@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 # Custom CSS for enhanced styling
 st.markdown(
@@ -144,7 +144,7 @@ def plot_results(results):
     recalls = [results[model]['recall'] for model in model_names]
     f1_scores = [results[model]['f1'] for model in model_names]
 
-    fig, axes = plt.subplots(2, 2, figsize=(12, 8), constrained_layout=True)
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10), constrained_layout=True)
     sns.barplot(x=model_names, y=accuracies, ax=axes[0, 0], palette='coolwarm')
     axes[0, 0].set_title('Accuracy')
     axes[0, 0].set_xlabel('Models')
@@ -179,19 +179,23 @@ def main():
     )
 
     df = load_data()
-    st.write("### Data Overview")
-    st.dataframe(df)  # Display all data
 
-    if st.button('Preprocess Data'):
-        df_processed = preprocessing(df)
-        st.write("### Data After Preprocessing")
-        st.dataframe(df_processed)  # Display all data
+    with st.sidebar:
+        st.header("Navigation")
+        if st.button('Show Data Overview'):
+            st.write("### Data Overview")
+            st.dataframe(df)  # Display all data
 
-        results = train_and_evaluate(df_processed)
-        st.write("### Model Performance")
-        st.write(results)
+        if st.button('Preprocess Data'):
+            df_processed = preprocessing(df)
+            st.write("### Data After Preprocessing")
+            st.dataframe(df_processed)  # Display all data
 
-        plot_results(results)
+            results = train_and_evaluate(df_processed)
+            st.write("### Model Performance")
+            st.write(results)
+
+            plot_results(results)
 
 if __name__ == "__main__":
     main()

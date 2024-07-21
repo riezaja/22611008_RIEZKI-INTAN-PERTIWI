@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
 
 # Custom CSS for enhanced styling
 st.markdown(
@@ -55,24 +55,15 @@ st.markdown(
         margin: 0;
     }
     .header-image {
-        width: 100%;
+        width: 80%;
+        max-width: 800px;
         height: auto;
-        margin-bottom: 20px;
+        margin: 20px auto;
+        display: block;
     }
-    .expander-header {
+    .icon {
+        color: #ff4081;
         font-size: 20px;
-        font-weight: bold;
-        color: #673ab7;
-    }
-    .section-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin: 20px 0;
-    }
-    .section-container > * {
-        margin: 10px 0;
     }
     </style>
     """,
@@ -89,11 +80,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Add a footer with your student identity
+# Add a footer with your student identity and icons
 st.markdown(
     """
     <div class="footer">
-        <p>Created by Riezki Intan Pertiwi, Statistics Student at Universitas Islam Indonesia</p>
+        <p>Created by Riezki Intan Pertiwi, Statistics Student at Universitas Islam Indonesia <i class="icon fas fa-graduation-cap"></i></p>
     </div>
     """,
     unsafe_allow_html=True
@@ -159,7 +150,7 @@ def plot_results(results):
     recalls = [results[model]['recall'] for model in model_names]
     f1_scores = [results[model]['f1'] for model in model_names]
 
-    fig, axes = plt.subplots(2, 2, figsize=(16, 10), constrained_layout=True)
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8), constrained_layout=True)
     sns.barplot(x=model_names, y=accuracies, ax=axes[0, 0], palette='coolwarm')
     axes[0, 0].set_title('Accuracy')
     axes[0, 0].set_xlabel('Models')
@@ -193,49 +184,20 @@ def main():
         """
     )
 
-    # Create two columns: one for the image and explanation, and one for the buttons
-    col1, col2 = st.columns([2, 1])
-    
-    with col1:
-        # Display the image and explanation
-        st.markdown(
-            """
-            <div>
-                <img class="header-image" src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Health Cartoon Image">
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-        st.markdown(
-            """
-            This application allows you to explore the relationship between various lifestyle factors and sleep disorders. 
-            You can preprocess the data, train multiple machine learning models, and evaluate their performance.
-            """
-        )
-
-    with col2:
-        # Add vertical alignment for buttons
-        st.button('Show Data Overview')
-        st.button('Preprocess Data')
-
-    # Data and results will be shown based on button interactions
     df = load_data()
-
-    if st.button('Show Data Overview'):
-        with st.expander("Data Overview", expanded=True):
-            st.dataframe(df)  # Display all data
+    st.write("### Data Overview")
+    st.dataframe(df)  # Display all data
 
     if st.button('Preprocess Data'):
         df_processed = preprocessing(df)
-        with st.expander("Data After Preprocessing", expanded=True):
-            st.dataframe(df_processed)  # Display all data
+        st.write("### Data After Preprocessing")
+        st.dataframe(df_processed)  # Display all data
 
-            results = train_and_evaluate(df_processed)
-            st.write("### Model Performance")
-            st.write(results)
+        results = train_and_evaluate(df_processed)
+        st.write("### Model Performance")
+        st.write(results)
 
-            st.write("### Performance Metrics Visualization")
-            plot_results(results)
+        plot_results(results)
 
 if __name__ == "__main__":
     main()

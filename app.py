@@ -63,7 +63,7 @@ st.markdown(
 st.markdown(
     """
     <div class="footer">
-        <p>Created by [Your Name], Statistics Student at Universitas Islam Indonesia</p>
+        <p>Created by Riezki Intan Pertiwi, Statistics Student at Universitas Islam Indonesia</p>
     </div>
     """,
     unsafe_allow_html=True

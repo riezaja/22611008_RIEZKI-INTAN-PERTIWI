@@ -236,13 +236,21 @@ def main():
             st.markdown('</div>', unsafe_allow_html=True)
 
     with tabs[2]:
-        st.write("### Visualisasi Distribusi Durasi Tidur")
+    st.write("### Visualisasi Distribusi Durasi Tidur")
+    st.write("Column names in the dataset:")
+    st.write(df.columns)
+
+    # Check if the column exists and then plot
+    if 'Duration of Sleep' in df.columns:
         plt.figure(figsize=(10, 6))
         sns.histplot(df['Duration of Sleep'], bins=30, kde=True, color='skyblue')
         plt.title('Distribusi Durasi Tidur')
         plt.xlabel('Durasi Tidur (jam)')
         plt.ylabel('Frekuensi')
         st.pyplot()
+    else:
+        st.error("Column 'Duration of Sleep' does not exist in the dataset.")
+
 
     with tabs[3]:
         st.write("### Data Preprocessing")

@@ -9,16 +9,16 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
-# Add custom CSS to make the layout wider and more spacious
+# Add custom CSS for styling
 st.markdown(
     """
     <style>
     .main .block-container {
-        max-width: 1600px;  /* Adjust the max-width as needed */
+        max-width: 1600px;
         padding: 1rem;
     }
     .dataframe-container {
-        max-width: 1400px;  /* Adjust the max-width as needed */
+        max-width: 1400px;
         margin: auto;
         overflow-x: auto;
     }
@@ -43,9 +43,14 @@ st.markdown(
         background-color: #4CAF50;
         color: white;
         padding: 0.5rem 1rem;
+        font-size: 16px;
     }
     .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
         color: #2C3E50;
+    }
+    .stMarkdown p {
+        font-size: 18px;
+        line-height: 1.6;
     }
     </style>
     """,
@@ -137,7 +142,9 @@ def plot_results(results):
 
 # Main function
 def main():
-    st.title("Analyzing Sleep Health and Lifestyle Data to Understand Patterns and Predict Sleep Disorders")
+    st.title("Analyzing Sleep Health and Lifestyle Data")
+    st.subheader("Presented by Riezki Intan Pertiwi")
+    st.write("Welcome to my Streamlit application for analyzing sleep health and lifestyle data. As a statistics student at Universitas Islam Indonesia, I have developed this application to demonstrate the power of data analysis and machine learning in understanding and predicting sleep disorders.")
 
     df = load_data()
 

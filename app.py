@@ -3,11 +3,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
 
 # Add custom CSS for styling
 st.markdown(
@@ -58,12 +58,12 @@ st.markdown(
         border-radius: 0.2rem;
     }
     .centered-title {
-    text-align: center;
-    font-size: 2rem;
-    color: #2C3E50;
-    font-weight: bold;
-    margin: 2rem 0;
-}
+        text-align: center;
+        font-size: 2rem;
+        color: #2C3E50;
+        font-weight: bold;
+        margin: 2rem 0;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -71,7 +71,7 @@ st.markdown(
 
 # Load the dataset
 def load_data():
-    df = pd.read_csv('Sleep_health_and_lifestyle_dataset.csv')
+    df = pd.read_csv('D:\\UASMPMLDATA\\Sleep_health_and_lifestyle_dataset.csv')
     df.columns = df.columns.str.strip()
     return df
 
@@ -152,6 +152,39 @@ def plot_results(results):
 
     st.pyplot(fig)
 
+# Evaluate a model
+def evaluate_model(model, X_test, y_test):
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred, average='weighted')
+    recall = recall_score(y_test, y_pred, average='weighted')
+    f1 = f1_score(y_test, y_pred, average='weighted')
+    print('Accuracy:', accuracy)
+    print('Precision:', precision)
+    print('Recall:', recall)
+    print('F1-score:', f1)
+    print('\nClassification Report:\n', classification_report(y_test, y_pred))
+    return accuracy, precision, recall, f1
+
+# Hyperparameter tuning
+def hyperparameter_tuning(X_train, y_train):
+    param_grid = {
+        'criterion': ['gini', 'entropy'],
+        'max_depth': [10, 20, None],
+        'min_samples_split': [2, 5],
+    }
+
+    model_dt = DecisionTreeClassifier(random_state=42)
+    grid_search = GridSearchCV(estimator=model_dt, param_grid=param_grid, cv=5, scoring='accuracy')
+    grid_search.fit(X_train, y_train)
+
+    return grid_search.best_params_, grid_search.best_estimator_
+
+# Cross-validation
+def cross_validation(model, X, y):
+    cv_scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')
+    return cv_scores
+
 # Main function
 def main():
     st.markdown('<div class="centered-title">Analyzing Sleep Health and Lifestyle Data</div>', unsafe_allow_html=True)
@@ -197,52 +230,23 @@ def main():
             st.markdown('</div>', unsafe_allow_html=True)
 
     with tabs[2]:
-        if st.button('Preprocess Data'):
-            df_processed = preprocessing(df)
-            st.write("### Data After Preprocessing")
-            st.dataframe(df_processed)  # Display all data
+        st.write("### Data Preprocessing")
+        st.write("#### Before Preprocessing")
+        st.dataframe(df.head())
+        
+        df_preprocessed = preprocessing(df)
+        st.write("#### After Preprocessing")
+        st.dataframe(df_preprocessed.head())
 
     with tabs[3]:
-        if st.button('Train and Evaluate Models'):
-            df_processed = preprocessing(df)
-            results = train_and_evaluate(df_processed)
-            st.write("### Model Performance")
-            st.write(results)
+        st.write("### Model Training")
+        results = train_and_evaluate(df_preprocessed)
+        st.write("#### Model Performance")
+        st.write(results)
 
-            st.write("""
-            ### Explanation of Model Performance Metrics
-            The performance of the models is evaluated using the following metrics:
+    with tabs[4]:
+        st.write("### Model Evaluation")
+        plot_results(results)
 
-            - **Accuracy:** The proportion of correctly classified instances among the total instances. Higher accuracy indicates better overall performance.
-            - **Precision:** The proportion of true positive results among the instances classified as positive. It measures the model's ability to avoid false positives.
-            - **Recall:** The proportion of true positive results among all actual positive instances. It measures the model's ability to identify all relevant instances.
-            - **F1-score:** The harmonic mean of precision and recall. It provides a balance between precision and recall and is useful when you need to balance both false positives and false negatives.
-
-            ### Model Comparison
-            Here is a summary of the model performance:
-
-            - **Logistic Regression:** 
-                - Accuracy: 88%
-                - Precision: 88.7%
-                - Recall: 88%
-                - F1-score: 88.1%
-
-            - **Decision Tree:**
-                - Accuracy: 89.3%
-                - Precision: 89.3%
-                - Recall: 89.3%
-                - F1-score: 89.2%
-
-            - **Random Forest:**
-                - Accuracy: 88%
-                - Precision: 88.2%
-                - Recall: 88%
-                - F1-score: 87.9%
-
-            From the results, the **Decision Tree** model performs slightly better compared to the **Logistic Regression** and **Random Forest** models across all metrics, indicating that it may be the best choice for this particular dataset.
-            """)
-
-            plot_results(results)
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

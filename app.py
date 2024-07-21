@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import LabelEncoder, StandardScaler
@@ -130,11 +131,12 @@ def plot_results(results):
     st.pyplot(fig)
 
 # Plot heatmap
-def plot_heatmap(df):
-    plt.figure(figsize=(12, 8))
-    correlation_matrix = df.corr()
-    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
-    plt.title('Correlation Heatmap')
+def plot_heatmap(results):
+    performance_matrix = np.array([[results[model]['accuracy'], results[model]['precision'], results[model]['recall'], results[model]['f1']] for model in results])
+    performance_df = pd.DataFrame(performance_matrix, columns=['Accuracy', 'Precision', 'Recall', 'F1-score'], index=results.keys())
+    plt.figure(figsize=(10, 6))
+    sns.heatmap(performance_df, annot=True, cmap='coolwarm', cbar=True)
+    plt.title('Model Performance Heatmap')
     st.pyplot(plt)
 
 # Main function
@@ -165,6 +167,9 @@ def main():
         st.write(results)
 
         plot_results(results)
+
+        if st.button('Show Performance Heatmap'):
+            plot_heatmap(results)
 
 if __name__ == "__main__":
     main()

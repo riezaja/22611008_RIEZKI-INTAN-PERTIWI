@@ -40,6 +40,10 @@ st.markdown(
     .dataframe {
         max-height: 400px;
         overflow: auto;
+        background-color: #ffffff;  /* White background for dataframes */
+    }
+    .dataframe table {
+        color: #000000;  /* Black text color for table cells */
     }
     .footer {
         position: fixed;
@@ -63,6 +67,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 
 # Add a header image with a unique cartoon-style health-related image
 st.markdown(

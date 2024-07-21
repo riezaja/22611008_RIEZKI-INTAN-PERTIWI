@@ -65,6 +65,37 @@ st.markdown(
         color: #ff4081;
         font-size: 20px;
     }
+    .css-1d391kg {
+        background: #673ab7 !important;
+        border: none !important;
+        border-radius: 10px !important;
+        margin-top: 10px !important;
+    }
+    .css-1d391kg:hover {
+        background: #512da8 !important;
+    }
+    .stTabs {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        background-color: #e1bee7;
+        border-radius: 10px;
+        padding: 10px;
+    }
+    .stTab {
+        flex-grow: 1;
+        text-align: center;
+        padding: 10px 20px;
+        background-color: #ff4081;
+        border-radius: 10px;
+        margin: 5px;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .stTab:hover {
+        background-color: #f50057;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -169,7 +200,7 @@ def main():
 
     df = load_data()
 
-    tabs = st.tabs(["Overview", "Data Overview", "Data Preprocessing", "Model Training", "Model Evaluation"])
+    tabs = st.tabs(["🏠 Overview", "📊 Data Overview", "🔧 Data Preprocessing", "🚀 Model Training", "📈 Model Evaluation"])
 
     with tabs[0]:
         st.image("https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg", use_column_width=True)
@@ -239,6 +270,17 @@ def main():
             """)
 
             plot_results(results)
+
+    with tabs[3]:
+        st.write("### Train Models")
+        df_processed = preprocessing(df)
+        results = train_and_evaluate(df_processed)
+        st.write("### Model Performance")
+        st.write(results)
+
+    with tabs[4]:
+        st.write("### Model Evaluation")
+        plot_results(results)
 
 if __name__ == "__main__":
     main()

@@ -64,11 +64,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Add a header image
+# Add a header image with a unique cartoon-style health-related image
 st.markdown(
     """
     <div>
-        <img class="header-image" src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61" alt="Header Image">
+        <img class="header-image" src="https://example.com/your-cartoon-image.jpg" alt="Health Cartoon Image">
     </div>
     """,
     unsafe_allow_html=True
@@ -78,7 +78,7 @@ st.markdown(
 st.markdown(
     """
     <div class="footer">
-        <p>Created by [Your Name], Statistics Student at Universitas Islam Indonesia</p>
+        <p>Created by Riezki Intan Pertiwi, Statistics Student at Universitas Islam Indonesia</p>
     </div>
     """,
     unsafe_allow_html=True

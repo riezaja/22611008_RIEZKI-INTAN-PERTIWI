@@ -71,7 +71,7 @@ st.markdown(
 
 # Load the dataset
 def load_data():
-    df = pd.read_csv('D:\\UASMPMLDATA\\Sleep_health_and_lifestyle_dataset.csv')
+    df = pd.read_csv('Sleep_health_and_lifestyle_dataset.csv')
     df.columns = df.columns.str.strip()
     return df
 

@@ -9,11 +9,13 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
 
+# Function to load data
 def load_data():
     df = pd.read_csv('Sleep_health_and_lifestyle_dataset.csv')
     df.columns = df.columns.str.strip()
     return df
 
+# Function to preprocess data
 def preprocessing(df):
     df[['Systolic_BP', 'Diastolic_BP']] = df['Blood Pressure'].str.split('/', expand=True).astype(float)
     df = df.drop(columns=['Blood Pressure'])
@@ -25,6 +27,7 @@ def preprocessing(df):
     df = df.drop(columns=['Person ID'])
     return df
 
+# Function to train and evaluate models
 def train_and_evaluate(df):
     X = df.drop('Sleep Disorder', axis=1)
     y = df['Sleep Disorder']
@@ -58,6 +61,7 @@ def train_and_evaluate(df):
 
     return results
 
+# Function to plot results
 def plot_results(results):
     model_names = list(results.keys())
     accuracies = [results[model]['accuracy'] for model in model_names]
@@ -65,7 +69,7 @@ def plot_results(results):
     recalls = [results[model]['recall'] for model in model_names]
     f1_scores = [results[model]['f1'] for model in model_names]
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 8))
     plt.subplot(2, 2, 1)
     sns.barplot(x=model_names, y=accuracies)
     plt.title('Accuracy')
@@ -85,25 +89,68 @@ def plot_results(results):
     plt.tight_layout()
     st.pyplot(plt)
 
+    performance_matrix = pd.DataFrame({
+        'Accuracy': accuracies,
+        'Precision': precisions,
+        'Recall': recalls,
+        'F1-score': f1_scores
+    }, index=model_names)
+
+    st.write("### Model Performance Matrix")
+    st.dataframe(performance_matrix)
+
+# Main function
 def main():
-    st.title("Sleep Health and Lifestyle Analysis")
-
-    df = load_data()
-    st.write("### Data Overview")
+    st.sidebar.title("Sleep Health and Lifestyle Analysis")
+    st.sidebar.image("https://via.placeholder.com/150", caption="Sleep Health Analysis")
     
-    # Add slider to select number of rows to display
-    num_rows = st.slider('Select number of rows to view', min_value=5, max_value=len(df), value=10, step=5)
-    st.dataframe(df.head(num_rows))
+    st.title("Sleep Health and Lifestyle Analysis")
+    st.markdown("""
+    This application allows you to explore, preprocess, and model the **Sleep Health and Lifestyle** dataset.
+    Use the sidebar to navigate through different sections.
+    """)
 
-    df_processed = preprocessing(df)
-    st.write("### Data After Preprocessing")
-    st.dataframe(df_processed.head(num_rows))
+    st.sidebar.header("Navigation")
+    page = st.sidebar.radio("Go to", ["Data Overview", "Preprocessing", "Model Training and Evaluation"])
 
-    results = train_and_evaluate(df_processed)
-    st.write("### Model Performance")
-    st.write(results)
+    if page == "Data Overview":
+        st.header("Data Overview")
+        df = load_data()
+        
+        # Add slider to select number of rows to view
+        num_rows = st.slider('Select number of rows to view', min_value=5, max_value=len(df), value=10, step=5)
+        st.dataframe(df.head(num_rows))
+        
+        st.write("### Summary Statistics")
+        st.write(df.describe())
 
-    plot_results(results)
+        st.write("### Missing Values")
+        st.write(df.isnull().sum())
+    
+    elif page == "Preprocessing":
+        st.header("Data Preprocessing")
+        df = load_data()
+        df_processed = preprocessing(df)
+        
+        st.write("### Data After Preprocessing")
+        num_rows = st.slider('Select number of rows to view', min_value=5, max_value=len(df_processed), value=10, step=5, key="preprocessed")
+        st.dataframe(df_processed.head(num_rows))
+        
+        st.write("### Data Types After Preprocessing")
+        st.write(df_processed.dtypes)
+    
+    elif page == "Model Training and Evaluation":
+        st.header("Model Training and Evaluation")
+        df = load_data()
+        df_processed = preprocessing(df)
+        
+        st.write("Training models...")
+        results = train_and_evaluate(df_processed)
+        st.write("### Model Performance")
+        st.write(results)
+        
+        st.write("### Model Comparison Visualizations")
+        plot_results(results)
 
 if __name__ == "__main__":
     main()

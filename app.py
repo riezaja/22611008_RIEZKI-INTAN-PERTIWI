@@ -9,6 +9,36 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
 
+# Custom CSS
+st.markdown(
+    """
+    <style>
+    .main {
+        background-color: #f0f2f6;
+        font-family: 'Arial', sans-serif;
+    }
+    .stButton>button {
+        background-color: #4CAF50;
+        color: white;
+        font-size: 16px;
+    }
+    .stButton>button:hover {
+        background-color: #45a049;
+    }
+    .stMarkdown h1 {
+        color: #2E8B57;
+    }
+    .stMarkdown h2 {
+        color: #2E8B57;
+    }
+    .stMarkdown p {
+        font-size: 18px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 def load_data():
     df = pd.read_csv('Sleep_health_and_lifestyle_dataset.csv')
     df.columns = df.columns.str.strip()
@@ -67,40 +97,50 @@ def plot_results(results):
 
     plt.figure(figsize=(10, 6))
     plt.subplot(2, 2, 1)
-    sns.barplot(x=model_names, y=accuracies)
+    sns.barplot(x=model_names, y=accuracies, palette='viridis')
     plt.title('Accuracy')
+    plt.xlabel('Models')
+    plt.ylabel('Score')
 
     plt.subplot(2, 2, 2)
-    sns.barplot(x=model_names, y=precisions)
+    sns.barplot(x=model_names, y=precisions, palette='viridis')
     plt.title('Precision')
+    plt.xlabel('Models')
+    plt.ylabel('Score')
 
     plt.subplot(2, 2, 3)
-    sns.barplot(x=model_names, y=recalls)
+    sns.barplot(x=model_names, y=recalls, palette='viridis')
     plt.title('Recall')
+    plt.xlabel('Models')
+    plt.ylabel('Score')
 
     plt.subplot(2, 2, 4)
-    sns.barplot(x=model_names, y=f1_scores)
+    sns.barplot(x=model_names, y=f1_scores, palette='viridis')
     plt.title('F1-score')
+    plt.xlabel('Models')
+    plt.ylabel('Score')
 
     plt.tight_layout()
     st.pyplot(plt)
 
 def main():
     st.title("Sleep Health and Lifestyle Analysis")
+    st.markdown("## Analyzing Sleep Health and Lifestyle Data to Understand Patterns and Predict Sleep Disorders")
 
     df = load_data()
     st.write("### Data Overview")
     st.write(df.head())
 
-    df_processed = preprocessing(df)
-    st.write("### Data After Preprocessing")
-    st.write(df_processed.head())
+    if st.button('Preprocess Data'):
+        df_processed = preprocessing(df)
+        st.write("### Data After Preprocessing")
+        st.write(df_processed.head())
 
-    results = train_and_evaluate(df_processed)
-    st.write("### Model Performance")
-    st.write(results)
+        results = train_and_evaluate(df_processed)
+        st.write("### Model Performance")
+        st.write(results)
 
-    plot_results(results)
+        plot_results(results)
 
 if __name__ == "__main__":
     main()

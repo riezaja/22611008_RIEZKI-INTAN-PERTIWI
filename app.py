@@ -64,6 +64,16 @@ st.markdown(
         font-weight: bold;
         color: #673ab7;
     }
+    .section-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+    }
+    .section-container > * {
+        margin: 10px 0;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -149,7 +159,7 @@ def plot_results(results):
     recalls = [results[model]['recall'] for model in model_names]
     f1_scores = [results[model]['f1'] for model in model_names]
 
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10), constrained_layout=True)
+    fig, axes = plt.subplots(2, 2, figsize=(16, 10), constrained_layout=True)
     sns.barplot(x=model_names, y=accuracies, ax=axes[0, 0], palette='coolwarm')
     axes[0, 0].set_title('Accuracy')
     axes[0, 0].set_xlabel('Models')
@@ -185,12 +195,14 @@ def main():
 
     df = load_data()
 
-    with st.sidebar:
-        st.header("Navigation")
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
         if st.button('Show Data Overview'):
             with st.expander("Data Overview", expanded=True):
                 st.dataframe(df)  # Display all data
 
+    with col2:
         if st.button('Preprocess Data'):
             df_processed = preprocessing(df)
             with st.expander("Data After Preprocessing", expanded=True):

@@ -170,12 +170,6 @@ def plot_results(results):
 def main():
     st.title("Sleep Health and Lifestyle Analysis")
     st.markdown("## Analyzing Sleep Health and Lifestyle Data to Understand Patterns and Predict Sleep Disorders")
-    st.markdown(
-        """
-        This application allows you to explore the relationship between various lifestyle factors and sleep disorders. 
-        You can preprocess the data, train multiple machine learning models, and evaluate their performance.
-        """
-    )
 
     df = load_data()
 

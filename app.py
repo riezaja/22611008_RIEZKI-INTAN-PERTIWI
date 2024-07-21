@@ -14,7 +14,7 @@ st.markdown(
     """
     <style>
     .main {
-        background-color: #eaf7f9;
+        background-color: #f5f5f5;
         font-family: 'Arial', sans-serif;
     }
     .stButton>button {
@@ -41,7 +41,30 @@ st.markdown(
         max-height: 400px;
         overflow: auto;
     }
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #2E8B57;
+        color: white;
+        text-align: center;
+        padding: 10px;
+    }
+    .footer p {
+        margin: 0;
+    }
     </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Add a footer with your student identity
+st.markdown(
+    """
+    <div class="footer">
+        <p>Created by [Your Name], Statistics Student at Universitas Islam Indonesia</p>
+    </div>
     """,
     unsafe_allow_html=True
 )

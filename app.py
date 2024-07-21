@@ -185,6 +185,21 @@ def main():
     )
 
     df = load_data()
+
+    col1, col2 = st.columns([1, 2])
+    
+    with col1:
+        st.image("https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg", width=300)
+
+    with col2:
+        st.write("### Overview of the Analysis")
+        st.write(
+            """
+            This application allows you to explore the relationship between various lifestyle factors and sleep disorders. 
+            You can preprocess the data, train multiple machine learning models, and evaluate their performance.
+            """
+        )
+
     st.write("### Data Overview")
     st.dataframe(df)  # Display all data
 

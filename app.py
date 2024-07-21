@@ -208,7 +208,8 @@ def main():
             min_value=5,
             max_value=max_rows,
             value=min(10, max_rows),  # Default to 10 or max_rows if less
-            step=5
+            step=5,
+            key='data_processed'  # Unique key for the slider
         )
         
         if num_rows_processed == max_rows:

@@ -188,7 +188,8 @@ def main():
     num_rows = st.selectbox(
         "Select number of rows to display",
         options=[5, 10, 100, 'Full Data'],
-        index=3  # Default to 'Full Data'
+        index=3,  # Default to 'Full Data'
+        key='data_overview'  # Unique key for the selectbox
     )
     
     if num_rows == 'Full Data':
@@ -203,7 +204,8 @@ def main():
         num_rows_processed = st.selectbox(
             "Select number of rows to display",
             options=[5, 10, 100, 'Full Data'],
-            index=3  # Default to 'Full Data'
+            index=3,  # Default to 'Full Data'
+            key='data_processed'  # Unique key for the selectbox
         )
         
         if num_rows_processed == 'Full Data':

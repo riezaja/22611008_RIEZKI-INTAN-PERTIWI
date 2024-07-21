@@ -9,18 +9,23 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
 
-# Custom CSS
+# Custom CSS for better styling
 st.markdown(
     """
     <style>
     .main {
-        background-color: #f0f2f6;
+        background-color: #eaf7f9;
         font-family: 'Arial', sans-serif;
     }
     .stButton>button {
         background-color: #4CAF50;
         color: white;
         font-size: 16px;
+        border-radius: 10px;
+        border: none;
+        padding: 10px 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
     .stButton>button:hover {
         background-color: #45a049;
@@ -30,6 +35,7 @@ st.markdown(
     }
     .stMarkdown p {
         font-size: 18px;
+        line-height: 1.6;
     }
     .dataframe {
         max-height: 400px;
@@ -40,11 +46,13 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Load the dataset
 def load_data():
     df = pd.read_csv('Sleep_health_and_lifestyle_dataset.csv')
     df.columns = df.columns.str.strip()
     return df
 
+# Preprocess the data
 def preprocessing(df):
     df[['Systolic_BP', 'Diastolic_BP']] = df['Blood Pressure'].str.split('/', expand=True).astype(float)
     df = df.drop(columns=['Blood Pressure'])
@@ -56,6 +64,7 @@ def preprocessing(df):
     df = df.drop(columns=['Person ID'])
     return df
 
+# Train and evaluate models
 def train_and_evaluate(df):
     X = df.drop('Sleep Disorder', axis=1)
     y = df['Sleep Disorder']
@@ -89,6 +98,7 @@ def train_and_evaluate(df):
 
     return results
 
+# Plot results
 def plot_results(results):
     model_names = list(results.keys())
     accuracies = [results[model]['accuracy'] for model in model_names]
@@ -96,37 +106,39 @@ def plot_results(results):
     recalls = [results[model]['recall'] for model in model_names]
     f1_scores = [results[model]['f1'] for model in model_names]
 
-    plt.figure(figsize=(12, 8))
-    plt.subplot(2, 2, 1)
-    sns.barplot(x=model_names, y=accuracies, palette='viridis')
-    plt.title('Accuracy')
-    plt.xlabel('Models')
-    plt.ylabel('Score')
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8), constrained_layout=True)
+    sns.barplot(x=model_names, y=accuracies, ax=axes[0, 0], palette='viridis')
+    axes[0, 0].set_title('Accuracy')
+    axes[0, 0].set_xlabel('Models')
+    axes[0, 0].set_ylabel('Score')
 
-    plt.subplot(2, 2, 2)
-    sns.barplot(x=model_names, y=precisions, palette='viridis')
-    plt.title('Precision')
-    plt.xlabel('Models')
-    plt.ylabel('Score')
+    sns.barplot(x=model_names, y=precisions, ax=axes[0, 1], palette='viridis')
+    axes[0, 1].set_title('Precision')
+    axes[0, 1].set_xlabel('Models')
+    axes[0, 1].set_ylabel('Score')
 
-    plt.subplot(2, 2, 3)
-    sns.barplot(x=model_names, y=recalls, palette='viridis')
-    plt.title('Recall')
-    plt.xlabel('Models')
-    plt.ylabel('Score')
+    sns.barplot(x=model_names, y=recalls, ax=axes[1, 0], palette='viridis')
+    axes[1, 0].set_title('Recall')
+    axes[1, 0].set_xlabel('Models')
+    axes[1, 0].set_ylabel('Score')
 
-    plt.subplot(2, 2, 4)
-    sns.barplot(x=model_names, y=f1_scores, palette='viridis')
-    plt.title('F1-score')
-    plt.xlabel('Models')
-    plt.ylabel('Score')
+    sns.barplot(x=model_names, y=f1_scores, ax=axes[1, 1], palette='viridis')
+    axes[1, 1].set_title('F1-score')
+    axes[1, 1].set_xlabel('Models')
+    axes[1, 1].set_ylabel('Score')
 
-    plt.tight_layout()
-    st.pyplot(plt)
+    st.pyplot(fig)
 
+# Main function
 def main():
     st.title("Sleep Health and Lifestyle Analysis")
     st.markdown("## Analyzing Sleep Health and Lifestyle Data to Understand Patterns and Predict Sleep Disorders")
+    st.markdown(
+        """
+        This application allows you to explore the relationship between various lifestyle factors and sleep disorders. 
+        You can preprocess the data, train multiple machine learning models, and evaluate their performance.
+        """
+    )
 
     df = load_data()
     st.write("### Data Overview")

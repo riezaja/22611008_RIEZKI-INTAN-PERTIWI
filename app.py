@@ -55,9 +55,15 @@ st.markdown(
         margin: 0;
     }
     .header-image {
-        width: 100%;
+        width: 80%;
+        max-width: 800px;
         height: auto;
-        margin-bottom: 20px;
+        margin: 20px auto;
+        display: block;
+    }
+    .icon {
+        color: #ff4081;
+        font-size: 20px;
     }
     </style>
     """,
@@ -74,11 +80,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Add a footer with your student identity
+# Add a footer with your student identity and icons
 st.markdown(
     """
     <div class="footer">
-        <p>Created by Riezki Intan Pertiwi, Statistics Student at Universitas Islam Indonesia</p>
+        <p>Created by Riezki Intan Pertiwi, Statistics Student at Universitas Islam Indonesia <i class="icon fas fa-graduation-cap"></i></p>
     </div>
     """,
     unsafe_allow_html=True

@@ -200,22 +200,7 @@ def main():
     if st.button('Preprocess Data'):
         df_processed = preprocessing(df)
         st.write("### Data After Preprocessing")
-        
-        # Use slider to choose number of rows to display
-        max_rows = len(df_processed)
-        num_rows_processed = st.slider(
-            "Select number of rows to display",
-            min_value=5,
-            max_value=max_rows,
-            value=min(10, max_rows),  # Default to 10 or max_rows if less
-            step=5,
-            key='data_processed'  # Unique key for the slider
-        )
-        
-        if num_rows_processed == max_rows:
-            st.dataframe(df_processed)  # Display all data
-        else:
-            st.dataframe(df_processed.head(num_rows_processed))  # Display the first `num_rows` data
+        st.dataframe(df_processed)  # Display all data
 
         results = train_and_evaluate(df_processed)
         st.write("### Model Performance")

@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_sc
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 # Add custom CSS for styling
 st.markdown(
@@ -152,20 +152,6 @@ def plot_results(results):
 
     st.pyplot(fig)
 
-# Evaluate a model
-def evaluate_model(model, X_test, y_test):
-    y_pred = model.predict(X_test)
-    accuracy = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred, average='weighted')
-    recall = recall_score(y_test, y_pred, average='weighted')
-    f1 = f1_score(y_test, y_pred, average='weighted')
-    print('Accuracy:', accuracy)
-    print('Precision:', precision)
-    print('Recall:', recall)
-    print('F1-score:', f1)
-    print('\nClassification Report:\n', classification_report(y_test, y_pred))
-    return accuracy, precision, recall, f1
-
 # Hyperparameter tuning
 def hyperparameter_tuning(X_train, y_train):
     param_grid = {
@@ -177,13 +163,28 @@ def hyperparameter_tuning(X_train, y_train):
     model_dt = DecisionTreeClassifier(random_state=42)
     grid_search = GridSearchCV(estimator=model_dt, param_grid=param_grid, cv=5, scoring='accuracy')
     grid_search.fit(X_train, y_train)
-
-    return grid_search.best_params_, grid_search.best_estimator_
+    return grid_search.best_estimator_, grid_search.best_params_, grid_search.best_score_
 
 # Cross-validation
-def cross_validation(model, X, y):
-    cv_scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')
+def cross_validation(X, y):
+    model_dt = DecisionTreeClassifier(random_state=42)
+    cv_scores = cross_val_score(model_dt, X, y, cv=5, scoring='accuracy')
     return cv_scores
+
+# Voting Classifier
+def voting_classifier(X_train, y_train):
+    model_lr = LogisticRegression(random_state=42)
+    model_dt = DecisionTreeClassifier(random_state=42)
+    model_rf = RandomForestClassifier(random_state=42)
+
+    voting_clf = VotingClassifier(estimators=[
+        ('lr', model_lr),
+        ('dt', model_dt),
+        ('rf', model_rf)
+    ], voting='soft')
+
+    voting_clf.fit(X_train, y_train)
+    return voting_clf
 
 # Main function
 def main():
@@ -199,7 +200,12 @@ def main():
 
     df = load_data()
 
-    tabs = st.tabs(["🏠 Overview", "📊 Data Overview", "🔧 Data Preprocessing", "🚀 Model Training", "📈 Model Evaluation"])
+    tabs = st.tabs([
+        "🏠 Overview", "📊 Data Overview", "📉 Visualisasi Durasi Tidur", 
+        "🔧 Data Preprocessing", "🚀 Model Training and Comparison", 
+        "📈 Bar Plots", "🌡️ Heatmap", "🔍 Hyperparameter Tuning", 
+        "🔄 Cross-validation", "🗳️ Model Voting Classifier"
+    ])
 
     with tabs[0]:
         st.image("https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg", use_column_width=True)
@@ -216,37 +222,98 @@ def main():
         num_rows = st.selectbox(
             "Select number of rows to display",
             options=[5, 10, 100, 'Full Data'],
-            index=3,  # Default to 'Full Data'
-            key='data_overview'  # Unique key for the selectbox
+            index=3,
+            key='data_overview'
         )
         
         if num_rows == 'Full Data':
             st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
-            st.dataframe(df, height=400)  # Adjust the height as needed
+            st.dataframe(df, height=400)
             st.markdown('</div>', unsafe_allow_html=True)
         else:
             st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
-            st.dataframe(df.head(num_rows), height=400)  # Adjust the height as needed
+            st.dataframe(df.head(num_rows), height=400)
             st.markdown('</div>', unsafe_allow_html=True)
 
     with tabs[2]:
-        st.write("### Data Preprocessing")
-        st.write("#### Before Preprocessing")
-        st.dataframe(df.head())
-        
-        df_preprocessed = preprocessing(df)
-        st.write("#### After Preprocessing")
-        st.dataframe(df_preprocessed.head())
+        st.write("### Visualisasi Distribusi Durasi Tidur")
+        plt.figure(figsize=(10, 6))
+        sns.histplot(df['Duration of Sleep'], bins=30, kde=True, color='skyblue')
+        plt.title('Distribusi Durasi Tidur')
+        plt.xlabel('Durasi Tidur (jam)')
+        plt.ylabel('Frekuensi')
+        st.pyplot()
 
     with tabs[3]:
-        st.write("### Model Training")
-        results = train_and_evaluate(df_preprocessed)
-        st.write("#### Model Performance")
-        st.write(results)
+        st.write("### Data Preprocessing")
+        st.write("Before preprocessing:")
+        st.write(df.head())
+
+        df_preprocessed = preprocessing(df)
+        st.write("After preprocessing:")
+        st.write(df_preprocessed.head())
 
     with tabs[4]:
-        st.write("### Model Evaluation")
+        st.write("### Model Training and Comparison")
+        results = train_and_evaluate(df_preprocessed)
+        st.write(results)
         plot_results(results)
+
+    with tabs[5]:
+        st.write("### Bar Plots")
+        plt.figure(figsize=(10, 6))
+        sns.countplot(data=df, x='Gender', hue='Sleep Disorder', palette='coolwarm')
+        plt.title('Sleep Disorder Distribution by Gender')
+        plt.xlabel('Gender')
+        plt.ylabel('Count')
+        st.pyplot()
+
+    with tabs[6]:
+        st.write("### Heatmap")
+        plt.figure(figsize=(12, 8))
+        correlation_matrix = df.corr()
+        sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f')
+        plt.title('Correlation Matrix Heatmap')
+        st.pyplot()
+
+    with tabs[7]:
+        st.write("### Hyperparameter Tuning")
+        X = df_preprocessed.drop('Sleep Disorder', axis=1)
+        y = df_preprocessed['Sleep Disorder']
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        best_estimator, best_params, best_score = hyperparameter_tuning(X_train, y_train)
+        st.write("Best Estimator:")
+        st.write(best_estimator)
+        st.write("Best Parameters:")
+        st.write(best_params)
+        st.write("Best Score:")
+        st.write(best_score)
+
+    with tabs[8]:
+        st.write("### Cross-validation")
+        X = df_preprocessed.drop('Sleep Disorder', axis=1)
+        y = df_preprocessed['Sleep Disorder']
+        
+        cv_scores = cross_validation(X, y)
+        st.write("Cross-validation scores:")
+        st.write(cv_scores)
+        st.write("Mean CV Score:", cv_scores.mean())
+
+    with tabs[9]:
+        st.write("### Model Voting Classifier")
+        X = df_preprocessed.drop('Sleep Disorder', axis=1)
+        y = df_preprocessed['Sleep Disorder']
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        
+        voting_clf = voting_classifier(X_train, y_train)
+        y_pred = voting_clf.predict(X_test)
+        
+        st.write("Voting Classifier Results:")
+        st.write("Accuracy:", accuracy_score(y_test, y_pred))
+        st.write("Precision:", precision_score(y_test, y_pred, average='weighted'))
+        st.write("Recall:", recall_score(y_test, y_pred, average='weighted'))
+        st.write("F1 Score:", f1_score(y_test, y_pred, average='weighted'))
 
 if __name__ == '__main__':
     main()

@@ -129,6 +129,14 @@ def plot_results(results):
 
     st.pyplot(fig)
 
+# Plot heatmap
+def plot_heatmap(df):
+    plt.figure(figsize=(12, 8))
+    correlation_matrix = df.corr()
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
+    plt.title('Correlation Heatmap')
+    st.pyplot(plt)
+
 # Main function
 def main():
     st.title("Sleep Health and Lifestyle Analysis")
@@ -148,6 +156,9 @@ def main():
         df_processed = preprocessing(df)
         st.write("### Data After Preprocessing")
         st.dataframe(df_processed)  # Display all data
+
+        if st.button('Show Correlation Heatmap'):
+            plot_heatmap(df_processed)
 
         results = train_and_evaluate(df_processed)
         st.write("### Model Performance")

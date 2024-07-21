@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 # Custom CSS for enhanced styling
 st.markdown(
@@ -201,14 +201,17 @@ def main():
         df_processed = preprocessing(df)
         st.write("### Data After Preprocessing")
         
-        num_rows_processed = st.selectbox(
+        # Use slider to choose number of rows to display
+        max_rows = len(df_processed)
+        num_rows_processed = st.slider(
             "Select number of rows to display",
-            options=[5, 10, 100, 'Full Data'],
-            index=3,  # Default to 'Full Data'
-            key='data_processed'  # Unique key for the selectbox
+            min_value=5,
+            max_value=max_rows,
+            value=min(10, max_rows),  # Default to 10 or max_rows if less
+            step=5
         )
         
-        if num_rows_processed == 'Full Data':
+        if num_rows_processed == max_rows:
             st.dataframe(df_processed)  # Display all data
         else:
             st.dataframe(df_processed.head(num_rows_processed))  # Display the first `num_rows` data

@@ -206,6 +206,39 @@ def main():
         st.write("### Model Performance")
         st.write(results)
 
+        st.write("""
+        ### Explanation of Model Performance Metrics
+        The performance of the models is evaluated using the following metrics:
+
+        - **Accuracy:** The proportion of correctly classified instances among the total instances. Higher accuracy indicates better overall performance.
+        - **Precision:** The proportion of true positive results among the instances classified as positive. It measures the model's ability to avoid false positives.
+        - **Recall:** The proportion of true positive results among all actual positive instances. It measures the model's ability to identify all relevant instances.
+        - **F1-score:** The harmonic mean of precision and recall. It provides a balance between precision and recall and is useful when you need to balance both false positives and false negatives.
+
+        ### Model Comparison
+        Here is a summary of the model performance:
+
+        - **Logistic Regression:** 
+            - Accuracy: 88%
+            - Precision: 88.7%
+            - Recall: 88%
+            - F1-score: 88.1%
+
+        - **Decision Tree:**
+            - Accuracy: 89.3%
+            - Precision: 89.3%
+            - Recall: 89.3%
+            - F1-score: 89.2%
+
+        - **Random Forest:**
+            - Accuracy: 88%
+            - Precision: 88.2%
+            - Recall: 88%
+            - F1-score: 87.9%
+
+        From the results, the **Decision Tree** model performs slightly better compared to the **Logistic Regression** and **Random Forest** models across all metrics, indicating that it may be the best choice for this particular dataset.
+        """)
+
         plot_results(results)
 
 if __name__ == "__main__":

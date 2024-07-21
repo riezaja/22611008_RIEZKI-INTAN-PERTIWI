@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 # Custom CSS for enhanced styling
 st.markdown(
@@ -55,15 +55,9 @@ st.markdown(
         margin: 0;
     }
     .header-image {
-        width: 80%;
-        max-width: 800px;
+        width: 70%;  /* Adjust the width as needed */
         height: auto;
-        margin: 20px auto;
-        display: block;
-    }
-    .icon {
-        color: #ff4081;
-        font-size: 20px;
+        margin-bottom: 20px;
     }
     </style>
     """,
@@ -80,11 +74,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Add a footer with your student identity and icons
+# Add a footer with your student identity
 st.markdown(
     """
     <div class="footer">
-        <p>Created by Riezki Intan Pertiwi, Statistics Student at Universitas Islam Indonesia <i class="icon fas fa-graduation-cap"></i></p>
+        <p>Created by Riezki Intan Pertiwi, Statistics Student at Universitas Islam Indonesia</p>
     </div>
     """,
     unsafe_allow_html=True

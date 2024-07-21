@@ -70,9 +70,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-
-
 # Add a footer with your student identity and icons
 st.markdown(
     """
@@ -169,7 +166,6 @@ def plot_results(results):
 # Main function
 def main():
     st.title("Analyzing Sleep Health and Lifestyle Data to Understand Patterns and Predict Sleep Disorders")
-   
 
     df = load_data()
 
@@ -187,13 +183,33 @@ def main():
             """
         )
 
+    # Data Overview
     st.write("### Data Overview")
-    st.dataframe(df)  # Display all data
+    num_rows = st.selectbox(
+        "Select number of rows to display",
+        options=[5, 10, 100, 'Full Data'],
+        index=3  # Default to 'Full Data'
+    )
+    
+    if num_rows == 'Full Data':
+        st.dataframe(df)  # Display all data
+    else:
+        st.dataframe(df.head(num_rows))  # Display the first `num_rows` data
 
     if st.button('Preprocess Data'):
         df_processed = preprocessing(df)
         st.write("### Data After Preprocessing")
-        st.dataframe(df_processed)  # Display all data
+        
+        num_rows_processed = st.selectbox(
+            "Select number of rows to display",
+            options=[5, 10, 100, 'Full Data'],
+            index=3  # Default to 'Full Data'
+        )
+        
+        if num_rows_processed == 'Full Data':
+            st.dataframe(df_processed)  # Display all data
+        else:
+            st.dataframe(df_processed.head(num_rows_processed))  # Display the first `num_rows` data
 
         results = train_and_evaluate(df_processed)
         st.write("### Model Performance")

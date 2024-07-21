@@ -112,40 +112,95 @@ sns.heatmap(performance_df, annot=True, cmap='coolwarm', cbar=True)
 plt.title('Model Performance Heatmap')
 plt.show()
 
-from sklearn.model_selection import GridSearchCV
+#hyperparameter tuning 
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import GridSearchCV, cross_val_score
 
-# Define parameter grid for RandomForestClassifier
+# Definisikan grid parameter untuk DecisionTreeClassifier
 param_grid = {
-    'n_estimators': [100, 200],
-    'max_depth': [10, 20],
+    'criterion': ['gini', 'entropy'],
+    'max_depth': [10, 20, None],
     'min_samples_split': [2, 5],
 }
 
-# Initialize RandomForestClassifier
-model_rf = RandomForestClassifier(random_state=42)
+# Inisialisasi DecisionTreeClassifier
+model_dt = DecisionTreeClassifier(random_state=42)
 
-# Set up GridSearchCV
-grid_search = GridSearchCV(estimator=model_rf, param_grid=param_grid, cv=5, scoring='accuracy')
+# Siapkan GridSearchCV
+grid_search = GridSearchCV(estimator=model_dt, param_grid=param_grid, cv=5, scoring='accuracy')
 
 # Fit grid search
 grid_search.fit(X_train, y_train)
 
-# Print the best parameters and best score
+# Cetak parameter terbaik dan skor terbaik
 print("Best Parameters:", grid_search.best_params_)
 print("Best Score:", grid_search.best_score_)
 
-# Use best estimator to evaluate on the test set
-best_model_rf = grid_search.best_estimator_
-acc_rf, prec_rf, rec_rf, f1_rf = evaluate_model(best_model_rf, X_test, y_test)
+# Gunakan estimator terbaik untuk evaluasi pada set uji
+best_model_dt = grid_search.best_estimator_
+acc_dt, prec_dt, rec_dt, f1_dt = evaluate_model(best_model_dt, X_test, y_test)
 
+
+#cross-validation 
 from sklearn.model_selection import cross_val_score
 
-# Initialize RandomForestClassifier
-model_rf = RandomForestClassifier(random_state=42)
+# Inisialisasi DecisionTreeClassifier
+model_dt = DecisionTreeClassifier(random_state=42)
 
-# Perform cross-validation
-cv_scores = cross_val_score(model_rf, X, y, cv=5, scoring='accuracy')
+# Lakukan cross-validation
+cv_scores = cross_val_score(model_dt, X, y, cv=5, scoring='accuracy')
 
-# Print cross-validation results
+# Cetak hasil cross-validation
 print("Cross-Validation Scores:", cv_scores)
 print("Mean Cross-Validation Score:", cv_scores.mean())
+
+
+#model Voting Classifier 
+from sklearn.ensemble import VotingClassifier
+
+# Inisialisasi model
+model_lr = LogisticRegression(random_state=42)
+model_dt = DecisionTreeClassifier(random_state=42)
+model_rf = RandomForestClassifier(random_state=42)
+
+# Inisialisasi Voting Classifier
+voting_clf = VotingClassifier(estimators=[
+    ('lr', model_lr),
+    ('dt', model_dt),
+    ('rf', model_rf)
+], voting='soft')
+
+# Latih Voting Classifier
+voting_clf.fit(X_train, y_train)
+
+# Evaluasi Voting Classifier
+print("Voting Classifier:")
+acc_vc, prec_vc, rec_vc, f1_vc = evaluate_model(voting_clf, X_test, y_test)
+
+# Visualisasi Perbandingan Model
+model_names = ['Logistic Regression', 'Decision Tree', 'Random Forest', 'Voting Classifier']
+accuracies = [acc_lr, acc_dt, acc_rf, acc_vc]
+precisions = [prec_lr, prec_dt, prec_rf, prec_vc]
+recalls = [rec_lr, rec_dt, rec_rf, rec_vc]
+f1_scores = [f1_lr, f1_dt, f1_rf, f1_vc]
+
+plt.figure(figsize=(10, 6))
+
+plt.subplot(2, 2, 1)
+sns.barplot(x=model_names, y=accuracies)
+plt.title('Accuracy')
+
+plt.subplot(2, 2, 2)
+sns.barplot(x=model_names, y=precisions)
+plt.title('Precision')
+
+plt.subplot(2, 2, 3)
+sns.barplot(x=model_names, y=recalls)
+plt.title('Recall')
+
+plt.subplot(2, 2, 4)
+sns.barplot(x=model_names, y=f1_scores)
+plt.title('F1-score')
+
+plt.tight_layout()
+plt.show()

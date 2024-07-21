@@ -226,22 +226,22 @@ def main():
         )
 
     with tabs[1]:
-    st.write("### Data Overview")
-    num_rows = st.selectbox(
-        "Select number of rows to display",
-        options=[5, 10, 100, 'Full Data'],
-        index=3,  # Default to 'Full Data'
-        key='data_overview'  # Unique key for the selectbox
-    )
-    
-    if num_rows == 'Full Data':
-        st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
-        st.dataframe(df, height=400)  # Adjust the height as needed
-        st.markdown('</div>', unsafe_allow_html=True)
-    else:
-        st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
-        st.dataframe(df.head(num_rows), height=400)  # Adjust the height as needed
-        st.markdown('</div>', unsafe_allow_html=True)
+        st.write("### Data Overview")
+        num_rows = st.selectbox(
+            "Select number of rows to display",
+            options=[5, 10, 100, 'Full Data'],
+            index=3,  # Default to 'Full Data'
+            key='data_overview'  # Unique key for the selectbox
+        )
+        
+        if num_rows == 'Full Data':
+            st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
+            st.dataframe(df, height=400)  # Adjust the height as needed
+            st.markdown('</div>', unsafe_allow_html=True)
+        else:
+            st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
+            st.dataframe(df.head(num_rows), height=400)  # Adjust the height as needed
+            st.markdown('</div>', unsafe_allow_html=True)
 
     with tabs[2]:
         if st.button('Preprocess Data'):
@@ -289,15 +289,19 @@ def main():
             plot_results(results)
 
     with tabs[3]:
-        st.write("### Train Models")
-        df_processed = preprocessing(df)
-        results = train_and_evaluate(df_processed)
-        st.write("### Model Performance")
-        st.write(results)
+        if st.button('Train and Evaluate Models'):
+            df_processed = preprocessing(df)
+            results = train_and_evaluate(df_processed)
+            st.write("### Model Performance")
+            st.write(results)
 
     with tabs[4]:
-        st.write("### Model Evaluation")
-        plot_results(results)
+        if st.button('Show Model Results'):
+            df_processed = preprocessing(df)
+            results = train_and_evaluate(df_processed)
+            st.write("### Model Performance")
+            st.write(results)
+            plot_results(results)
 
 if __name__ == "__main__":
     main()

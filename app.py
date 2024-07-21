@@ -10,7 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
 
 def load_data():
-    df = pd.read_csv(r'D:\UASMPMLDATA1\Sleep_health_and_lifestyle_dataset.csv')
+    df = pd.read_csv('Sleep_health_and_lifestyle_dataset.csv')
     df.columns = df.columns.str.strip()
     return df
 

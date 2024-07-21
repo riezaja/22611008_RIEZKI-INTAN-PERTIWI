@@ -1,9 +1,10 @@
+#explore_data.py
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Membaca dataset
-df = pd.read_csv(r'D:\UASMPMLDATA1\Sleep_health_and_lifestyle_dataset.csv')
+df = pd.read_csv(r'D:\UASMPMLDATA\Sleep_health_and_lifestyle_dataset.csv')
 
 # Strip whitespace from column names
 df.columns = df.columns.str.strip()

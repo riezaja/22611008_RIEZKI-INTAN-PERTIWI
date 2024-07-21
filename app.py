@@ -9,16 +9,16 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
 
-# Custom CSS for enhanced styling
+# Custom CSS for better styling
 st.markdown(
     """
     <style>
     .main {
-        background: linear-gradient(to bottom right, #e0f7fa, #e1bee7);
-        font-family: 'Courier New', Courier, monospace;
+        background-color: #f5f5f5;
+        font-family: 'Arial', sans-serif;
     }
     .stButton>button {
-        background-color: #ff4081;
+        background-color: #4CAF50;
         color: white;
         font-size: 16px;
         border-radius: 10px;
@@ -28,10 +28,10 @@ st.markdown(
         margin-bottom: 10px;
     }
     .stButton>button:hover {
-        background-color: #f50057;
+        background-color: #45a049;
     }
     .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-        color: #673ab7;
+        color: #2E8B57;
     }
     .stMarkdown p {
         font-size: 18px;
@@ -40,17 +40,13 @@ st.markdown(
     .dataframe {
         max-height: 400px;
         overflow: auto;
-        background-color: #ffffff;  /* White background for dataframes */
-    }
-    .dataframe table {
-        color: #000000;  /* Black text color for table cells */
     }
     .footer {
         position: fixed;
         left: 0;
         bottom: 0;
         width: 100%;
-        background-color: #673ab7;
+        background-color: #2E8B57;
         color: white;
         text-align: center;
         padding: 10px;
@@ -58,23 +54,7 @@ st.markdown(
     .footer p {
         margin: 0;
     }
-    .header-image {
-        width: 100%;
-        height: auto;
-        margin-bottom: 20px;
-    }
     </style>
-    """,
-    unsafe_allow_html=True
-)
-
-
-# Add a header image with a unique cartoon-style health-related image
-st.markdown(
-    """
-    <div>
-         <img class="header-image" src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Health Cartoon Image">
-    </div>
     """,
     unsafe_allow_html=True
 )
@@ -83,7 +63,7 @@ st.markdown(
 st.markdown(
     """
     <div class="footer">
-        <p>Created by [Your Name], Statistics Student at Universitas Islam Indonesia</p>
+        <p>Created by Riezki Intan Pertiwi, Statistics Student at Universitas Islam Indonesia</p>
     </div>
     """,
     unsafe_allow_html=True
@@ -150,22 +130,22 @@ def plot_results(results):
     f1_scores = [results[model]['f1'] for model in model_names]
 
     fig, axes = plt.subplots(2, 2, figsize=(12, 8), constrained_layout=True)
-    sns.barplot(x=model_names, y=accuracies, ax=axes[0, 0], palette='coolwarm')
+    sns.barplot(x=model_names, y=accuracies, ax=axes[0, 0], palette='viridis')
     axes[0, 0].set_title('Accuracy')
     axes[0, 0].set_xlabel('Models')
     axes[0, 0].set_ylabel('Score')
 
-    sns.barplot(x=model_names, y=precisions, ax=axes[0, 1], palette='coolwarm')
+    sns.barplot(x=model_names, y=precisions, ax=axes[0, 1], palette='viridis')
     axes[0, 1].set_title('Precision')
     axes[0, 1].set_xlabel('Models')
     axes[0, 1].set_ylabel('Score')
 
-    sns.barplot(x=model_names, y=recalls, ax=axes[1, 0], palette='coolwarm')
+    sns.barplot(x=model_names, y=recalls, ax=axes[1, 0], palette='viridis')
     axes[1, 0].set_title('Recall')
     axes[1, 0].set_xlabel('Models')
     axes[1, 0].set_ylabel('Score')
 
-    sns.barplot(x=model_names, y=f1_scores, ax=axes[1, 1], palette='coolwarm')
+    sns.barplot(x=model_names, y=f1_scores, ax=axes[1, 1], palette='viridis')
     axes[1, 1].set_title('F1-score')
     axes[1, 1].set_xlabel('Models')
     axes[1, 1].set_ylabel('Score')

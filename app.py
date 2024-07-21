@@ -249,6 +249,9 @@ def main():
             st.write("### Data After Preprocessing")
             st.dataframe(df_processed)  # Display all data
 
+    with tabs[3]:
+        if st.button('Train and Evaluate Models'):
+            df_processed = preprocessing(df)
             results = train_and_evaluate(df_processed)
             st.write("### Model Performance")
             st.write(results)
@@ -285,15 +288,6 @@ def main():
 
             From the results, the **Decision Tree** model performs slightly better compared to the **Logistic Regression** and **Random Forest** models across all metrics, indicating that it may be the best choice for this particular dataset.
             """)
-
-            plot_results(results)
-
-    with tabs[3]:
-        if st.button('Train and Evaluate Models'):
-            df_processed = preprocessing(df)
-            results = train_and_evaluate(df_processed)
-            st.write("### Model Performance")
-            st.write(results)
 
     with tabs[4]:
         if st.button('Show Model Results'):

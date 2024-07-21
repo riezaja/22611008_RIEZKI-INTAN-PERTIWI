@@ -56,7 +56,7 @@ st.markdown(
     }
     .header-image {
         width: 80%;
-        max-width: 800px;
+        max-width: 200px;
         height: auto;
         margin: 20px auto;
         display: block;
@@ -81,7 +81,7 @@ st.markdown(
     background-color: #e1bee7;
     border-radius: 10px;
     padding: 10px;
-    max-width: 120px;
+    max-width: 1200px;
     margin: auto;
 }
 

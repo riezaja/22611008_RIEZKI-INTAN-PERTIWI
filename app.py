@@ -95,7 +95,7 @@ st.markdown(
     color: white;
     font-size: 18px;
     font-weight: bold;
-    min-width: 200px;
+    min-width: 50px;
 }
 
     .stTab:hover {

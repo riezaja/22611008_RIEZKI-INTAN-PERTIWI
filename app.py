@@ -25,14 +25,15 @@ st.markdown(
     .stButton>button:hover {
         background-color: #45a049;
     }
-    .stMarkdown h1 {
-        color: #2E8B57;
-    }
-    .stMarkdown h2 {
+    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
         color: #2E8B57;
     }
     .stMarkdown p {
         font-size: 18px;
+    }
+    .dataframe {
+        max-height: 400px;
+        overflow: auto;
     }
     </style>
     """,
@@ -95,7 +96,7 @@ def plot_results(results):
     recalls = [results[model]['recall'] for model in model_names]
     f1_scores = [results[model]['f1'] for model in model_names]
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(12, 8))
     plt.subplot(2, 2, 1)
     sns.barplot(x=model_names, y=accuracies, palette='viridis')
     plt.title('Accuracy')
@@ -129,12 +130,12 @@ def main():
 
     df = load_data()
     st.write("### Data Overview")
-    st.write(df.head())
+    st.dataframe(df)  # Display all data
 
     if st.button('Preprocess Data'):
         df_processed = preprocessing(df)
         st.write("### Data After Preprocessing")
-        st.write(df_processed.head())
+        st.dataframe(df_processed)  # Display all data
 
         results = train_and_evaluate(df_processed)
         st.write("### Model Performance")

@@ -41,6 +41,14 @@ st.markdown(
         max-height: 400px;
         overflow: auto;
     }
+    .dataframe-container {
+        max-width: 800px;  /* Adjust the max-width as needed */
+        margin: auto;
+        overflow-x: auto;
+    }
+    .dataframe table {
+        width: 100%;
+    }
     .footer {
         position: fixed;
         left: 0;

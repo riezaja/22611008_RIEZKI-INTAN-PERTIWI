@@ -15,7 +15,7 @@ st.markdown(
     <style>
     .main .block-container {
         max-width: 1600px;
-        padding: 1rem;
+        padding: 2rem;
     }
     .dataframe-container {
         max-width: 1400px;
@@ -40,7 +40,7 @@ st.markdown(
     }
     .stButton>button {
         border-radius: 15px;
-        background-color: #4CAF50;
+        background-color: #1f77b4;
         color: white;
         padding: 0.5rem 1rem;
         font-size: 16px;
@@ -51,6 +51,11 @@ st.markdown(
     .stMarkdown p {
         font-size: 18px;
         line-height: 1.6;
+    }
+    .stMarkdown .highlight {
+        background-color: #FFD700;
+        padding: 0.2rem;
+        border-radius: 0.2rem;
     }
     </style>
     """,
@@ -144,7 +149,13 @@ def plot_results(results):
 def main():
     st.title("Analyzing Sleep Health and Lifestyle Data")
     st.subheader("Presented by Riezki Intan Pertiwi")
-    st.write("Welcome to my Streamlit application for analyzing sleep health and lifestyle data. As a statistics student at Universitas Islam Indonesia, I have developed this application to demonstrate the power of data analysis and machine learning in understanding and predicting sleep disorders.")
+    st.write(
+        """
+        Welcome to my Streamlit application for analyzing sleep health and lifestyle data. 
+        As a statistics student at Universitas Islam Indonesia, I have developed this application 
+        to demonstrate the power of data analysis and machine learning in understanding and predicting sleep disorders.
+        """
+    )
 
     df = load_data()
 

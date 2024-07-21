@@ -289,6 +289,8 @@ def main():
             From the results, the **Decision Tree** model performs slightly better compared to the **Logistic Regression** and **Random Forest** models across all metrics, indicating that it may be the best choice for this particular dataset.
             """)
 
+            plot_results(results)
+
     with tabs[4]:
         if st.button('Show Model Results'):
             df_processed = preprocessing(df)

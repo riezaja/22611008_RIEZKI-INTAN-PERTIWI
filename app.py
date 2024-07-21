@@ -244,13 +244,5 @@ def main():
 
             plot_results(results)
 
-    with tabs[4]:
-        if st.button('Show Model Results'):
-            df_processed = preprocessing(df)
-            results = train_and_evaluate(df_processed)
-            st.write("### Model Performance")
-            st.write(results)
-            plot_results(results)
-
 if __name__ == "__main__":
     main()

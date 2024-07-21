@@ -75,24 +75,29 @@ st.markdown(
         background: #512da8 !important;
     }
     .stTabs {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        background-color: #e1bee7;
-        border-radius: 10px;
-        padding: 10px;
-    }
-    .stTab {
-        flex-grow: 1;
-        text-align: center;
-        padding: 10px 20px;
-        background-color: #ff4081;
-        border-radius: 10px;
-        margin: 5px;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-    }
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #e1bee7;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.stTab {
+    flex-grow: 1;
+    text-align: center;
+    padding: 15px 30px;
+    background-color: #ff4081;
+    border-radius: 10px;
+    margin: 10px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 150px;
+}
+
     .stTab:hover {
         background-color: #f50057;
     }

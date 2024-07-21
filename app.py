@@ -166,7 +166,7 @@ def main():
 
     df = load_data()
 
-    tabs = st.tabs(["🏠 Overview", "📊 Data Overview", "🔧 Data Preprocessing", "🚀 Model Training", "📈 Model Evaluation"])
+    tabs = st.tabs(["🏠 Overview", "📊 Data Overview", "🔧 Data Preprocessing", "🚀 Model Training"])
 
     with tabs[0]:
         st.image("https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg", use_column_width=True)
@@ -242,14 +242,6 @@ def main():
             From the results, the **Decision Tree** model performs slightly better compared to the **Logistic Regression** and **Random Forest** models across all metrics, indicating that it may be the best choice for this particular dataset.
             """)
 
-            plot_results(results)
-
-    with tabs[4]:
-        if st.button('Show Model Results'):
-            df_processed = preprocessing(df)
-            results = train_and_evaluate(df_processed)
-            st.write("### Model Performance")
-            st.write(results)
             plot_results(results)
 
 if __name__ == "__main__":

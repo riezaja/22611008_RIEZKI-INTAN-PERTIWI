@@ -168,8 +168,8 @@ def plot_results(results):
 
 # Main function
 def main():
-    st.title("Sleep Health and Lifestyle Analysis")
-    st.markdown("## Analyzing Sleep Health and Lifestyle Data to Understand Patterns and Predict Sleep Disorders")
+    st.title("Analyzing Sleep Health and Lifestyle Data to Understand Patterns and Predict Sleep Disorders")
+   
 
     df = load_data()
 

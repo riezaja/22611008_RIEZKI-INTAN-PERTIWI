@@ -9,7 +9,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
-# Add custom CSS to limit table width and extend tab width
+# Add custom CSS to improve the appearance
 st.markdown(
     """
     <style>
@@ -29,6 +29,14 @@ st.markdown(
     .stTabs [data-baseweb="tab"] {
         flex: 1;
         text-align: center;
+    }
+    .stImage img {
+        border-radius: 15px;
+    }
+    .stButton>button {
+        border-radius: 15px;
+        background-color: #4CAF50;
+        color: white;
     }
     </style>
     """,

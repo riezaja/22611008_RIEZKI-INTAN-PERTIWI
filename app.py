@@ -64,7 +64,15 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
+# Add a header image with a unique cartoon-style health-related image
+st.markdown(
+    """
+    <div>
+        <img class="header-image" src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Health Cartoon Image">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # Add a footer with your student identity
 st.markdown(

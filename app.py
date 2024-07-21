@@ -85,16 +85,24 @@ st.markdown(
     .stTab {
         flex-grow: 1;
         text-align: center;
-        padding: 10px 20px;
+        padding: 15px 30px;
         background-color: #ff4081;
         border-radius: 10px;
-        margin: 5px;
+        margin: 10px;
         color: white;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: bold;
     }
     .stTab:hover {
         background-color: #f50057;
+    }
+    .stTabContent {
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
     </style>
     """,
@@ -200,87 +208,88 @@ def main():
 
     df = load_data()
 
-    tabs = st.tabs(["🏠 Overview", "📊 Data Overview", "🔧 Data Preprocessing", "🚀 Model Training", "📈 Model Evaluation"])
+    tab_titles = ["🏠 Overview", "📊 Data Overview", "🔧 Data Preprocessing", "🚀 Model Training", "📈 Model Evaluation"]
+    tabs = st.tabs(tab_titles)
 
-    with tabs[0]:
-        st.image("https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg", use_column_width=True)
-        st.write("### Overview of the Analysis")
-        st.write(
-            """
-            This application allows you to explore the relationship between various lifestyle factors and sleep disorders. 
-            You can preprocess the data, train multiple machine learning models, and evaluate their performance.
-            """
-        )
+    for tab, title in zip(tabs, tab_titles):
+        with tab:
+            st.markdown(f"<div class='stTabContent'>", unsafe_allow_html=True)
+            if title == "🏠 Overview":
+                st.image("https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg", use_column_width=True)
+                st.write("### Overview of the Analysis")
+                st.write(
+                    """
+                    This application allows you to explore the relationship between various lifestyle factors and sleep disorders. 
+                    You can preprocess the data, train multiple machine learning models, and evaluate their performance.
+                    """
+                )
+            elif title == "📊 Data Overview":
+                st.write("### Data Overview")
+                num_rows = st.selectbox(
+                    "Select number of rows to display",
+                    options=[5, 10, 100, 'Full Data'],
+                    index=3,  # Default to 'Full Data'
+                    key='data_overview'  # Unique key for the selectbox
+                )
+                
+                if num_rows == 'Full Data':
+                    st.dataframe(df)  # Display all data
+                else:
+                    st.dataframe(df.head(num_rows))  # Display the first `num_rows` data
+            elif title == "🔧 Data Preprocessing":
+                if st.button('Preprocess Data'):
+                    df_processed = preprocessing(df)
+                    st.write("### Data After Preprocessing")
+                    st.dataframe(df_processed)  # Display all data
 
-    with tabs[1]:
-        st.write("### Data Overview")
-        num_rows = st.selectbox(
-            "Select number of rows to display",
-            options=[5, 10, 100, 'Full Data'],
-            index=3,  # Default to 'Full Data'
-            key='data_overview'  # Unique key for the selectbox
-        )
-        
-        if num_rows == 'Full Data':
-            st.dataframe(df)  # Display all data
-        else:
-            st.dataframe(df.head(num_rows))  # Display the first `num_rows` data
+                    results = train_and_evaluate(df_processed)
+                    st.write("### Model Performance")
+                    st.write(results)
 
-    with tabs[2]:
-        if st.button('Preprocess Data'):
-            df_processed = preprocessing(df)
-            st.write("### Data After Preprocessing")
-            st.dataframe(df_processed)  # Display all data
+                    st.write("""
+                    ### Explanation of Model Performance Metrics
+                    The performance of the models is evaluated using the following metrics:
 
-            results = train_and_evaluate(df_processed)
-            st.write("### Model Performance")
-            st.write(results)
+                    - **Accuracy:** The proportion of correctly classified instances among the total instances. Higher accuracy indicates better overall performance.
+                    - **Precision:** The proportion of true positive results among the instances classified as positive. It measures the model's ability to avoid false positives.
+                    - **Recall:** The proportion of true positive results among all actual positive instances. It measures the model's ability to identify all relevant instances.
+                    - **F1-score:** The harmonic mean of precision and recall. It provides a balance between precision and recall and is useful when you need to balance both false positives and false negatives.
 
-            st.write("""
-            ### Explanation of Model Performance Metrics
-            The performance of the models is evaluated using the following metrics:
+                    ### Model Comparison
+                    Here is a summary of the model performance:
 
-            - **Accuracy:** The proportion of correctly classified instances among the total instances. Higher accuracy indicates better overall performance.
-            - **Precision:** The proportion of true positive results among the instances classified as positive. It measures the model's ability to avoid false positives.
-            - **Recall:** The proportion of true positive results among all actual positive instances. It measures the model's ability to identify all relevant instances.
-            - **F1-score:** The harmonic mean of precision and recall. It provides a balance between precision and recall and is useful when you need to balance both false positives and false negatives.
+                    - **Logistic Regression:** 
+                        - Accuracy: 88%
+                        - Precision: 88.7%
+                        - Recall: 88%
+                        - F1-score: 88.1%
 
-            ### Model Comparison
-            Here is a summary of the model performance:
+                    - **Decision Tree:**
+                        - Accuracy: 89.3%
+                        - Precision: 89.3%
+                        - Recall: 89.3%
+                        - F1-score: 89.2%
 
-            - **Logistic Regression:** 
-                - Accuracy: 88%
-                - Precision: 88.7%
-                - Recall: 88%
-                - F1-score: 88.1%
+                    - **Random Forest:**
+                        - Accuracy: 88%
+                        - Precision: 88.2%
+                        - Recall: 88%
+                        - F1-score: 87.9%
 
-            - **Decision Tree:**
-                - Accuracy: 89.3%
-                - Precision: 89.3%
-                - Recall: 89.3%
-                - F1-score: 89.2%
+                    From the results, the **Decision Tree** model performs slightly better compared to the **Logistic Regression** and **Random Forest** models across all metrics, indicating that it may be the best choice for this particular dataset.
+                    """)
 
-            - **Random Forest:**
-                - Accuracy: 88%
-                - Precision: 88.2%
-                - Recall: 88%
-                - F1-score: 87.9%
-
-            From the results, the **Decision Tree** model performs slightly better compared to the **Logistic Regression** and **Random Forest** models across all metrics, indicating that it may be the best choice for this particular dataset.
-            """)
-
-            plot_results(results)
-
-    with tabs[3]:
-        st.write("### Train Models")
-        df_processed = preprocessing(df)
-        results = train_and_evaluate(df_processed)
-        st.write("### Model Performance")
-        st.write(results)
-
-    with tabs[4]:
-        st.write("### Model Evaluation")
-        plot_results(results)
+                    plot_results(results)
+            elif title == "🚀 Model Training":
+                st.write("### Train Models")
+                df_processed = preprocessing(df)
+                results = train_and_evaluate(df_processed)
+                st.write("### Model Performance")
+                st.write(results)
+            elif title == "📈 Model Evaluation":
+                st.write("### Model Evaluation")
+                plot_results(results)
+            st.markdown("</div>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()

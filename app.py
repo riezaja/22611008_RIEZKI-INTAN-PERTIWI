@@ -235,22 +235,14 @@ def main():
             st.dataframe(df.head(num_rows), height=400)
             st.markdown('</div>', unsafe_allow_html=True)
 
-  
-    with tabs[2]:  # Visualisasi distribusi durasi tidur tab
+    with tabs[2]:
         st.write("### Visualisasi Distribusi Durasi Tidur")
-        
-        # Check if the column exists
-        column_name = 'Duration of Sleep'
-        if column_name in df.columns:
-            plt.figure(figsize=(10, 6))
-            sns.histplot(df[column_name], bins=30, kde=True, color='skyblue')
-            plt.title('Distribusi Durasi Tidur')
-            plt.xlabel('Durasi Tidur (jam)')
-            plt.ylabel('Frekuensi')
-            st.pyplot()
-        else:
-            st.error(f"Column '{column_name}' does not exist in the dataset.")
-
+        plt.figure(figsize=(10, 6))
+        sns.histplot(df['Sleep Duration'], bins=30, kde=True, color='skyblue')
+        plt.title('Distribusi Durasi Tidur')
+        plt.xlabel('Durasi Tidur (jam)')
+        plt.ylabel('Frekuensi')
+        st.pyplot()
 
     with tabs[3]:
         st.write("### Data Preprocessing")

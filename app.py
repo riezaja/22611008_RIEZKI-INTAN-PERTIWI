@@ -57,6 +57,13 @@ st.markdown(
         padding: 0.2rem;
         border-radius: 0.2rem;
     }
+    .centered-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #2C3E50;
+    font-weight: bold;
+    margin: 2rem 0;
+}
     </style>
     """,
     unsafe_allow_html=True
@@ -147,7 +154,7 @@ def plot_results(results):
 
 # Main function
 def main():
-    st.title("Analyzing Sleep Health and Lifestyle Data")
+    st.markdown('<div class="centered-title">Analyzing Sleep Health and Lifestyle Data</div>', unsafe_allow_html=True)
     st.subheader("Presented by Riezki Intan Pertiwi")
     st.write(
         """

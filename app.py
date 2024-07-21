@@ -90,11 +90,14 @@ def main():
 
     df = load_data()
     st.write("### Data Overview")
-    st.write(df.head())
+    
+    # Add slider to select number of rows to display
+    num_rows = st.slider('Select number of rows to view', min_value=5, max_value=len(df), value=10, step=5)
+    st.dataframe(df.head(num_rows))
 
     df_processed = preprocessing(df)
     st.write("### Data After Preprocessing")
-    st.write(df_processed.head())
+    st.dataframe(df_processed.head(num_rows))
 
     results = train_and_evaluate(df_processed)
     st.write("### Model Performance")

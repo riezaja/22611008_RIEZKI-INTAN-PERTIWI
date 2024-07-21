@@ -169,12 +169,10 @@ def main():
 
     df = load_data()
 
-    col1, col2 = st.columns([1, 2])
+    tabs = st.tabs(["Overview", "Data Overview", "Data Preprocessing", "Model Training", "Model Evaluation"])
 
-    with col1:
+    with tabs[0]:
         st.image("https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg", use_column_width=True)
-
-    with col2:
         st.write("### Overview of the Analysis")
         st.write(
             """
@@ -183,63 +181,64 @@ def main():
             """
         )
 
-    # Data Overview
-    st.write("### Data Overview")
-    num_rows = st.selectbox(
-        "Select number of rows to display",
-        options=[5, 10, 100, 'Full Data'],
-        index=3,  # Default to 'Full Data'
-        key='data_overview'  # Unique key for the selectbox
-    )
-    
-    if num_rows == 'Full Data':
-        st.dataframe(df)  # Display all data
-    else:
-        st.dataframe(df.head(num_rows))  # Display the first `num_rows` data
+    with tabs[1]:
+        st.write("### Data Overview")
+        num_rows = st.selectbox(
+            "Select number of rows to display",
+            options=[5, 10, 100, 'Full Data'],
+            index=3,  # Default to 'Full Data'
+            key='data_overview'  # Unique key for the selectbox
+        )
+        
+        if num_rows == 'Full Data':
+            st.dataframe(df)  # Display all data
+        else:
+            st.dataframe(df.head(num_rows))  # Display the first `num_rows` data
 
-    if st.button('Preprocess Data'):
-        df_processed = preprocessing(df)
-        st.write("### Data After Preprocessing")
-        st.dataframe(df_processed)  # Display all data
+    with tabs[2]:
+        if st.button('Preprocess Data'):
+            df_processed = preprocessing(df)
+            st.write("### Data After Preprocessing")
+            st.dataframe(df_processed)  # Display all data
 
-        results = train_and_evaluate(df_processed)
-        st.write("### Model Performance")
-        st.write(results)
+            results = train_and_evaluate(df_processed)
+            st.write("### Model Performance")
+            st.write(results)
 
-        st.write("""
-        ### Explanation of Model Performance Metrics
-        The performance of the models is evaluated using the following metrics:
+            st.write("""
+            ### Explanation of Model Performance Metrics
+            The performance of the models is evaluated using the following metrics:
 
-        - **Accuracy:** The proportion of correctly classified instances among the total instances. Higher accuracy indicates better overall performance.
-        - **Precision:** The proportion of true positive results among the instances classified as positive. It measures the model's ability to avoid false positives.
-        - **Recall:** The proportion of true positive results among all actual positive instances. It measures the model's ability to identify all relevant instances.
-        - **F1-score:** The harmonic mean of precision and recall. It provides a balance between precision and recall and is useful when you need to balance both false positives and false negatives.
+            - **Accuracy:** The proportion of correctly classified instances among the total instances. Higher accuracy indicates better overall performance.
+            - **Precision:** The proportion of true positive results among the instances classified as positive. It measures the model's ability to avoid false positives.
+            - **Recall:** The proportion of true positive results among all actual positive instances. It measures the model's ability to identify all relevant instances.
+            - **F1-score:** The harmonic mean of precision and recall. It provides a balance between precision and recall and is useful when you need to balance both false positives and false negatives.
 
-        ### Model Comparison
-        Here is a summary of the model performance:
+            ### Model Comparison
+            Here is a summary of the model performance:
 
-        - **Logistic Regression:** 
-            - Accuracy: 88%
-            - Precision: 88.7%
-            - Recall: 88%
-            - F1-score: 88.1%
+            - **Logistic Regression:** 
+                - Accuracy: 88%
+                - Precision: 88.7%
+                - Recall: 88%
+                - F1-score: 88.1%
 
-        - **Decision Tree:**
-            - Accuracy: 89.3%
-            - Precision: 89.3%
-            - Recall: 89.3%
-            - F1-score: 89.2%
+            - **Decision Tree:**
+                - Accuracy: 89.3%
+                - Precision: 89.3%
+                - Recall: 89.3%
+                - F1-score: 89.2%
 
-        - **Random Forest:**
-            - Accuracy: 88%
-            - Precision: 88.2%
-            - Recall: 88%
-            - F1-score: 87.9%
+            - **Random Forest:**
+                - Accuracy: 88%
+                - Precision: 88.2%
+                - Recall: 88%
+                - F1-score: 87.9%
 
-        From the results, the **Decision Tree** model performs slightly better compared to the **Logistic Regression** and **Random Forest** models across all metrics, indicating that it may be the best choice for this particular dataset.
-        """)
+            From the results, the **Decision Tree** model performs slightly better compared to the **Logistic Regression** and **Random Forest** models across all metrics, indicating that it may be the best choice for this particular dataset.
+            """)
 
-        plot_results(results)
+            plot_results(results)
 
 if __name__ == "__main__":
     main()

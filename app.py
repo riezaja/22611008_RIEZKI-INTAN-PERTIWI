@@ -10,7 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
 
 def load_data():
-    df = pd.read_csv('Sleep_health_and_lifestyle_dataset.csv')
+    df = pd.read_csv(r'D:\UASMPMLDATA1\Sleep_health_and_lifestyle_dataset.csv')
     df.columns = df.columns.str.strip()
     return df
 
@@ -90,14 +90,11 @@ def main():
 
     df = load_data()
     st.write("### Data Overview")
-    
-    # Add slider to select number of rows to display
-    num_rows = st.slider('Select number of rows to view', min_value=5, max_value=len(df), value=10, step=5)
-    st.dataframe(df.head(num_rows))
+    st.write(df.head())
 
     df_processed = preprocessing(df)
     st.write("### Data After Preprocessing")
-    st.dataframe(df_processed.head(num_rows))
+    st.write(df_processed.head())
 
     results = train_and_evaluate(df_processed)
     st.write("### Model Performance")

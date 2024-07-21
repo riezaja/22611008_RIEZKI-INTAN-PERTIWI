@@ -1,3 +1,4 @@
+#train_and_evaluate.py
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -25,7 +26,7 @@ def evaluate_model(model, X_test, y_test):
     return accuracy, precision, recall, f1
 
 # Read data
-data = pd.read_csv(r'D:\UASMPMLDATA\Sleep_health_and_lifestyle_dataset.csv')
+data = pd.read_csv(r'D:\UASMPMLDATA1\Sleep_health_and_lifestyle_dataset.csv')
 
 # Strip whitespace from column names
 data.columns = data.columns.str.strip()

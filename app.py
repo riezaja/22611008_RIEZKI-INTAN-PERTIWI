@@ -59,6 +59,11 @@ st.markdown(
         height: auto;
         margin-bottom: 20px;
     }
+    .expander-header {
+        font-size: 20px;
+        font-weight: bold;
+        color: #673ab7;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -183,19 +188,20 @@ def main():
     with st.sidebar:
         st.header("Navigation")
         if st.button('Show Data Overview'):
-            st.write("### Data Overview")
-            st.dataframe(df)  # Display all data
+            with st.expander("Data Overview", expanded=True):
+                st.dataframe(df)  # Display all data
 
         if st.button('Preprocess Data'):
             df_processed = preprocessing(df)
-            st.write("### Data After Preprocessing")
-            st.dataframe(df_processed)  # Display all data
+            with st.expander("Data After Preprocessing", expanded=True):
+                st.dataframe(df_processed)  # Display all data
 
-            results = train_and_evaluate(df_processed)
-            st.write("### Model Performance")
-            st.write(results)
+                results = train_and_evaluate(df_processed)
+                st.write("### Model Performance")
+                st.write(results)
 
-            plot_results(results)
+                st.write("### Performance Metrics Visualization")
+                plot_results(results)
 
 if __name__ == "__main__":
     main()

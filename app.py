@@ -9,38 +9,10 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
-# Custom CSS for enhanced styling
+# Add custom CSS to limit table width and extend tab width
 st.markdown(
     """
     <style>
-    .main {
-        background: linear-gradient(to bottom right, #e0f7fa, #e1bee7);
-        font-family: 'Courier New', Courier, monospace;
-    }
-    .stButton>button {
-        background-color: #ff4081;
-        color: white;
-        font-size: 16px;
-        border-radius: 10px;
-        border: none;
-        padding: 10px 20px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-    .stButton>button:hover {
-        background-color: #f50057;
-    }
-    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-        color: #673ab7;
-    }
-    .stMarkdown p {
-        font-size: 18px;
-        line-height: 1.6;
-    }
-    .dataframe {
-        max-height: 400px;
-        overflow: auto;
-    }
     .dataframe-container {
         max-width: 800px;  /* Adjust the max-width as needed */
         margin: auto;
@@ -49,77 +21,16 @@ st.markdown(
     .dataframe table {
         width: 100%;
     }
-    .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
+    .stTabs [data-baseweb="tab-list"] {
+        display: flex;
+        justify-content: space-between;
         width: 100%;
-        background-color: #673ab7;
-        color: white;
+    }
+    .stTabs [data-baseweb="tab"] {
+        flex: 1;
         text-align: center;
-        padding: 10px;
-    }
-    .footer p {
-        margin: 0;
-    }
-    .header-image {
-        width: 80%;
-        max-width: 200px;
-        height: auto;
-        margin: 20px auto;
-        display: block;
-    }
-    .icon {
-        color: #ff4081;
-        font-size: 20px;
-    }
-    .css-1d391kg {
-        background: #673ab7 !important;
-        border: none !important;
-        border-radius: 10px !important;
-        margin-top: 10px !important;
-    }
-    .css-1d391kg:hover {
-        background: #512da8 !important;
-    }
-    .stTabs {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    background-color: #e1bee7;
-    border-radius: 10px;
-    padding: 10px;
-    max-width: 1200px;
-    margin: auto;
-}
-
-.stTab {
-    flex-grow: 1;
-    text-align: center;
-    padding: 15px 30px;
-    background-color: #ff4081;
-    border-radius: 10px;
-    margin: 10px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    min-width: 50px;
-}
-
-    .stTab:hover {
-        background-color: #f50057;
     }
     </style>
-    """,
-    unsafe_allow_html=True
-)
-
-# Add a footer with your student identity and icons
-st.markdown(
-    """
-    <div class="footer">
-        <p>Created by Riezki Intan Pertiwi, Statistics Student at Universitas Islam Indonesia <i class="icon fas fa-graduation-cap"></i></p>
-    </div>
     """,
     unsafe_allow_html=True
 )

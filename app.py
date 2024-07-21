@@ -193,27 +193,49 @@ def main():
         """
     )
 
-    df = load_data()
-
+    # Create two columns: one for the image and explanation, and one for the buttons
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        if st.button('Show Data Overview'):
-            with st.expander("Data Overview", expanded=True):
-                st.dataframe(df)  # Display all data
+        # Display the image and explanation
+        st.markdown(
+            """
+            <div>
+                <img class="header-image" src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Health Cartoon Image">
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            """
+            This application allows you to explore the relationship between various lifestyle factors and sleep disorders. 
+            You can preprocess the data, train multiple machine learning models, and evaluate their performance.
+            """
+        )
 
     with col2:
-        if st.button('Preprocess Data'):
-            df_processed = preprocessing(df)
-            with st.expander("Data After Preprocessing", expanded=True):
-                st.dataframe(df_processed)  # Display all data
+        # Add vertical alignment for buttons
+        st.button('Show Data Overview')
+        st.button('Preprocess Data')
 
-                results = train_and_evaluate(df_processed)
-                st.write("### Model Performance")
-                st.write(results)
+    # Data and results will be shown based on button interactions
+    df = load_data()
 
-                st.write("### Performance Metrics Visualization")
-                plot_results(results)
+    if st.button('Show Data Overview'):
+        with st.expander("Data Overview", expanded=True):
+            st.dataframe(df)  # Display all data
+
+    if st.button('Preprocess Data'):
+        df_processed = preprocessing(df)
+        with st.expander("Data After Preprocessing", expanded=True):
+            st.dataframe(df_processed)  # Display all data
+
+            results = train_and_evaluate(df_processed)
+            st.write("### Model Performance")
+            st.write(results)
+
+            st.write("### Performance Metrics Visualization")
+            plot_results(results)
 
 if __name__ == "__main__":
     main()

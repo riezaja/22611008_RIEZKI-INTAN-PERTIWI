@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
 
 # Custom CSS for enhanced styling
 st.markdown(
@@ -55,7 +55,7 @@ st.markdown(
         margin: 0;
     }
     .header-image {
-        width: 70%;  /* Adjust the width as needed */
+        width: 100%;
         height: auto;
         margin-bottom: 20px;
     }
@@ -68,7 +68,7 @@ st.markdown(
 st.markdown(
     """
     <div>
-        <img class="header-image" src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Health Cartoon Image">
+         <img class="header-image" src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Health Cartoon Image">
     </div>
     """,
     unsafe_allow_html=True
@@ -78,7 +78,7 @@ st.markdown(
 st.markdown(
     """
     <div class="footer">
-        <p>Created by Riezki Intan Pertiwi, Statistics Student at Universitas Islam Indonesia</p>
+        <p>Created by [Your Name], Statistics Student at Universitas Islam Indonesia</p>
     </div>
     """,
     unsafe_allow_html=True

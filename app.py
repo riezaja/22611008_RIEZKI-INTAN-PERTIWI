@@ -68,7 +68,7 @@ st.markdown(
 st.markdown(
     """
     <div>
-        <img class="header-image" src="https://example.com/your-cartoon-image.jpg" alt="Health Cartoon Image">
+        <img class="header-image" src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Health Cartoon Image">
     </div>
     """,
     unsafe_allow_html=True

@@ -226,18 +226,22 @@ def main():
         )
 
     with tabs[1]:
-        st.write("### Data Overview")
-        num_rows = st.selectbox(
-            "Select number of rows to display",
-            options=[5, 10, 100, 'Full Data'],
-            index=3,  # Default to 'Full Data'
-            key='data_overview'  # Unique key for the selectbox
-        )
-        
-        if num_rows == 'Full Data':
-            st.dataframe(df)  # Display all data
-        else:
-            st.dataframe(df.head(num_rows))  # Display the first `num_rows` data
+    st.write("### Data Overview")
+    num_rows = st.selectbox(
+        "Select number of rows to display",
+        options=[5, 10, 100, 'Full Data'],
+        index=3,  # Default to 'Full Data'
+        key='data_overview'  # Unique key for the selectbox
+    )
+    
+    if num_rows == 'Full Data':
+        st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
+        st.dataframe(df, height=400)  # Adjust the height as needed
+        st.markdown('</div>', unsafe_allow_html=True)
+    else:
+        st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
+        st.dataframe(df.head(num_rows), height=400)  # Adjust the height as needed
+        st.markdown('</div>', unsafe_allow_html=True)
 
     with tabs[2]:
         if st.button('Preprocess Data'):

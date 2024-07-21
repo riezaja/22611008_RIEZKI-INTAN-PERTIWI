@@ -81,7 +81,7 @@ st.markdown(
     background-color: #e1bee7;
     border-radius: 10px;
     padding: 10px;
-    max-width: 1200px;
+    max-width: 120px;
     margin: auto;
 }
 

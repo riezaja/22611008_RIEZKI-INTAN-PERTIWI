@@ -9,12 +9,16 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
-# Add custom CSS to improve the appearance
+# Add custom CSS to make the layout wider and more spacious
 st.markdown(
     """
     <style>
+    .main .block-container {
+        max-width: 1600px;  /* Adjust the max-width as needed */
+        padding: 1rem;
+    }
     .dataframe-container {
-        max-width: 800px;  /* Adjust the max-width as needed */
+        max-width: 1400px;  /* Adjust the max-width as needed */
         margin: auto;
         overflow-x: auto;
     }
@@ -32,11 +36,16 @@ st.markdown(
     }
     .stImage img {
         border-radius: 15px;
+        max-width: 100%;
     }
     .stButton>button {
         border-radius: 15px;
         background-color: #4CAF50;
         color: white;
+        padding: 0.5rem 1rem;
+    }
+    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+        color: #2C3E50;
     }
     </style>
     """,

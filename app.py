@@ -18,28 +18,28 @@ st.markdown(
     <style>
     body {
         font-family: 'Times New Roman', serif;
-        background: linear-gradient(to right, #f9c5d1, #d3a6d1); /* Gradient background in pink and purple */
+        background: linear-gradient(to right, #fc354c, #0abfbc); /* Gradient background in pink and teal */
     }
     .main .block-container {
         max-width: 1200px;
         padding: 2rem;
-        background: linear-gradient(to right, #ffffff, #f4e1f0); /* Gradient background for the container */
+        background: linear-gradient(to right, #ffffff, #f0f0f0); /* Light gradient background for the container */
         border-radius: 15px;
         box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     }
     .centered-title {
         text-align: center;
         font-size: 2.8rem;
-        color: #6c1d7e; /* Dark purple for the title */
+        color: #333; /* Dark gray for the title text */
         font-weight: 700;
         margin: 2rem 0;
-        background: linear-gradient(to right, #d36b8f, #a81d60); /* Gradient text background */
+        background: linear-gradient(to right, #fc354c, #0abfbc); /* Gradient text background */
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
     .stButton>button {
         border-radius: 12px;
-        background-color: #d36b8f; /* Pink button */
+        background-color: #fc354c; /* Pink button */
         color: white;
         padding: 0.8rem 2rem;
         font-size: 18px;
@@ -48,10 +48,10 @@ st.markdown(
         font-family: 'Times New Roman', serif;
     }
     .stButton>button:hover {
-        background-color: #a81d60; /* Darker pink on hover */
+        background-color: #e03c51; /* Slightly darker pink on hover */
     }
     .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-        color: #6c1d7e; /* Dark purple text */
+        color: #333; /* Dark gray text */
         font-family: 'Times New Roman', serif;
     }
     .stMarkdown p {
@@ -66,12 +66,12 @@ st.markdown(
     }
     .tab-content {
         padding: 2rem;
-        background: linear-gradient(to right, #ffffff, #f4e1f0); /* Gradient background for tabs */
+        background: linear-gradient(to right, #ffffff, #f0f0f0); /* Light gradient background for tabs */
         border-radius: 15px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
     .tab-content h3 {
-        color: #6c1d7e; /* Dark purple text for tab headers */
+        color: #333; /* Dark gray text for tab headers */
     }
     .tab-content p {
         font-size: 16px;
@@ -84,7 +84,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
 # Load the dataset
 @st.cache
 def load_data():

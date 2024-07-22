@@ -18,7 +18,7 @@ st.markdown(
     <style>
     body {
         font-family: 'Times New Roman', serif;
-        background: linear-gradient(to right, #e9eff1, #ffffff); /* Gradiasi latar belakang */
+        background: linear-gradient(to right, #e9eff1, #ffffff); /* Gradient background */
     }
     .main .block-container {
         max-width: 1200px;
@@ -80,17 +80,10 @@ st.markdown(
     .tab-content img {
         border-radius: 15px;
     }
-    .tab-content {
-        padding: 2rem;
-        background: linear-gradient(to right, #f7f9fc, #ffffff); /* Gradiasi untuk konten tab */
-        border-radius: 15px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    }
     </style>
     """,
     unsafe_allow_html=True
 )
-
 
 # Load the dataset
 @st.cache
@@ -153,27 +146,31 @@ def plot_results(results):
     recalls = [results[model]['recall'] for model in model_names]
     f1_scores = [results[model]['f1'] for model in model_names]
 
-    fig, axes = plt.subplots(2, 2, figsize=(16, 12), constrained_layout=True)
+    fig, axes = plt.subplots(2, 2, figsize=(18, 14), constrained_layout=True)
     sns.barplot(x=model_names, y=accuracies, ax=axes[0, 0], palette='coolwarm')
-    axes[0, 0].set_title('Accuracy')
-    axes[0, 0].set_xlabel('Models')
-    axes[0, 0].set_ylabel('Score')
+    axes[0, 0].set_title('Accuracy', fontsize=18)
+    axes[0, 0].set_xlabel('Models', fontsize=14)
+    axes[0, 0].set_ylabel('Score', fontsize=14)
 
     sns.barplot(x=model_names, y=precisions, ax=axes[0, 1], palette='coolwarm')
-    axes[0, 1].set_title('Precision')
-    axes[0, 1].set_xlabel('Models')
-    axes[0, 1].set_ylabel('Score')
+    axes[0, 1].set_title('Precision', fontsize=18)
+    axes[0, 1].set_xlabel('Models', fontsize=14)
+    axes[0, 1].set_ylabel('Score', fontsize=14)
 
     sns.barplot(x=model_names, y=recalls, ax=axes[1, 0], palette='coolwarm')
-    axes[1, 0].set_title('Recall')
-    axes[1, 0].set_xlabel('Models')
-    axes[1, 0].set_ylabel('Score')
+    axes[1, 0].set_title('Recall', fontsize=18)
+    axes[1, 0].set_xlabel('Models', fontsize=14)
+    axes[1, 0].set_ylabel('Score', fontsize=14)
 
     sns.barplot(x=model_names, y=f1_scores, ax=axes[1, 1], palette='coolwarm')
-    axes[1, 1].set_title('F1-score')
-    axes[1, 1].set_xlabel('Models')
-    axes[1, 1].set_ylabel('Score')
+    axes[1, 1].set_title('F1-score', fontsize=18)
+    axes[1, 1].set_xlabel('Models', fontsize=14)
+    axes[1, 1].set_ylabel('Score', fontsize=14)
 
+    for ax in axes.flatten():
+        ax.tick_params(axis='x', rotation=45)
+        ax.grid(True, linestyle='--', alpha=0.7)
+    
     st.pyplot(fig)
 
 # Load image from URL
@@ -219,11 +216,11 @@ def main():
         
         if num_rows == 'Full Data':
             st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
-            st.dataframe(df, height=400)  # Adjust the height as needed
+            st.dataframe(df, height=500)  # Adjust the height as needed
             st.markdown('</div>', unsafe_allow_html=True)
         else:
             st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
-            st.dataframe(df.head(num_rows), height=400)  # Adjust the height as needed
+            st.dataframe(df.head(num_rows), height=500)  # Adjust the height as needed
             st.markdown('</div>', unsafe_allow_html=True)
 
     with tabs[2]:

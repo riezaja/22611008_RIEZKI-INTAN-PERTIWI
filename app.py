@@ -18,7 +18,7 @@ st.markdown(
     <style>
     body {
         font-family: 'Times New Roman', serif;
-        background: #f4f4f9;
+        background: linear-gradient(to right, #e9eff1, #ffffff); /* Gradiasi latar belakang */
     }
     .main .block-container {
         max-width: 1200px;
@@ -80,10 +80,17 @@ st.markdown(
     .tab-content img {
         border-radius: 15px;
     }
+    .tab-content {
+        padding: 2rem;
+        background: linear-gradient(to right, #f7f9fc, #ffffff); /* Gradiasi untuk konten tab */
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 # Load the dataset
 @st.cache

@@ -17,10 +17,14 @@ st.markdown(
     <style>
     body {
         font-family: 'Arial', sans-serif;
+        background: #f0f0f0;
     }
     .main .block-container {
         max-width: 1200px;
         padding: 2rem;
+        background: linear-gradient(to right, #ffffff, #f9f9f9);
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
     .centered-title {
         text-align: center;
@@ -55,7 +59,7 @@ st.markdown(
     }
     .tab-content {
         padding: 2rem;
-        background-color: #f9f9f9;
+        background: linear-gradient(to right, #e0e0e0, #ffffff);
         border-radius: 10px;
     }
     .tab-content h3 {

@@ -212,11 +212,11 @@ def main():
         
         if num_rows == 'Full Data':
             st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
-            st.dataframe(df, height=500)  # Adjust the height as needed
+            st.dataframe(df, height=400)  # Adjust the height as needed
             st.markdown('</div>', unsafe_allow_html=True)
         else:
             st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
-            st.dataframe(df.head(num_rows), height=500)  # Adjust the height as needed
+            st.dataframe(df.head(num_rows), height=400)  # Adjust the height as needed
             st.markdown('</div>', unsafe_allow_html=True)
 
     with tabs[2]:

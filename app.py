@@ -10,6 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from PIL import Image
 from io import BytesIO
+import requests
 
 # Add custom CSS for styling
 st.markdown(
@@ -17,40 +18,41 @@ st.markdown(
     <style>
     body {
         font-family: 'Arial', sans-serif;
-        background: #f0f0f0;
+        background: #f7f9fc;
     }
     .main .block-container {
         max-width: 1200px;
         padding: 2rem;
-        background: linear-gradient(to right, #ffffff, #f9f9f9);
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(to right, #ffffff, #f7f9fc);
+        border-radius: 15px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     }
     .centered-title {
         text-align: center;
-        font-size: 2.5rem;
-        color: #2C3E50;
-        font-weight: bold;
+        font-size: 2.8rem;
+        color: #34495e;
+        font-weight: 700;
         margin: 2rem 0;
     }
     .stButton>button {
-        border-radius: 10px;
-        background-color: #007bff;
+        border-radius: 12px;
+        background-color: #3498db;
         color: white;
-        padding: 0.7rem 1.5rem;
-        font-size: 16px;
+        padding: 0.8rem 2rem;
+        font-size: 18px;
         margin-top: 1rem;
+        transition: background-color 0.3s ease;
     }
     .stButton>button:hover {
-        background-color: #0056b3;
+        background-color: #2980b9;
     }
     .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-        color: #2C3E50;
+        color: #2c3e50;
     }
     .stMarkdown p {
         font-size: 18px;
-        line-height: 1.6;
-        margin-bottom: 1rem;
+        line-height: 1.8;
+        margin-bottom: 1.2rem;
     }
     .dataframe-container {
         display: flex;
@@ -59,11 +61,19 @@ st.markdown(
     }
     .tab-content {
         padding: 2rem;
-        background: linear-gradient(to right, #e0e0e0, #ffffff);
-        border-radius: 10px;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
     .tab-content h3 {
-        color: #2C3E50;
+        color: #34495e;
+    }
+    .tab-content p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    .tab-content img {
+        border-radius: 15px;
     }
     </style>
     """,
@@ -131,23 +141,23 @@ def plot_results(results):
     recalls = [results[model]['recall'] for model in model_names]
     f1_scores = [results[model]['f1'] for model in model_names]
 
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10), constrained_layout=True)
-    sns.barplot(x=model_names, y=accuracies, ax=axes[0, 0], palette='viridis')
+    fig, axes = plt.subplots(2, 2, figsize=(16, 12), constrained_layout=True)
+    sns.barplot(x=model_names, y=accuracies, ax=axes[0, 0], palette='coolwarm')
     axes[0, 0].set_title('Accuracy')
     axes[0, 0].set_xlabel('Models')
     axes[0, 0].set_ylabel('Score')
 
-    sns.barplot(x=model_names, y=precisions, ax=axes[0, 1], palette='viridis')
+    sns.barplot(x=model_names, y=precisions, ax=axes[0, 1], palette='coolwarm')
     axes[0, 1].set_title('Precision')
     axes[0, 1].set_xlabel('Models')
     axes[0, 1].set_ylabel('Score')
 
-    sns.barplot(x=model_names, y=recalls, ax=axes[1, 0], palette='viridis')
+    sns.barplot(x=model_names, y=recalls, ax=axes[1, 0], palette='coolwarm')
     axes[1, 0].set_title('Recall')
     axes[1, 0].set_xlabel('Models')
     axes[1, 0].set_ylabel('Score')
 
-    sns.barplot(x=model_names, y=f1_scores, ax=axes[1, 1], palette='viridis')
+    sns.barplot(x=model_names, y=f1_scores, ax=axes[1, 1], palette='coolwarm')
     axes[1, 1].set_title('F1-score')
     axes[1, 1].set_xlabel('Models')
     axes[1, 1].set_ylabel('Score')
@@ -197,11 +207,11 @@ def main():
         
         if num_rows == 'Full Data':
             st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
-            st.dataframe(df, height=400)  # Adjust the height as needed
+            st.dataframe(df, height=500)  # Adjust the height as needed
             st.markdown('</div>', unsafe_allow_html=True)
         else:
             st.markdown('<div class="dataframe-container">', unsafe_allow_html=True)
-            st.dataframe(df.head(num_rows), height=400)  # Adjust the height as needed
+            st.dataframe(df.head(num_rows), height=500)  # Adjust the height as needed
             st.markdown('</div>', unsafe_allow_html=True)
 
     with tabs[2]:

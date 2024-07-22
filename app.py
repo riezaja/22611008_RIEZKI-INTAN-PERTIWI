@@ -13,37 +13,49 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 st.markdown(
     """
     <style>
+    body {
+        font-family: 'Arial', sans-serif;
+    }
     .main .block-container {
         max-width: 1600px;
         padding: 2rem;
     }
-    .dataframe-container {
-        max-width: 1400px;
-        margin: auto;
-        overflow-x: auto;
+    @media (max-width: 768px) {
+        .main .block-container {
+            padding: 1rem;
+        }
+        .dataframe-container {
+            max-width: 100%;
+        }
     }
-    .dataframe table {
-        width: 100%;
+    .dataframe-container {
+        display: flex;
+        justify-content: center;
+        margin: 2rem 0;
     }
     .stTabs [data-baseweb="tab-list"] {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
+        background-color: #f0f0f0;
+        border-radius: 10px;
     }
     .stTabs [data-baseweb="tab"] {
-        flex: 1;
-        text-align: center;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        margin: 0 0.5rem;
+        cursor: pointer;
     }
-    .stImage img {
-        border-radius: 15px;
-        max-width: 100%;
+    .stTabs [data-baseweb="tab"] [data-baseweb="tab-content"] {
+        padding: 1rem;
     }
     .stButton>button {
         border-radius: 15px;
-        background-color: #1f77b4;
+        background-color: #007bff;
         color: white;
         padding: 0.5rem 1rem;
         font-size: 16px;
+        margin-top: 1rem;
+    }
+    .stButton>button:hover {
+        background-color: #0056b3;
     }
     .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
         color: #2C3E50;
@@ -51,6 +63,7 @@ st.markdown(
     .stMarkdown p {
         font-size: 18px;
         line-height: 1.6;
+        margin-bottom: 1rem;
     }
     .stMarkdown .highlight {
         background-color: #FFD700;
@@ -58,12 +71,12 @@ st.markdown(
         border-radius: 0.2rem;
     }
     .centered-title {
-    text-align: center;
-    font-size: 2rem;
-    color: #2C3E50;
-    font-weight: bold;
-    margin: 2rem 0;
-}
+        text-align: center;
+        font-size: 2rem;
+        color: #2C3E50;
+        font-weight: bold;
+        margin: 2rem 0;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -169,7 +182,7 @@ def main():
     tabs = st.tabs(["🏠 Overview", "📊 Data Overview", "🔧 Data Preprocessing", "🚀 Model Training"])
 
     with tabs[0]:
-        st.image("https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg", use_column_width=True)
+        st.image(load_image("https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg"), use_column_width=True)
         st.write("### Overview of the Analysis")
         st.write(
             """

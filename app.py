@@ -13,7 +13,6 @@ from io import BytesIO
 import requests
 
 # Add custom CSS for styling
-# Add custom CSS for styling
 st.markdown(
     """
     <style>

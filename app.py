@@ -8,6 +8,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from PIL import Image
+from io import BytesIO
 
 # Add custom CSS for styling
 st.markdown(
@@ -17,40 +19,21 @@ st.markdown(
         font-family: 'Arial', sans-serif;
     }
     .main .block-container {
-        max-width: 1600px;
+        max-width: 1200px;
         padding: 2rem;
     }
-    @media (max-width: 768px) {
-        .main .block-container {
-            padding: 1rem;
-        }
-        .dataframe-container {
-            max-width: 100%;
-        }
-    }
-    .dataframe-container {
-        display: flex;
-        justify-content: center;
+    .centered-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #2C3E50;
+        font-weight: bold;
         margin: 2rem 0;
     }
-    .stTabs [data-baseweb="tab-list"] {
-        background-color: #f0f0f0;
-        border-radius: 10px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        margin: 0 0.5rem;
-        cursor: pointer;
-    }
-    .stTabs [data-baseweb="tab"] [data-baseweb="tab-content"] {
-        padding: 1rem;
-    }
     .stButton>button {
-        border-radius: 15px;
+        border-radius: 10px;
         background-color: #007bff;
         color: white;
-        padding: 0.5rem 1rem;
+        padding: 0.7rem 1.5rem;
         font-size: 16px;
         margin-top: 1rem;
     }
@@ -65,17 +48,18 @@ st.markdown(
         line-height: 1.6;
         margin-bottom: 1rem;
     }
-    .stMarkdown .highlight {
-        background-color: #FFD700;
-        padding: 0.2rem;
-        border-radius: 0.2rem;
-    }
-    .centered-title {
-        text-align: center;
-        font-size: 2rem;
-        color: #2C3E50;
-        font-weight: bold;
+    .dataframe-container {
+        display: flex;
+        justify-content: center;
         margin: 2rem 0;
+    }
+    .tab-content {
+        padding: 2rem;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+    }
+    .tab-content h3 {
+        color: #2C3E50;
     }
     </style>
     """,
@@ -83,6 +67,7 @@ st.markdown(
 )
 
 # Load the dataset
+@st.cache
 def load_data():
     df = pd.read_csv('Sleep_health_and_lifestyle_dataset.csv')
     df.columns = df.columns.str.strip()
@@ -142,28 +127,34 @@ def plot_results(results):
     recalls = [results[model]['recall'] for model in model_names]
     f1_scores = [results[model]['f1'] for model in model_names]
 
-    fig, axes = plt.subplots(2, 2, figsize=(12, 8), constrained_layout=True)
-    sns.barplot(x=model_names, y=accuracies, ax=axes[0, 0], palette='coolwarm')
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10), constrained_layout=True)
+    sns.barplot(x=model_names, y=accuracies, ax=axes[0, 0], palette='viridis')
     axes[0, 0].set_title('Accuracy')
     axes[0, 0].set_xlabel('Models')
     axes[0, 0].set_ylabel('Score')
 
-    sns.barplot(x=model_names, y=precisions, ax=axes[0, 1], palette='coolwarm')
+    sns.barplot(x=model_names, y=precisions, ax=axes[0, 1], palette='viridis')
     axes[0, 1].set_title('Precision')
     axes[0, 1].set_xlabel('Models')
     axes[0, 1].set_ylabel('Score')
 
-    sns.barplot(x=model_names, y=recalls, ax=axes[1, 0], palette='coolwarm')
+    sns.barplot(x=model_names, y=recalls, ax=axes[1, 0], palette='viridis')
     axes[1, 0].set_title('Recall')
     axes[1, 0].set_xlabel('Models')
     axes[1, 0].set_ylabel('Score')
 
-    sns.barplot(x=model_names, y=f1_scores, ax=axes[1, 1], palette='coolwarm')
+    sns.barplot(x=model_names, y=f1_scores, ax=axes[1, 1], palette='viridis')
     axes[1, 1].set_title('F1-score')
     axes[1, 1].set_xlabel('Models')
     axes[1, 1].set_ylabel('Score')
 
     st.pyplot(fig)
+
+# Load image from URL
+@st.cache
+def load_image(image_url):
+    image = Image.open(BytesIO(requests.get(image_url).content))
+    return image
 
 # Main function
 def main():

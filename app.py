@@ -13,33 +13,34 @@ from io import BytesIO
 import requests
 
 # Add custom CSS for styling
+# Add custom CSS for styling
 st.markdown(
     """
     <style>
     body {
         font-family: 'Times New Roman', serif;
-        background: linear-gradient(to right, #e9eff1, #ffffff); /* Gradient background */
+        background: linear-gradient(to right, #f9c5d1, #d3a6d1); /* Gradient background in pink and purple */
     }
     .main .block-container {
         max-width: 1200px;
         padding: 2rem;
-        background: linear-gradient(to right, #ffffff, #e9eff1);
+        background: linear-gradient(to right, #ffffff, #f4e1f0); /* Gradient background for the container */
         border-radius: 15px;
         box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     }
     .centered-title {
         text-align: center;
         font-size: 2.8rem;
-        color: #2c3e50;
+        color: #6c1d7e; /* Dark purple for the title */
         font-weight: 700;
         margin: 2rem 0;
-        background: linear-gradient(to right, #3498db, #9b59b6);
+        background: linear-gradient(to right, #d36b8f, #a81d60); /* Gradient text background */
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
     .stButton>button {
         border-radius: 12px;
-        background-color: #3498db;
+        background-color: #d36b8f; /* Pink button */
         color: white;
         padding: 0.8rem 2rem;
         font-size: 18px;
@@ -48,10 +49,10 @@ st.markdown(
         font-family: 'Times New Roman', serif;
     }
     .stButton>button:hover {
-        background-color: #2980b9;
+        background-color: #a81d60; /* Darker pink on hover */
     }
     .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-        color: #2c3e50;
+        color: #6c1d7e; /* Dark purple text */
         font-family: 'Times New Roman', serif;
     }
     .stMarkdown p {
@@ -66,12 +67,12 @@ st.markdown(
     }
     .tab-content {
         padding: 2rem;
-        background: linear-gradient(to right, #ffffff, #f7f9fc);
+        background: linear-gradient(to right, #ffffff, #f4e1f0); /* Gradient background for tabs */
         border-radius: 15px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
     .tab-content h3 {
-        color: #2c3e50;
+        color: #6c1d7e; /* Dark purple text for tab headers */
     }
     .tab-content p {
         font-size: 16px;

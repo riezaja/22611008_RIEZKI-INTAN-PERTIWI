@@ -18,7 +18,7 @@ st.markdown(
     <style>
     body {
         font-family: 'Times New Roman', serif;
-        background: linear-gradient(to right, #fc354c, #0abfbc); /* Gradient background in pink and teal */
+        background: linear-gradient(to right, #5f2c82, #49a09d); /* Gradient background in purple and teal */
     }
     .main .block-container {
         max-width: 1200px;
@@ -33,13 +33,13 @@ st.markdown(
         color: #333; /* Dark gray for the title text */
         font-weight: 700;
         margin: 2rem 0;
-        background: linear-gradient(to right, #fc354c, #0abfbc); /* Gradient text background */
+        background: linear-gradient(to right, #5f2c82, #49a09d); /* Gradient text background */
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
     .stButton>button {
         border-radius: 12px;
-        background-color: #fc354c; /* Pink button */
+        background-color: #5f2c82; /* Purple button */
         color: white;
         padding: 0.8rem 2rem;
         font-size: 18px;
@@ -48,7 +48,7 @@ st.markdown(
         font-family: 'Times New Roman', serif;
     }
     .stButton>button:hover {
-        background-color: #e03c51; /* Slightly darker pink on hover */
+        background-color: #4e1f66; /* Slightly darker purple on hover */
     }
     .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
         color: #333; /* Dark gray text */

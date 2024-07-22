@@ -17,22 +17,25 @@ st.markdown(
     """
     <style>
     body {
-        font-family: 'Arial', sans-serif;
-        background: #f7f9fc;
+        font-family: 'Times New Roman', serif;
+        background: #f4f4f9;
     }
     .main .block-container {
         max-width: 1200px;
         padding: 2rem;
-        background: linear-gradient(to right, #ffffff, #f7f9fc);
+        background: linear-gradient(to right, #ffffff, #e9eff1);
         border-radius: 15px;
         box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     }
     .centered-title {
         text-align: center;
         font-size: 2.8rem;
-        color: #34495e;
+        color: #2c3e50;
         font-weight: 700;
         margin: 2rem 0;
+        background: linear-gradient(to right, #3498db, #9b59b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
     .stButton>button {
         border-radius: 12px;
@@ -42,12 +45,14 @@ st.markdown(
         font-size: 18px;
         margin-top: 1rem;
         transition: background-color 0.3s ease;
+        font-family: 'Times New Roman', serif;
     }
     .stButton>button:hover {
         background-color: #2980b9;
     }
     .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
         color: #2c3e50;
+        font-family: 'Times New Roman', serif;
     }
     .stMarkdown p {
         font-size: 18px;
@@ -61,12 +66,12 @@ st.markdown(
     }
     .tab-content {
         padding: 2rem;
-        background: #ffffff;
+        background: linear-gradient(to right, #ffffff, #f7f9fc);
         border-radius: 15px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
     .tab-content h3 {
-        color: #34495e;
+        color: #2c3e50;
     }
     .tab-content p {
         font-size: 16px;

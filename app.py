@@ -37,11 +37,11 @@ body {
 }
 
 .main .block-container {
-    max-width: 1200px;
-    padding: 2.5rem;
+    max-width: 1000px; /* Slightly narrower for a more focused look */
+    padding: 2rem;
     background: rgba(255, 255, 255, 0.9); /* Semi-transparent background for a light feel */
-    border-radius: 40px; /* More rounded corners */
-    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.4); /* Deep shadow for depth */
+    border-radius: 30px; /* Rounded corners */
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3); /* Medium shadow for depth */
     margin: 2rem auto;
     border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border for definition */
     position: relative;
@@ -49,69 +49,69 @@ body {
 
 .centered-title {
     text-align: center;
-    font-size: 4.5rem; /* Larger font size for a bold statement */
+    font-size: 3.5rem; /* Adjusted font size for a more balanced look */
     color: #fff;
-    font-weight: 900;
-    margin: 2.5rem 0;
+    font-weight: 800;
+    margin: 1.5rem 0;
     background: linear-gradient(to right, #e0aaff, #a76cd9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6); /* Dramatic shadow for impact */
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5); /* Softer shadow for impact */
 }
 
 .stButton>button {
-    border-radius: 30px; /* Soft rounded corners */
+    border-radius: 25px; /* Rounded corners */
     background-color: #a76cd9;
     color: white;
-    padding: 1.5rem 3.5rem;
-    font-size: 24px;
-    margin-top: 1.5rem;
+    padding: 1rem 2.5rem;
+    font-size: 20px; /* Slightly smaller font size */
+    margin-top: 1rem;
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     font-family: 'Arial', sans-serif;
     border: none;
     cursor: pointer;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Light shadow for depth */
 }
 
 .stButton>button:hover {
     background-color: #8a4d8d;
-    transform: scale(1.1);
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
+    transform: scale(1.05);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow on hover */
 }
 
 .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
     color: #5f2c82;
     font-family: 'Georgia', serif;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Enhanced shadow for headings */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Subtle shadow for headings */
 }
 
 .stMarkdown p {
-    font-size: 20px;
-    line-height: 1.8;
-    margin-bottom: 2rem;
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 1.5rem; /* Reduced margin for compact design */
 }
 
 .dataframe-container {
     display: flex;
     justify-content: center;
-    margin: 2rem 0;
+    margin: 1.5rem 0; /* Adjusted margin for a more compact look */
 }
 
 .tab-content {
-    padding: 3rem;
+    padding: 2.5rem;
     background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
-    border-radius: 40px;
-    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.3); /* Deep shadow for depth */
+    border-radius: 30px;
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2); /* Medium shadow for depth */
     position: relative;
 }
 
 .tab-content h3 {
     color: #5f2c82;
     font-family: 'Georgia', serif;
-    font-size: 2.5rem; /* Larger font size */
-    border-bottom: 4px solid #a76cd9; /* Thick underline for emphasis */
+    font-size: 2rem; /* Adjusted font size for a balanced look */
+    border-bottom: 3px solid #a76cd9; /* Thinner underline for emphasis */
     padding-bottom: 0.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem; /* Reduced margin for compactness */
     position: relative;
 }
 
@@ -119,57 +119,57 @@ body {
     content: '';
     position: absolute;
     left: 50%;
-    bottom: -10px; /* Position below the text */
+    bottom: -8px; /* Position slightly below the text */
     transform: translateX(-50%);
-    width: 60px;
-    height: 5px;
+    width: 40px;
+    height: 4px;
     background-color: #a76cd9;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for the underline */
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for the underline */
 }
 
 .tab-content p {
-    font-size: 18px;
-    line-height: 1.6;
+    font-size: 16px;
+    line-height: 1.5;
 }
 
 .tab-content img {
     display: block;
-    margin: 1.5rem auto;
-    border-radius: 25px; /* Larger border-radius */
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Deep shadow effect */
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    margin: 1rem auto;
+    border-radius: 20px; /* Moderate border-radius */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Medium shadow effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .tab-content img:hover {
-    transform: scale(1.1); /* Larger zoom effect on hover */
-    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+    transform: scale(1.05); /* Slight zoom effect on hover */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow on hover */
 }
 
 .tabs {
     display: flex;
     justify-content: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem; /* Adjusted margin for compact design */
 }
 
 .tab-button {
-    padding: 1rem 2rem;
-    margin: 0 0.5rem;
+    padding: 0.8rem 1.5rem;
+    margin: 0 0.3rem;
     border: 1px solid #a76cd9;
-    border-radius: 35px; /* Softer corners */
+    border-radius: 25px; /* Rounded corners */
     background-color: #ffffff;
     color: #a76cd9;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     font-family: 'Arial', sans-serif;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .tab-button:hover {
     background-color: #a76cd9;
     color: #ffffff;
-    transform: scale(1.05);
+    transform: scale(1.03);
 }
 
 .active {
@@ -179,18 +179,19 @@ body {
 
 .footer {
     text-align: center;
-    padding: 2rem;
+    padding: 1.5rem;
     background: linear-gradient(to right, #f9a9b1, #d95dae);
     color: #ffffff;
-    font-size: 18px; /* Slightly larger font size */
-    border-top: 2px solid rgba(255, 255, 255, 0.2); /* Slightly thicker border for definition */
+    font-size: 16px; /* Compact font size */
+    border-top: 2px solid rgba(255, 255, 255, 0.2); /* Subtle border for definition */
     margin-top: 2rem;
     position: relative;
 }
 
 .footer::before {
+    content: 'Created with ♥ by Riezki Intan Pertiwi';
     display: block;
-    font-size: 16px;
+    font-size: 14px; /* Smaller font size for footer text */
     color: #ffffff;
     margin-top: 0.5rem;
 }
@@ -209,14 +210,20 @@ body {
 
 /* Icons */
 .icon {
-    font-size: 1.5rem;
+    font-size: 1.2rem; /* Smaller icon size */
     color: #a76cd9;
     margin-right: 0.5rem;
     vertical-align: middle;
 }
 
-/* Use font-awesome or other icon libraries */
+/* Example of Font Awesome usage */
+.icon-heart:before {
+    content: "\f004"; /* Unicode for heart icon */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+}
 </style>
+
     """,
     unsafe_allow_html=True
 )

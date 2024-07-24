@@ -184,7 +184,7 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
     X_test = scaler.transform(X_test)
 
     # Model training and evaluation
-    st.write("## Model Performance")
+   st.write("## Model Performance")
     def evaluate_model(model, X_test, y_test):
         y_pred = model.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)
@@ -196,25 +196,26 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
     model_lr = LogisticRegression(random_state=42)
     model_dt = DecisionTreeClassifier(random_state=42)
     model_rf = RandomForestClassifier(random_state=42)
-    
-    # Fit models
+
     model_lr.fit(X_train, y_train)
     model_dt.fit(X_train, y_train)
     model_rf.fit(X_train, y_train)
 
-    # Evaluate models
-    st.write("### Logistic Regression")
-    lr_acc, lr_prec, lr_rec, lr_f1 = evaluate_model(model_lr, X_test, y_test)
-    st.write(f"Accuracy: {lr_acc:.4f}, Precision: {lr_prec:.4f}, Recall: {lr_rec:.4f}, F1-Score: {lr_f1:.4f}")
+    acc_lr, prec_lr, rec_lr, f1_lr = evaluate_model(model_lr, X_test, y_test)
+    acc_dt, prec_dt, rec_dt, f1_dt = evaluate_model(model_dt, X_test, y_test)
+    acc_rf, prec_rf, rec_rf, f1_rf = evaluate_model(model_rf, X_test, y_test)
 
-    st.write("### Decision Tree")
-    dt_acc, dt_prec, dt_rec, dt_f1 = evaluate_model(model_dt, X_test, y_test)
-    st.write(f"Accuracy: {dt_acc:.4f}, Precision: {dt_prec:.4f}, Recall: {dt_rec:.4f}, F1-Score: {dt_f1:.4f}")
+    st.write(f"**Logistic Regression:** Accuracy={acc_lr:.4f}, Precision={prec_lr:.4f}, Recall={rec_lr:.4f}, F1-Score={f1_lr:.4f}")
+    st.write(f"**Decision Tree:** Accuracy={acc_dt:.4f}, Precision={prec_dt:.4f}, Recall={rec_dt:.4f}, F1-Score={f1_dt:.4f}")
+    st.write(f"**Random Forest:** Accuracy={acc_rf:.4f}, Precision={prec_rf:.4f}, Recall={rec_rf:.4f}, F1-Score={f1_rf:.4f}")
 
-    st.write("### Random Forest")
-    rf_acc, rf_prec, rf_rec, rf_f1 = evaluate_model(model_rf, X_test, y_test)
-    st.write(f"Accuracy: {rf_acc:.4f}, Precision: {rf_prec:.4f}, Recall: {rf_rec:.4f}, F1-Score: {rf_f1:.4f}")
+    model_names = ['Logistic Regression', 'Decision Tree', 'Random Forest']
+    accuracies = [acc_lr, acc_dt, acc_rf]
+    precisions = [prec_lr, prec_dt, prec_rf]
+    recalls = [rec_lr, rec_dt, rec_rf]
+    f1_scores = [f1_lr, f1_dt, f1_rf]
 
+    
     # Hyperparameter tuning for Decision Tree
     st.write("## Hyperparameter Tuning for Decision Tree")
     param_grid = {

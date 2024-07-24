@@ -29,7 +29,7 @@ st.markdown(
 <style>
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(to right, #f9a9b1, #d95dae);
+    background: radial-gradient(circle, #f9a9b1, #d95dae); /* Radial gradient for a dynamic background */
     color: #333;
     margin: 0;
     padding: 0;
@@ -189,7 +189,6 @@ body {
 }
 
 .footer::before {
-    content: 'Created with ♥ by Riezki Intan Pertiwi';
     display: block;
     font-size: 12px; /* Smaller font size for footer text */
     color: #ffffff;

@@ -38,12 +38,6 @@ st.markdown("""
             font-family: 'Roboto', sans-serif;
             color: #49a09d;
         }
-        .container {
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            gap: 20px;
-            padding: 20px;
-        }
         .sidebar {
             background-color: #f2f2f2;
             padding: 20px;
@@ -79,15 +73,20 @@ st.markdown("""
 # Application title
 st.markdown('<h1 class="title">Sleep Health and Lifestyle Analysis</h1>', unsafe_allow_html=True)
 
-# Layout for the main content
-with st.container():
+# Sidebar menu
+sidebar_option = st.sidebar.selectbox(
+    "Choose a section",
+    ["Data Overview", "Visualizations", "Preprocessing and Model Training", "Model Performance"]
+)
+
+if sidebar_option == "Data Overview":
     st.write("## Data Overview")
     st.dataframe(data)
 
     st.write("## Summary Statistics")
     st.write(data.describe())
 
-    # Visualization section
+elif sidebar_option == "Visualizations":
     st.write("## Enhanced Visualizations")
     fig, axs = plt.subplots(2, 2, figsize=(14, 10))
 
@@ -125,7 +124,7 @@ with st.container():
     plt.ylabel('Kualitas Tidur')
     st.pyplot(plt)
 
-    # Preprocessing steps
+elif sidebar_option == "Preprocessing and Model Training":
     st.write("## Preprocessing Data")
     data[['Systolic_BP', 'Diastolic_BP']] = data['Blood Pressure'].str.split('/', expand=True).astype(float)
     data = data.drop(columns=['Blood Pressure'])
@@ -150,7 +149,7 @@ with st.container():
     X_test = scaler.transform(X_test)
 
     # Model training and evaluation
-    st.write("## Model Performance")
+    st.write("## Model Training and Evaluation")
     def evaluate_model(model, X_test, y_test):
         y_pred = model.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)
@@ -204,13 +203,12 @@ with st.container():
     st.write("Best Parameters:", grid_search.best_params_)
     st.write("Best Score:", grid_search.best_score_)
 
-    # Cross-validation
+elif sidebar_option == "Model Performance":
     st.write("## Cross-Validation Results")
     cv_scores = cross_val_score(model_rf, X, y, cv=5, scoring='accuracy')
     st.write(f"Cross-Validation Scores: {cv_scores}")
     st.write(f"Mean CV Score: {cv_scores.mean():.4f}")
 
-    # Voting Classifier
     st.write("## Voting Classifier")
     voting_clf = VotingClassifier(estimators=[
         ('lr', model_lr),

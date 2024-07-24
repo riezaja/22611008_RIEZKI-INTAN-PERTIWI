@@ -89,6 +89,8 @@ st.markdown(
         line-height: 1.6;
     }
     .tab-content img {
+        display: block;
+        margin: 0 auto;
         border-radius: 15px;
     }
     .tabs {
@@ -131,7 +133,7 @@ tab = st.selectbox("Choose a tab", tabs, index=0, key="tabs")
 if tab == "Introduction":
     st.markdown("""
         <div class="tab-content">
-            <img src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Sleep and Lifestyle">
+            <img src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Sleep and Lifestyle" width="600">
             <h2>Welcome to the Sleep Health and Lifestyle Analysis Dashboard</h2>
             <p>This application provides insights into sleep health and lifestyle factors using a comprehensive dataset. Explore the data overview, visualizations, and machine learning models to understand how different factors affect sleep quality and overall health.</p>
         </div>

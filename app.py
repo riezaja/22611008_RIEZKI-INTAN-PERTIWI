@@ -8,6 +8,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+import plotly.graph_objects as go
 
 # Set up the layout and page configuration
 st.set_page_config(page_title='Sleep Health and Lifestyle Analysis', layout='wide')
@@ -25,14 +26,16 @@ data.columns = data.columns.str.strip()
 # Set custom CSS for styling
 st.markdown("""
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        
         .title {
-            font-family: 'Times New Roman', serif;
+            font-family: 'Roboto', sans-serif;
             color: #5f2c82;
             text-align: center;
             margin-bottom: 20px;
         }
         .subtitle {
-            font-family: 'Times New Roman', serif;
+            font-family: 'Roboto', sans-serif;
             color: #49a09d;
         }
         .container {
@@ -52,17 +55,23 @@ st.markdown("""
             border-radius: 10px;
         }
         .header {
-            font-family: 'Times New Roman', serif;
+            font-family: 'Roboto', sans-serif;
             font-size: 24px;
             color: #5f2c82;
             margin-bottom: 10px;
         }
         .footer {
-            font-family: 'Times New Roman', serif;
+            font-family: 'Roboto', sans-serif;
             color: #49a09d;
             text-align: center;
             padding: 10px;
             border-top: 1px solid #e0e0e0;
+        }
+        .chart-container {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
         }
     </style>
 """, unsafe_allow_html=True)
@@ -79,25 +88,30 @@ with st.container():
     st.write(data.describe())
 
     # Visualization section
-    st.write("## Visualizations")
+    st.write("## Enhanced Visualizations")
     fig, axs = plt.subplots(2, 2, figsize=(14, 10))
-    sns.histplot(data['Sleep Duration'], bins=30, ax=axs[0, 0])
+
+    # Sleep Duration Distribution
+    sns.histplot(data['Sleep Duration'], bins=30, ax=axs[0, 0], kde=True, color='purple')
     axs[0, 0].set_title('Distribusi Durasi Tidur')
     axs[0, 0].set_xlabel('Durasi Tidur (jam)')
     axs[0, 0].set_ylabel('Frekuensi')
 
-    sns.countplot(x='BMI Category', data=data, ax=axs[0, 1])
+    # BMI Category Count Plot
+    sns.countplot(x='BMI Category', data=data, ax=axs[0, 1], palette='magma')
     axs[0, 1].set_title('Count Plot of BMI Category')
     axs[0, 1].set_xlabel('Kategori BMI')
     axs[0, 1].set_ylabel('Frekuensi')
 
-    sns.violinplot(x='Occupation', y='Stress Level', data=data, ax=axs[1, 0])
+    # Stress Level Violin Plot
+    sns.violinplot(x='Occupation', y='Stress Level', data=data, ax=axs[1, 0], palette='crest')
     axs[1, 0].set_title('Violin Plot of Stress Level by Occupation')
     axs[1, 0].set_xlabel('Pekerjaan')
     axs[1, 0].set_ylabel('Tingkat Stres')
     axs[1, 0].tick_params(axis='x', rotation=45)
 
-    data['Sleep Disorder'].value_counts().plot.pie(autopct='%1.1f%%', colors=sns.color_palette('pastel'), ax=axs[1, 1])
+    # Sleep Disorder Pie Chart
+    data['Sleep Disorder'].value_counts().plot.pie(autopct='%1.1f%%', colors=sns.color_palette('pastel'), ax=axs[1, 1], startangle=140)
     axs[1, 1].set_title('Distribusi Kategori Gangguan Tidur')
 
     plt.tight_layout()
@@ -105,7 +119,7 @@ with st.container():
 
     # Bar Plot Kualitas Tidur Berdasarkan Kategori BMI
     plt.figure(figsize=(10, 6))
-    sns.barplot(x='BMI Category', y='Quality of Sleep', data=data)
+    sns.barplot(x='BMI Category', y='Quality of Sleep', data=data, palette='coolwarm')
     plt.title('Bar Plot Kualitas Tidur Berdasarkan Kategori BMI')
     plt.xlabel('Kategori BMI')
     plt.ylabel('Kualitas Tidur')
@@ -167,42 +181,34 @@ with st.container():
     recalls = [rec_lr, rec_dt, rec_rf]
     f1_scores = [f1_lr, f1_dt, f1_rf]
 
-    fig, axs = plt.subplots(2, 2, figsize=(14, 10))
-    sns.barplot(x=model_names, y=accuracies, ax=axs[0, 0])
-    axs[0, 0].set_title('Accuracy')
+    # Interactive Model Performance Comparison
+    st.write("## Model Performance Comparison")
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=model_names, y=accuracies, name='Accuracy'))
+    fig.add_trace(go.Bar(x=model_names, y=precisions, name='Precision'))
+    fig.add_trace(go.Bar(x=model_names, y=recalls, name='Recall'))
+    fig.add_trace(go.Bar(x=model_names, y=f1_scores, name='F1-Score'))
 
-    sns.barplot(x=model_names, y=precisions, ax=axs[0, 1])
-    axs[0, 1].set_title('Precision')
-
-    sns.barplot(x=model_names, y=recalls, ax=axs[1, 0])
-    axs[1, 0].set_title('Recall')
-
-    sns.barplot(x=model_names, y=f1_scores, ax=axs[1, 1])
-    axs[1, 1].set_title('F1-score')
-
-    plt.tight_layout()
-    st.pyplot(fig)
+    fig.update_layout(barmode='group', title='Model Performance Metrics', xaxis_title='Model', yaxis_title='Score')
+    st.plotly_chart(fig)
 
     # Hyperparameter tuning for Decision Tree
     st.write("## Hyperparameter Tuning for Decision Tree")
     param_grid = {
         'criterion': ['gini', 'entropy'],
         'max_depth': [10, 20, None],
-        'min_samples_split': [2, 5],
+        'min_samples_split': [2, 5, 10],
     }
-    grid_search = GridSearchCV(estimator=model_dt, param_grid=param_grid, cv=5, scoring='accuracy')
+    grid_search = GridSearchCV(DecisionTreeClassifier(random_state=42), param_grid, cv=5, scoring='accuracy')
     grid_search.fit(X_train, y_train)
-    best_params = grid_search.best_params_
-    st.write(f"Best Parameters: {best_params}")
-    best_model_dt = grid_search.best_estimator_
-    acc_dt, prec_dt, rec_dt, f1_dt = evaluate_model(best_model_dt, X_test, y_test)
-    st.write(f"**Best Decision Tree:** Accuracy={acc_dt:.4f}, Precision={prec_dt:.4f}, Recall={rec_dt:.4f}, F1-Score={f1_dt:.4f}")
+    st.write("Best Parameters:", grid_search.best_params_)
+    st.write("Best Score:", grid_search.best_score_)
 
     # Cross-validation
-    st.write("## Cross-validation")
-    cv_scores = cross_val_score(model_dt, X, y, cv=5, scoring='accuracy')
+    st.write("## Cross-Validation Results")
+    cv_scores = cross_val_score(model_rf, X, y, cv=5, scoring='accuracy')
     st.write(f"Cross-Validation Scores: {cv_scores}")
-    st.write(f"Mean Cross-Validation Score: {cv_scores.mean():.4f}")
+    st.write(f"Mean CV Score: {cv_scores.mean():.4f}")
 
     # Voting Classifier
     st.write("## Voting Classifier")
@@ -210,10 +216,10 @@ with st.container():
         ('lr', model_lr),
         ('dt', model_dt),
         ('rf', model_rf)
-    ], voting='soft')
+    ], voting='hard')
     voting_clf.fit(X_train, y_train)
-    acc_vc, prec_vc, rec_vc, f1_vc = evaluate_model(voting_clf, X_test, y_test)
-    st.write(f"**Voting Classifier:** Accuracy={acc_vc:.4f}, Precision={prec_vc:.4f}, Recall={rec_vc:.4f}, F1-Score={f1_vc:.4f}")
+    voting_acc, voting_prec, voting_rec, voting_f1 = evaluate_model(voting_clf, X_test, y_test)
+    st.write(f"**Voting Classifier:** Accuracy={voting_acc:.4f}, Precision={voting_prec:.4f}, Recall={voting_rec:.4f}, F1-Score={voting_f1:.4f}")
 
-# Footer
-st.markdown('<div class="footer">Created by Riezki Intan Pertiwi | Universitas Islam Indonesia</div>', unsafe_allow_html=True)
+# Custom Footer
+st.markdown('<div class="footer">Created with ❤️ by Riezki Intan Pertiwi | Universitas Islam Indonesia</div>', unsafe_allow_html=True)

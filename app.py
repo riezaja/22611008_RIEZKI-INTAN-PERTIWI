@@ -33,62 +33,62 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-x: hidden;
 }
 
 .main .block-container {
     max-width: 1200px;
-    padding: 2rem;
-    background: linear-gradient(to right, #ffffff, #f0f4f8);
-    border-radius: 35px; /* More rounded corners */
-    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background for a light feel */
+    border-radius: 40px; /* More rounded corners */
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.4); /* Deep shadow for depth */
     margin: 2rem auto;
-    border: 1px solid #e0e0e0; /* Subtle border for better definition */
-    position: relative; /* Allow positioning of pseudo-elements */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border for definition */
+    position: relative;
 }
 
 .centered-title {
     text-align: center;
-    font-size: 4rem; /* Larger font size for impact */
+    font-size: 4.5rem; /* Larger font size for a bold statement */
     color: #fff;
-    font-weight: 900; /* Bold text */
-    margin: 2rem 0;
+    font-weight: 900;
+    margin: 2.5rem 0;
     background: linear-gradient(to right, #e0aaff, #a76cd9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5); /* More pronounced shadow */
+    text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6); /* Dramatic shadow for impact */
 }
 
 .stButton>button {
-    border-radius: 30px; /* Softer corners */
+    border-radius: 30px; /* Soft rounded corners */
     background-color: #a76cd9;
     color: white;
-    padding: 1.5rem 3.5rem; /* Larger padding */
-    font-size: 24px; /* Larger font size */
-    margin-top: 1rem;
+    padding: 1.5rem 3.5rem;
+    font-size: 24px;
+    margin-top: 1.5rem;
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     font-family: 'Arial', sans-serif;
     border: none;
     cursor: pointer;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.25); /* Soft shadow effect */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
 }
 
 .stButton>button:hover {
     background-color: #8a4d8d;
     transform: scale(1.1);
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
 }
 
 .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
     color: #5f2c82;
     font-family: 'Georgia', serif;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Subtle shadow for text */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Enhanced shadow for headings */
 }
 
 .stMarkdown p {
-    font-size: 20px; /* Larger font size */
+    font-size: 20px;
     line-height: 1.8;
-    margin-bottom: 1.8rem;
+    margin-bottom: 2rem;
 }
 
 .dataframe-container {
@@ -98,18 +98,18 @@ body {
 }
 
 .tab-content {
-    padding: 2.5rem;
-    background: linear-gradient(to right, #ffffff, #f0f4f8);
-    border-radius: 35px; /* More rounded corners */
-    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.25); /* Stronger shadow for depth */
-    position: relative; /* Allow positioning of pseudo-elements */
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    border-radius: 40px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.3); /* Deep shadow for depth */
+    position: relative;
 }
 
 .tab-content h3 {
     color: #5f2c82;
     font-family: 'Georgia', serif;
-    font-size: 2.2rem; /* Larger font size for section headings */
-    border-bottom: 3px solid #a76cd9; /* Underline for emphasis */
+    font-size: 2.5rem; /* Larger font size */
+    border-bottom: 4px solid #a76cd9; /* Thick underline for emphasis */
     padding-bottom: 0.5rem;
     margin-bottom: 1.5rem;
     position: relative;
@@ -119,12 +119,13 @@ body {
     content: '';
     position: absolute;
     left: 50%;
-    bottom: 0;
+    bottom: -10px; /* Position below the text */
     transform: translateX(-50%);
-    width: 50px;
-    height: 3px;
+    width: 60px;
+    height: 5px;
     background-color: #a76cd9;
-    border-radius: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for the underline */
 }
 
 .tab-content p {
@@ -134,14 +135,15 @@ body {
 
 .tab-content img {
     display: block;
-    margin: 1rem auto; /* Add margin around the image */
-    border-radius: 20px; /* Larger border-radius */
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2); /* Soft shadow effect */
-    transition: transform 0.3s ease; /* Smooth transform effect */
+    margin: 1.5rem auto;
+    border-radius: 25px; /* Larger border-radius */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Deep shadow effect */
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .tab-content img:hover {
-    transform: scale(1.05); /* Slight zoom effect on hover */
+    transform: scale(1.1); /* Larger zoom effect on hover */
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
 }
 
 .tabs {
@@ -151,23 +153,23 @@ body {
 }
 
 .tab-button {
-    padding: 0.8rem 1.5rem;
+    padding: 1rem 2rem;
     margin: 0 0.5rem;
     border: 1px solid #a76cd9;
-    border-radius: 30px; /* Softer corners */
+    border-radius: 35px; /* Softer corners */
     background-color: #ffffff;
     color: #a76cd9;
     font-size: 18px;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     font-family: 'Arial', sans-serif;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .tab-button:hover {
     background-color: #a76cd9;
     color: #ffffff;
-    transform: scale(1.05); /* Slight zoom effect on hover */
+    transform: scale(1.05);
 }
 
 .active {
@@ -177,11 +179,11 @@ body {
 
 .footer {
     text-align: center;
-    padding: 1.5rem;
+    padding: 2rem;
     background: linear-gradient(to right, #f9a9b1, #d95dae);
     color: #ffffff;
-    font-size: 16px;
-    border-top: 2px solid #e0e0e0; /* Slightly thicker border for definition */
+    font-size: 18px; /* Slightly larger font size */
+    border-top: 2px solid rgba(255, 255, 255, 0.2); /* Slightly thicker border for definition */
     margin-top: 2rem;
     position: relative;
 }
@@ -189,7 +191,7 @@ body {
 .footer::before {
     content: 'Created with ♥ by Riezki Intan Pertiwi';
     display: block;
-    font-size: 14px;
+    font-size: 16px;
     color: #ffffff;
     margin-top: 0.5rem;
 }
@@ -198,11 +200,14 @@ body {
     color: #ffffff;
     text-decoration: none;
     font-weight: bold;
+    transition: color 0.3s ease;
 }
 
 .footer a:hover {
+    color: #f9a9b1; /* Highlight link on hover */
     text-decoration: underline;
 }
+
 
 </style>
 

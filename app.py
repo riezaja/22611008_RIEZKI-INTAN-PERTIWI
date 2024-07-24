@@ -27,205 +27,19 @@ data.columns = data.columns.str.strip()
 st.markdown(
     """
 <style>
-body {
-    font-family: 'Arial', sans-serif;
-    background: radial-gradient(circle, #f9a9b1, #d95dae); /* Radial gradient for a dynamic background */
-    color: #333;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-}
-
-.main .block-container {
-    max-width: 900px; /* Reduced width for a more compact container */
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
-    border-radius: 20px; /* Smaller rounded corners */
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Lighter shadow for depth */
-    margin: 1.5rem auto;
-    border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border for definition */
-    position: relative;
-}
-
-.centered-title {
-    text-align: center;
-    font-size: 2.5rem; /* Smaller font size for a more compact title */
-    color: #fff;
-    font-weight: 700;
-    margin: 1.5rem 0;
-    background: linear-gradient(to right, #e0aaff, #a76cd9);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4); /* Subtle shadow for impact */
-}
-.stButton>button {
-    border-radius: 20px; /* Smaller rounded corners */
-    background-color: #a76cd9;
-    color: white;
-    padding: 0.8rem 2rem; /* Reduced padding */
-    font-size: 16px; /* Smaller font size */
-    margin-top: 1rem;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    font-family: 'Arial', sans-serif;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Lighter shadow */
-}
-
-.stButton>button:hover {
-    background-color: #8a4d8d;
-    transform: scale(1.03);
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow on hover */
-}
-
-.stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-    color: #5f2c82;
-    font-family: 'Georgia', serif;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Subtle shadow for headings */
-}
-
-.stMarkdown p {
-    font-size: 16px; /* Smaller font size */
-    line-height: 1.5;
-    margin-bottom: 1rem; /* Reduced margin */
-}
-
-.dataframe-container {
-    display: flex;
-    justify-content: center;
-    margin: 1rem 0; /* Adjusted margin */
-}
-
-.tab-content {
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
-    border-radius: 20px; /* Smaller rounded corners */
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Medium shadow for depth */
-    position: relative;
-}
-
-.tab-content h3 {
-    color: #5f2c82;
-    font-family: 'Georgia', serif;
-    font-size: 1.8rem; /* Smaller font size */
-    border-bottom: 2px solid #a76cd9; /* Thinner underline */
-    padding-bottom: 0.4rem;
-    margin-bottom: 1rem; /* Reduced margin */
-    position: relative;
-}
-
-.tab-content h3::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -6px; /* Position slightly below the text */
-    transform: translateX(-50%);
-    width: 30px;
-    height: 3px;
-    background-color: #a76cd9;
-    border-radius: 3px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for the underline */
-}
-
-.tab-content p {
-    font-size: 14px; /* Smaller font size */
-    line-height: 1.4;
-}
-
-.tab-content img {
-    display: block;
-    margin: 1rem auto;
-    border-radius: 15px; /* Smaller border-radius */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Light shadow effect */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.tab-content img:hover {
-    transform: scale(1.05); /* Slight zoom effect on hover */
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow on hover */
-}
-
-.tabs {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1rem; /* Adjusted margin */
-}
-
-.tab-button {
-    padding: 0.6rem 1.2rem; /* Smaller padding */
-    margin: 0 0.3rem;
-    border: 1px solid #a76cd9;
-    border-radius: 20px; /* Rounded corners */
-    background-color: #ffffff;
-    color: #a76cd9;
-    font-size: 14px; /* Smaller font size */
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-    font-family: 'Arial', sans-serif;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
-}
-
-.tab-button:hover {
-    background-color: #a76cd9;
-    color: #ffffff;
-    transform: scale(1.02);
-}
-
-.active {
-    background-color: #a76cd9;
-    color: #ffffff;
-}
-
-.footer {
-    text-align: center;
-    padding: 1rem;
-    background: linear-gradient(to right, #f9a9b1, #d95dae);
-    color: #ffffff;
-    font-size: 14px; /* Smaller font size */
-    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for definition */
-    margin-top: 1.5rem;
-    position: relative;
-}
-
-.footer::before {
-    display: block;
-    font-size: 12px; /* Smaller font size for footer text */
-    color: #ffffff;
-    margin-top: 0.5rem;
-}
-
-.footer a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-.footer a:hover {
-    color: #f9a9b1; /* Highlight link on hover */
-    text-decoration: underline;
-}
-
-/* Icons */
-.icon {
-    font-size: 1rem; /* Smaller icon size */
-    color: #a76cd9;
-    margin-right: 0.3rem;
-    vertical-align: middle;
-}
-
-/* Example of Font Awesome usage */
-.icon-heart:before {
-    content: "\f004"; /* Unicode for heart icon */
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-}
+/* Add your existing CSS here */
 </style>
-
-
     """,
     unsafe_allow_html=True
 )
+
+# Define footer HTML as a function
+def footer():
+    return """
+    <div class="footer">
+        Created with ❤️ by Riezki Intan Pertiwi | <a href="https://www.uii.ac.id" style="color: #49a09d;">Universitas Islam Indonesia</a>
+    </div>
+    """
 
 # Application title
 st.markdown('<h1 class="centered-title">Sleep Health and Lifestyle Analysis</h1>', unsafe_allow_html=True)
@@ -242,6 +56,7 @@ if tab == "Introduction":
             <p>This application provides insights into sleep health and lifestyle factors using a comprehensive dataset. Explore the data overview, visualizations, and machine learning models to understand how different factors affect sleep quality and overall health.</p>
         </div>
     """, unsafe_allow_html=True)
+    st.markdown(footer(), unsafe_allow_html=True)  # Add footer here
 
 elif tab == "Data Overview":
     st.write("## Data Overview")
@@ -249,6 +64,7 @@ elif tab == "Data Overview":
 
     st.write("## Summary Statistics")
     st.write(data.describe())
+    st.markdown(footer(), unsafe_allow_html=True)  # Add footer here
 
 elif tab == "Visualizations":
     st.write("## Enhanced Visualizations")
@@ -288,6 +104,8 @@ elif tab == "Visualizations":
     plt.xlabel('Kategori BMI', fontsize=14)
     plt.ylabel('Kualitas Tidur', fontsize=14)
     st.pyplot(plt)
+
+    st.markdown(footer(), unsafe_allow_html=True)  # Add footer here
 
 elif tab == "Preprocessing, Model Training, and Model Performance":
     st.write("## Preprocessing Data")
@@ -364,14 +182,14 @@ elif tab == "Preprocessing, Model Training, and Model Performance":
     recalls = [rec_lr, rec_dt, rec_rf]
     f1_scores = [f1_lr, f1_dt, f1_rf]
 
-    st.write("## Model Performance Comparison")
+    # Plot model performance
     fig = go.Figure()
     fig.add_trace(go.Bar(x=model_names, y=accuracies, name='Accuracy'))
     fig.add_trace(go.Bar(x=model_names, y=precisions, name='Precision'))
     fig.add_trace(go.Bar(x=model_names, y=recalls, name='Recall'))
     fig.add_trace(go.Bar(x=model_names, y=f1_scores, name='F1-Score'))
 
-    fig.update_layout(barmode='group', title='Model Performance Metrics', xaxis_title='Model', yaxis_title='Score')
+    fig.update_layout(barmode='group', title='Model Performance Comparison', xaxis_title='Model', yaxis_title='Score')
     st.plotly_chart(fig)
 
     # Hyperparameter tuning for Decision Tree
@@ -404,9 +222,5 @@ elif tab == "Preprocessing, Model Training, and Model Performance":
     st.write(f"**Voting Classifier:** Accuracy={voting_acc:.4f}, Precision={voting_prec:.4f}, Recall={voting_rec:.4f}, F1-Score={voting_f1:.4f}")
 
     # Custom Footer
-    st.markdown("""
-        <div class="footer">
-            Created with ❤️ by Riezki Intan Pertiwi | <a href="https://www.uii.ac.id" style="color: #49a09d;">Universitas Islam Indonesia</a>
-        </div>
-    """, unsafe_allow_html=True)
+st.markdown(footer(), unsafe_allow_html=True)  # Add footer here
 

@@ -291,24 +291,41 @@ elif tab == "Visualizations":
 
 elif tab == "Preprocessing, Model Training, and Model Performance":
     st.write("## Preprocessing Data")
-    data[['Systolic_BP', 'Diastolic_BP']] = data['Blood Pressure'].str.split('/', expand=True).astype(float)
-    data = data.drop(columns=['Blood Pressure'])
+
+    # Display the data before preprocessing
+    st.write("### Data Before Preprocessing")
+    st.dataframe(data)
+
+    # Define preprocessing function
+    def preprocessing(df):
+        df[['Systolic_BP', 'Diastolic_BP']] = df['Blood Pressure'].str.split('/', expand=True).astype(float)
+        df = df.drop(columns=['Blood Pressure'])
+
+        label_encoder = LabelEncoder()
+        for col in ['Gender', 'Occupation', 'BMI Category', 'Sleep Disorder']:
+            df[col] = label_encoder.fit_transform(df[col])
+
+        df = df.drop(columns=['Person ID'])
+        return df
+
+    # Apply preprocessing
+    preprocessed_data = preprocessing(data.copy())
+
+    # Display the data after preprocessing
+    st.write("### Data After Preprocessing")
+    st.dataframe(preprocessed_data)
+
     st.write("Missing Values per Column:")
-    st.write(data.isnull().sum())
-    
+    st.write(preprocessed_data.isnull().sum())
+
     # Fill missing values only for numeric columns
-    numeric_cols = data.select_dtypes(include=['float64', 'int64']).columns
-    data[numeric_cols] = data[numeric_cols].fillna(data[numeric_cols].mean())
+    numeric_cols = preprocessed_data.select_dtypes(include=['float64', 'int64']).columns
+    preprocessed_data[numeric_cols] = preprocessed_data[numeric_cols].fillna(preprocessed_data[numeric_cols].mean())
 
-    data.dropna(subset=['Sleep Disorder'], inplace=True)
-    label_encoder = LabelEncoder()
-    categorical_cols = ['Gender', 'Occupation', 'BMI Category', 'Sleep Disorder']
-    for col in categorical_cols:
-        data[col] = label_encoder.fit_transform(data[col])
-    data = data.drop(columns=['Person ID'])
+    preprocessed_data.dropna(subset=['Sleep Disorder'], inplace=True)
 
-    X = data.drop('Sleep Disorder', axis=1)
-    y = data['Sleep Disorder']
+    X = preprocessed_data.drop('Sleep Disorder', axis=1)
+    y = preprocessed_data['Sleep Disorder']
     X = X.apply(pd.to_numeric, errors='coerce').fillna(0)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     scaler = StandardScaler()
@@ -316,7 +333,7 @@ elif tab == "Preprocessing, Model Training, and Model Performance":
     X_test = scaler.transform(X_test)
 
     # Model training and evaluation
-   
+
     def evaluate_model(model, X_test, y_test):
         y_pred = model.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)
@@ -392,3 +409,4 @@ elif tab == "Preprocessing, Model Training, and Model Performance":
             Created with ❤️ by Riezki Intan Pertiwi | <a href="https://www.uii.ac.id" style="color: #49a09d;">Universitas Islam Indonesia</a>
         </div>
     """, unsafe_allow_html=True)
+

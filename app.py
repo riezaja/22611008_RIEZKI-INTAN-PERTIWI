@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_sc
 import plotly.graph_objects as go
 
 # Set up the layout and page configuration
-st.set_page_config(page_title='Sleep Health and Lifestyle Analysis', layout='wide')
+st.set_page_config(page_title='Sleep Health and Lifestyle Analysis', layout='wide', initial_sidebar_state='expanded')
 
 # Load the dataset
 @st.cache_data
@@ -26,7 +26,31 @@ data.columns = data.columns.str.strip()
 # Set custom CSS for styling
 st.markdown("""
     <style>
-        /* Your CSS styles here */
+        .title {
+            color: #5f2c82;
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            font-size: 1.5em;
+            color: #49a09d;
+        }
+        .introduction img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            color: #666;
+        }
+        .footer a {
+            color: #49a09d;
+            text-decoration: none;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -34,7 +58,8 @@ st.markdown("""
 st.markdown('<h1 class="title">Sleep Health and Lifestyle Analysis</h1>', unsafe_allow_html=True)
 
 # Sidebar menu
-menu = st.sidebar.radio("Menu", ["Introduction", "Data Overview", "Visualizations", "Preprocessing, Model Training, and Model Performance"])
+st.sidebar.title("Navigation")
+menu = st.sidebar.radio("Menu", ["Introduction", "Data Overview", "Visualizations", "Model Training and Performance"])
 
 if menu == "Introduction":
     st.markdown("""
@@ -59,47 +84,45 @@ elif menu == "Visualizations":
     # Sleep Duration Distribution
     sns.set(style="whitegrid", palette="pastel")
     sns.histplot(data['Sleep Duration'], bins=30, ax=axs[0, 0], kde=True, color='#5f2c82')
-    axs[0, 0].set_title('Distribusi Durasi Tidur', fontsize=16)
-    axs[0, 0].set_xlabel('Durasi Tidur (jam)', fontsize=14)
-    axs[0, 0].set_ylabel('Frekuensi', fontsize=14)
+    axs[0, 0].set_title('Distribution of Sleep Duration', fontsize=16)
+    axs[0, 0].set_xlabel('Duration (hours)', fontsize=14)
+    axs[0, 0].set_ylabel('Frequency', fontsize=14)
 
     # BMI Category Count Plot
     sns.countplot(x='BMI Category', data=data, ax=axs[0, 1], palette='magma')
-    axs[0, 1].set_title('Count Plot of BMI Category', fontsize=16)
-    axs[0, 1].set_xlabel('Kategori BMI', fontsize=14)
-    axs[0, 1].set_ylabel('Frekuensi', fontsize=14)
+    axs[0, 1].set_title('BMI Category Count', fontsize=16)
+    axs[0, 1].set_xlabel('BMI Category', fontsize=14)
+    axs[0, 1].set_ylabel('Count', fontsize=14)
 
     # Stress Level Violin Plot
     sns.violinplot(x='Occupation', y='Stress Level', data=data, ax=axs[1, 0], palette='crest')
-    axs[1, 0].set_title('Violin Plot of Stress Level by Occupation', fontsize=16)
-    axs[1, 0].set_xlabel('Pekerjaan', fontsize=14)
-    axs[1, 0].set_ylabel('Tingkat Stres', fontsize=14)
+    axs[1, 0].set_title('Stress Level by Occupation', fontsize=16)
+    axs[1, 0].set_xlabel('Occupation', fontsize=14)
+    axs[1, 0].set_ylabel('Stress Level', fontsize=14)
     axs[1, 0].tick_params(axis='x', rotation=45)
 
     # Sleep Disorder Pie Chart
     data['Sleep Disorder'].value_counts().plot.pie(autopct='%1.1f%%', colors=sns.color_palette('pastel'), ax=axs[1, 1], startangle=140)
-    axs[1, 1].set_title('Distribusi Kategori Gangguan Tidur', fontsize=16)
+    axs[1, 1].set_title('Sleep Disorder Distribution', fontsize=16)
 
     plt.tight_layout()
     st.pyplot(fig)
 
     # Bar Plot Kualitas Tidur Berdasarkan Kategori BMI
+    st.write("## Quality of Sleep by BMI Category")
     plt.figure(figsize=(10, 6))
     sns.barplot(x='BMI Category', y='Quality of Sleep', data=data, palette='coolwarm')
-    plt.title('Bar Plot Kualitas Tidur Berdasarkan Kategori BMI', fontsize=16)
-    plt.xlabel('Kategori BMI', fontsize=14)
-    plt.ylabel('Kualitas Tidur', fontsize=14)
+    plt.title('Quality of Sleep by BMI Category', fontsize=16)
+    plt.xlabel('BMI Category', fontsize=14)
+    plt.ylabel('Quality of Sleep', fontsize=14)
     st.pyplot(plt)
 
-elif menu == "Preprocessing, Model Training, and Model Performance":
-    st.write("## Preprocessing Data")
+elif menu == "Model Training and Performance":
+    st.write("## Data Preprocessing")
     data[['Systolic_BP', 'Diastolic_BP']] = data['Blood Pressure'].str.split('/', expand=True).astype(float)
     data = data.drop(columns=['Blood Pressure'])
-    st.write("Missing Values per Column:")
-    st.write(data.isnull().sum())
     data.dropna(subset=['Sleep Disorder'], inplace=True)
-    numeric_cols = data.select_dtypes(include=['float64', 'int64']).columns
-    data[numeric_cols] = data[numeric_cols].fillna(data[numeric_cols].mean())
+    data.fillna(data.mean(), inplace=True)
     label_encoder = LabelEncoder()
     categorical_cols = ['Gender', 'Occupation', 'BMI Category', 'Sleep Disorder']
     for col in categorical_cols:
@@ -108,8 +131,7 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
 
     X = data.drop('Sleep Disorder', axis=1)
     y = data['Sleep Disorder']
-    X = X.apply(pd.to_numeric, errors='coerce')
-    X = X.fillna(0)
+    X = X.apply(pd.to_numeric, errors='coerce').fillna(0)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
@@ -152,11 +174,10 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
     fig = go.Figure()
     fig.add_trace(go.Bar(x=model_names, y=accuracies, name='Accuracy', marker_color='#5f2c82'))
     fig.add_trace(go.Bar(x=model_names, y=precisions, name='Precision', marker_color='#49a09d'))
-    fig.add_trace(go.Bar(x=model_names, y=recalls, name='Recall', marker_color='#ff6347'))
-    fig.add_trace(go.Bar(x=model_names, y=f1_scores, name='F1-Score', marker_color='#32cd32'))
+    fig.add_trace(go.Bar(x=model_names, y=recalls, name='Recall', marker_color='#7b1fa2'))
+    fig.add_trace(go.Bar(x=model_names, y=f1_scores, name='F1 Score', marker_color='#4caf50'))
 
-    fig.update_layout(barmode='group', title='Model Performance Metrics', xaxis_title='Model', yaxis_title='Score',
-                      title_font=dict(size=24, color='#5f2c82'), xaxis_title_font=dict(size=16), yaxis_title_font=dict(size=16))
+    fig.update_layout(barmode='group', xaxis_tickangle=-45)
     st.plotly_chart(fig)
 
     # Hyperparameter tuning for Decision Tree

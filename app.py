@@ -26,8 +26,8 @@ data.columns = data.columns.str.strip()
 menu = st.sidebar.selectbox('Select a Page', [
     'Data Overview',
     'Visualizations',
-    'Preprocessing and Model Training',
-    'Model Performance'
+    'Preprocessing Model Performance and Model Training'
+    
 ])
 
 # Custom CSS for styling
@@ -167,7 +167,6 @@ elif menu == 'Preprocessing and Model Training':
     st.write(f"**Decision Tree:** Accuracy={acc_dt:.4f}, Precision={prec_dt:.4f}, Recall={rec_dt:.4f}, F1-Score={f1_dt:.4f}")
     st.write(f"**Random Forest:** Accuracy={acc_rf:.4f}, Precision={prec_rf:.4f}, Recall={rec_rf:.4f}, F1-Score={f1_rf:.4f}")
 
-elif menu == 'Model Performance':
     st.write("## Model Performance Visualizations")
     model_names = ['Logistic Regression', 'Decision Tree', 'Random Forest']
     accuracies = [acc_lr, acc_dt, acc_rf]

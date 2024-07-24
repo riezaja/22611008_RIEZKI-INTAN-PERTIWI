@@ -73,14 +73,33 @@ st.pyplot(plt)
 # Preprocessing steps
 # Preprocess the data
 def preprocessing(df):
-    df[['Systolic_BP', 'Diastolic_BP']] = df['Blood Pressure'].str.split('/', expand=True).astype(float)
+    # Check if necessary columns are present
+    required_columns = ['Blood Pressure', 'Gender', 'Occupation', 'BMI Category', 'Sleep Disorder', 'Person ID']
+    for col in required_columns:
+        if col not in df.columns:
+            raise ValueError(f"Missing required column: {col}")
+    
+    # Split Blood Pressure into Systolic and Diastolic
+    try:
+        df[['Systolic_BP', 'Diastolic_BP']] = df['Blood Pressure'].str.split('/', expand=True).astype(float)
+    except Exception as e:
+        raise ValueError(f"Error splitting 'Blood Pressure': {e}")
+
+    # Drop original Blood Pressure column
     df = df.drop(columns=['Blood Pressure'])
 
+    # Label encoding
     label_encoder = LabelEncoder()
     for col in ['Gender', 'Occupation', 'BMI Category', 'Sleep Disorder']:
-        df[col] = label_encoder.fit_transform(df[col])
+        if col in df.columns:
+            df[col] = label_encoder.fit_transform(df[col])
+        else:
+            raise ValueError(f"Column {col} not found for encoding")
 
-    df = df.drop(columns=['Person ID'])
+    # Drop Person ID column
+    if 'Person ID' in df.columns:
+        df = df.drop(columns=['Person ID'])
+
     return df
 
 

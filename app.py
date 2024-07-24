@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_sc
 import plotly.graph_objects as go
 
 # Set up the layout and page configuration
-st.set_page_config(page_title='Sleep Health and Lifestyle Analysis', layout='wide', initial_sidebar_state='expanded')
+st.set_page_config(page_title='Sleep Health and Lifestyle Analysis', layout='wide')
 
 # Load the dataset
 @st.cache_data
@@ -29,28 +29,28 @@ st.markdown(
     <style>
     body {
         font-family: 'Times New Roman', serif;
-        background: linear-gradient(to right, #5f2c82, #49a09d);
+        background: linear-gradient(to right, #5f2c82, #49a09d); /* Gradient background in purple and teal */
     }
     .main .block-container {
         max-width: 1200px;
         padding: 2rem;
-        background: linear-gradient(to right, #ffffff, #f0f0f0);
+        background: linear-gradient(to right, #ffffff, #f0f0f0); /* Light gradient background for the container */
         border-radius: 15px;
         box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     }
     .centered-title {
         text-align: center;
         font-size: 2.8rem;
-        color: #333;
+        color: #333; /* Dark gray for the title text */
         font-weight: 700;
         margin: 2rem 0;
-        background: linear-gradient(to right, #5f2c82, #49a09d);
+        background: linear-gradient(to right, #5f2c82, #49a09d); /* Gradient text background */
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
     .stButton>button {
         border-radius: 12px;
-        background-color: #5f2c82;
+        background-color: #5f2c82; /* Purple button */
         color: white;
         padding: 0.8rem 2rem;
         font-size: 18px;
@@ -59,10 +59,10 @@ st.markdown(
         font-family: 'Times New Roman', serif;
     }
     .stButton>button:hover {
-        background-color: #4e1f66;
+        background-color: #4e1f66; /* Slightly darker purple on hover */
     }
     .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-        color: #333;
+        color: #333; /* Dark gray text */
         font-family: 'Times New Roman', serif;
     }
     .stMarkdown p {
@@ -77,12 +77,12 @@ st.markdown(
     }
     .tab-content {
         padding: 2rem;
-        background: linear-gradient(to right, #ffffff, #f0f0f0);
+        background: linear-gradient(to right, #ffffff, #f0f0f0); /* Light gradient background for tabs */
         border-radius: 15px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
     .tab-content h3 {
-        color: #333;
+        color: #333; /* Dark gray text for tab headers */
     }
     .tab-content p {
         font-size: 16px;
@@ -100,14 +100,13 @@ st.markdown(
 st.markdown('<h1 class="centered-title">Sleep Health and Lifestyle Analysis</h1>', unsafe_allow_html=True)
 
 # Sidebar menu
-st.sidebar.title("Navigation")
-menu = st.sidebar.radio("Menu", ["Introduction", "Data Overview", "Visualizations", "Model Training and Performance"])
+menu = st.sidebar.radio("Menu", ["Introduction", "Data Overview", "Visualizations", "Preprocessing, Model Training, and Model Performance"])
 
 if menu == "Introduction":
     st.markdown("""
         <div class="tab-content">
             <img src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Sleep and Lifestyle">
-            <h2 class="subtitle">Welcome to the Sleep Health and Lifestyle Analysis Dashboard</h2>
+            <h2>Welcome to the Sleep Health and Lifestyle Analysis Dashboard</h2>
             <p>This application provides insights into sleep health and lifestyle factors using a comprehensive dataset. Explore the data overview, visualizations, and machine learning models to understand how different factors affect sleep quality and overall health.</p>
         </div>
     """, unsafe_allow_html=True)
@@ -126,45 +125,50 @@ elif menu == "Visualizations":
     # Sleep Duration Distribution
     sns.set(style="whitegrid", palette="pastel")
     sns.histplot(data['Sleep Duration'], bins=30, ax=axs[0, 0], kde=True, color='#5f2c82')
-    axs[0, 0].set_title('Distribution of Sleep Duration', fontsize=16)
-    axs[0, 0].set_xlabel('Duration (hours)', fontsize=14)
-    axs[0, 0].set_ylabel('Frequency', fontsize=14)
+    axs[0, 0].set_title('Distribusi Durasi Tidur', fontsize=16)
+    axs[0, 0].set_xlabel('Durasi Tidur (jam)', fontsize=14)
+    axs[0, 0].set_ylabel('Frekuensi', fontsize=14)
 
     # BMI Category Count Plot
     sns.countplot(x='BMI Category', data=data, ax=axs[0, 1], palette='magma')
-    axs[0, 1].set_title('BMI Category Count', fontsize=16)
-    axs[0, 1].set_xlabel('BMI Category', fontsize=14)
-    axs[0, 1].set_ylabel('Count', fontsize=14)
+    axs[0, 1].set_title('Count Plot of BMI Category', fontsize=16)
+    axs[0, 1].set_xlabel('Kategori BMI', fontsize=14)
+    axs[0, 1].set_ylabel('Frekuensi', fontsize=14)
 
     # Stress Level Violin Plot
     sns.violinplot(x='Occupation', y='Stress Level', data=data, ax=axs[1, 0], palette='crest')
-    axs[1, 0].set_title('Stress Level by Occupation', fontsize=16)
-    axs[1, 0].set_xlabel('Occupation', fontsize=14)
-    axs[1, 0].set_ylabel('Stress Level', fontsize=14)
+    axs[1, 0].set_title('Violin Plot of Stress Level by Occupation', fontsize=16)
+    axs[1, 0].set_xlabel('Pekerjaan', fontsize=14)
+    axs[1, 0].set_ylabel('Tingkat Stres', fontsize=14)
     axs[1, 0].tick_params(axis='x', rotation=45)
 
     # Sleep Disorder Pie Chart
     data['Sleep Disorder'].value_counts().plot.pie(autopct='%1.1f%%', colors=sns.color_palette('pastel'), ax=axs[1, 1], startangle=140)
-    axs[1, 1].set_title('Sleep Disorder Distribution', fontsize=16)
+    axs[1, 1].set_title('Distribusi Kategori Gangguan Tidur', fontsize=16)
 
     plt.tight_layout()
     st.pyplot(fig)
 
     # Bar Plot Kualitas Tidur Berdasarkan Kategori BMI
-    st.write("## Quality of Sleep by BMI Category")
     plt.figure(figsize=(10, 6))
     sns.barplot(x='BMI Category', y='Quality of Sleep', data=data, palette='coolwarm')
-    plt.title('Quality of Sleep by BMI Category', fontsize=16)
-    plt.xlabel('BMI Category', fontsize=14)
-    plt.ylabel('Quality of Sleep', fontsize=14)
+    plt.title('Bar Plot Kualitas Tidur Berdasarkan Kategori BMI', fontsize=16)
+    plt.xlabel('Kategori BMI', fontsize=14)
+    plt.ylabel('Kualitas Tidur', fontsize=14)
     st.pyplot(plt)
 
-elif menu == "Model Training and Performance":
-    st.write("## Data Preprocessing")
+elif menu == "Preprocessing, Model Training, and Model Performance":
+    st.write("## Preprocessing Data")
     data[['Systolic_BP', 'Diastolic_BP']] = data['Blood Pressure'].str.split('/', expand=True).astype(float)
     data = data.drop(columns=['Blood Pressure'])
+    st.write("Missing Values per Column:")
+    st.write(data.isnull().sum())
+    
+    # Fill missing values only for numeric columns
+    numeric_cols = data.select_dtypes(include=['float64', 'int64']).columns
+    data[numeric_cols] = data[numeric_cols].fillna(data[numeric_cols].mean())
+
     data.dropna(subset=['Sleep Disorder'], inplace=True)
-    data.fillna(data.mean(), inplace=True)
     label_encoder = LabelEncoder()
     categorical_cols = ['Gender', 'Occupation', 'BMI Category', 'Sleep Disorder']
     for col in categorical_cols:
@@ -192,35 +196,24 @@ elif menu == "Model Training and Performance":
     model_lr = LogisticRegression(random_state=42)
     model_dt = DecisionTreeClassifier(random_state=42)
     model_rf = RandomForestClassifier(random_state=42)
-
+    
+    # Fit models
     model_lr.fit(X_train, y_train)
     model_dt.fit(X_train, y_train)
     model_rf.fit(X_train, y_train)
 
-    acc_lr, prec_lr, rec_lr, f1_lr = evaluate_model(model_lr, X_test, y_test)
-    acc_dt, prec_dt, rec_dt, f1_dt = evaluate_model(model_dt, X_test, y_test)
-    acc_rf, prec_rf, rec_rf, f1_rf = evaluate_model(model_rf, X_test, y_test)
+    # Evaluate models
+    st.write("### Logistic Regression")
+    lr_acc, lr_prec, lr_rec, lr_f1 = evaluate_model(model_lr, X_test, y_test)
+    st.write(f"Accuracy: {lr_acc:.4f}, Precision: {lr_prec:.4f}, Recall: {lr_rec:.4f}, F1-Score: {lr_f1:.4f}")
 
-    st.write(f"**Logistic Regression:** Accuracy={acc_lr:.4f}, Precision={prec_lr:.4f}, Recall={rec_lr:.4f}, F1-Score={f1_lr:.4f}")
-    st.write(f"**Decision Tree:** Accuracy={acc_dt:.4f}, Precision={prec_dt:.4f}, Recall={rec_dt:.4f}, F1-Score={f1_dt:.4f}")
-    st.write(f"**Random Forest:** Accuracy={acc_rf:.4f}, Precision={prec_rf:.4f}, Recall={rec_rf:.4f}, F1-Score={f1_rf:.4f}")
+    st.write("### Decision Tree")
+    dt_acc, dt_prec, dt_rec, dt_f1 = evaluate_model(model_dt, X_test, y_test)
+    st.write(f"Accuracy: {dt_acc:.4f}, Precision: {dt_prec:.4f}, Recall: {dt_rec:.4f}, F1-Score: {dt_f1:.4f}")
 
-    # Plot model comparison
-    st.write("## Model Comparison")
-    model_names = ['Logistic Regression', 'Decision Tree', 'Random Forest']
-    accuracies = [acc_lr, acc_dt, acc_rf]
-    precisions = [prec_lr, prec_dt, prec_rf]
-    recalls = [rec_lr, rec_dt, rec_rf]
-    f1_scores = [f1_lr, f1_dt, f1_rf]
-
-    fig = go.Figure()
-    fig.add_trace(go.Bar(x=model_names, y=accuracies, name='Accuracy', marker_color='#5f2c82'))
-    fig.add_trace(go.Bar(x=model_names, y=precisions, name='Precision', marker_color='#49a09d'))
-    fig.add_trace(go.Bar(x=model_names, y=recalls, name='Recall', marker_color='#7b1fa2'))
-    fig.add_trace(go.Bar(x=model_names, y=f1_scores, name='F1 Score', marker_color='#4caf50'))
-
-    fig.update_layout(barmode='group', xaxis_tickangle=-45)
-    st.plotly_chart(fig)
+    st.write("### Random Forest")
+    rf_acc, rf_prec, rf_rec, rf_f1 = evaluate_model(model_rf, X_test, y_test)
+    st.write(f"Accuracy: {rf_acc:.4f}, Precision: {rf_prec:.4f}, Recall: {rf_rec:.4f}, F1-Score: {rf_f1:.4f}")
 
     # Hyperparameter tuning for Decision Tree
     st.write("## Hyperparameter Tuning for Decision Tree")

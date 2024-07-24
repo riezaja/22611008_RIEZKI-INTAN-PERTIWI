@@ -28,59 +28,62 @@ st.markdown(
     """
 <style>
 body {
-    font-family: 'Arial', sans-serif; /* Modern and clean font */
-    background: linear-gradient(to right, #f9a9b1, #d95dae); /* Gradient from soft pink to vibrant purple */
-    color: #333; /* Dark text color for better readability */
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #f9a9b1, #d95dae);
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
 .main .block-container {
     max-width: 1200px;
     padding: 2rem;
-    background: linear-gradient(to right, #ffffff, #f0f4f8); /* Light gradient background for the container */
-    border-radius: 25px; /* More rounded corners for a soft look */
-    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2); /* Softer and more pronounced shadow */
-    margin: 2rem auto; /* Centered container with margin */
+    background: linear-gradient(to right, #ffffff, #f0f4f8);
+    border-radius: 30px; /* More rounded corners for a soft look */
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.25); /* Enhanced shadow */
+    margin: 2rem auto;
+    border: 1px solid #ddd; /* Subtle border for better definition */
 }
 
 .centered-title {
     text-align: center;
-    font-size: 3.5rem; /* Larger font size for a more impactful title */
-    color: #fff; /* White text color for the gradient effect */
-    font-weight: 800; /* Bold text */
+    font-size: 4rem; /* Larger font size for a more impactful title */
+    color: #fff;
+    font-weight: 900; /* Bold text */
     margin: 2rem 0;
-    background: linear-gradient(to right, #e0aaff, #a76cd9); /* Gradient text background */
+    background: linear-gradient(to right, #e0aaff, #a76cd9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Subtle shadow for enhanced text readability */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4); /* More pronounced shadow */
 }
 
 .stButton>button {
-    border-radius: 20px; /* Softer corners for the button */
-    background-color: #a76cd9; /* Soft purple button */
+    border-radius: 25px; /* Softer corners */
+    background-color: #a76cd9;
     color: white;
-    padding: 1rem 2.5rem;
-    font-size: 20px;
+    padding: 1.2rem 3rem; /* Larger padding for a more substantial button */
+    font-size: 22px; /* Larger font size */
     margin-top: 1rem;
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    transition: background-color 0.3s ease, transform 0.3s ease;
     font-family: 'Arial', sans-serif;
-    border: none; /* Remove default border */
-    cursor: pointer; /* Pointer cursor on hover */
+    border: none;
+    cursor: pointer;
 }
 
 .stButton>button:hover {
-    background-color: #8a4d8d; /* Slightly darker purple on hover */
-    transform: scale(1.1); /* Slightly increase button size on hover */
+    background-color: #8a4d8d;
+    transform: scale(1.1);
 }
 
 .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-    color: #5f2c82; /* Matching dark purple for headings */
-    font-family: 'Georgia', serif; /* Elegant serif font for headings */
+    color: #5f2c82;
+    font-family: 'Georgia', serif;
 }
 
 .stMarkdown p {
-    font-size: 18px;
+    font-size: 20px; /* Larger font size for better readability */
     line-height: 1.8;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem; /* Increased margin for better spacing */
 }
 
 .dataframe-container {
@@ -91,45 +94,50 @@ body {
 
 .tab-content {
     padding: 2rem;
-    background: linear-gradient(to right, #ffffff, #f0f4f8); /* Light gradient background for tabs */
-    border-radius: 25px;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15); /* Softer and more pronounced shadow */
+    background: linear-gradient(to right, #ffffff, #f0f4f8);
+    border-radius: 30px; /* More rounded corners */
+    box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
 }
 
 .tab-content h3 {
-    color: #5f2c82; /* Dark purple text for tab headers */
+    color: #5f2c82;
     font-family: 'Georgia', serif;
+    font-size: 2rem; /* Larger font size for section headings */
+    border-bottom: 2px solid #a76cd9; /* Underline for emphasis */
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .tab-content p {
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.6;
 }
 
 .tab-content img {
     display: block;
     margin: 0 auto;
-    border-radius: 15px;
+    border-radius: 20px; /* Larger border-radius for a softer look */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
 }
 
 .tabs {
     display: flex;
     justify-content: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem; /* Increased margin for better spacing */
 }
 
 .tab-button {
-    padding: 0.6rem 1.2rem;
-    margin: 0 0.3rem;
+    padding: 0.8rem 1.5rem; /* Larger padding for more prominent buttons */
+    margin: 0 0.5rem;
     border: 1px solid #a76cd9;
-    border-radius: 20px; /* Softer corners for tab buttons */
-    background-color: #ffffff; /* Light background for tab buttons */
+    border-radius: 25px; /* Softer corners */
+    background-color: #ffffff;
     color: #a76cd9;
-    font-size: 16px;
+    font-size: 18px; /* Slightly larger font size */
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
     font-family: 'Arial', sans-serif;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Subtle shadow effect */
 }
 
 .tab-button:hover {
@@ -142,6 +150,25 @@ body {
     color: #ffffff;
 }
 
+.footer {
+    text-align: center;
+    padding: 1rem;
+    background: linear-gradient(to right, #f9a9b1, #d95dae);
+    color: #ffffff;
+    font-size: 16px;
+    border-top: 1px solid #ddd;
+    margin-top: 2rem;
+}
+
+.footer a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
 </style>
 
 

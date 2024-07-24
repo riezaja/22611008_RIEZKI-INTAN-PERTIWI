@@ -36,7 +36,7 @@ body {
     padding: 2rem;
     background: linear-gradient(to right, #ffffff, #f0f0f0); /* Light gradient background for the container */
     border-radius: 15px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 15px rgba(215, 112, 165, 0.8);
 }
 .centered-title {
     text-align: center;

@@ -5,9 +5,9 @@ import seaborn as sns
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+from sklearn.model_selection import train_test_split
 import plotly.graph_objects as go
 
 # Set up the layout and page configuration
@@ -26,6 +26,11 @@ data.columns = data.columns.str.strip()
 # Set custom CSS for styling
 st.markdown("""
     <style>
+        body {
+            background-image: url('https://www.example.com/your-background-image.jpg');
+            background-size: cover;
+            background-position: center;
+        }
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
         
         .title {
@@ -73,6 +78,10 @@ st.markdown("""
             padding: 10px;
             box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
         }
+        .introduction img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -80,9 +89,18 @@ st.markdown("""
 st.markdown('<h1 class="title">Sleep Health and Lifestyle Analysis</h1>', unsafe_allow_html=True)
 
 # Sidebar menu
-menu = st.sidebar.radio("Menu", ["Data Overview", "Visualizations", "Preprocessing, Model Training, and Model Performance"])
+menu = st.sidebar.radio("Menu", ["Introduction", "Data Overview", "Visualizations", "Preprocessing, Model Training, and Model Performance"])
 
-if menu == "Data Overview":
+if menu == "Introduction":
+    st.markdown("""
+        <div class="introduction">
+            <img src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Sleep and Lifestyle">
+            <h2 class="subtitle">Welcome to the Sleep Health and Lifestyle Analysis Dashboard</h2>
+            <p>This application provides insights into sleep health and lifestyle factors using a comprehensive dataset. Explore the data overview, visualizations, and machine learning models to understand how different factors affect sleep quality and overall health.</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+elif menu == "Data Overview":
     st.write("## Data Overview")
     st.dataframe(data)
 
@@ -94,27 +112,28 @@ elif menu == "Visualizations":
     fig, axs = plt.subplots(2, 2, figsize=(14, 10))
 
     # Sleep Duration Distribution
-    sns.histplot(data['Sleep Duration'], bins=30, ax=axs[0, 0], kde=True, color='purple')
-    axs[0, 0].set_title('Distribusi Durasi Tidur')
-    axs[0, 0].set_xlabel('Durasi Tidur (jam)')
-    axs[0, 0].set_ylabel('Frekuensi')
+    sns.set(style="whitegrid", palette="pastel")
+    sns.histplot(data['Sleep Duration'], bins=30, ax=axs[0, 0], kde=True, color='#5f2c82')
+    axs[0, 0].set_title('Distribusi Durasi Tidur', fontsize=16)
+    axs[0, 0].set_xlabel('Durasi Tidur (jam)', fontsize=14)
+    axs[0, 0].set_ylabel('Frekuensi', fontsize=14)
 
     # BMI Category Count Plot
     sns.countplot(x='BMI Category', data=data, ax=axs[0, 1], palette='magma')
-    axs[0, 1].set_title('Count Plot of BMI Category')
-    axs[0, 1].set_xlabel('Kategori BMI')
-    axs[0, 1].set_ylabel('Frekuensi')
+    axs[0, 1].set_title('Count Plot of BMI Category', fontsize=16)
+    axs[0, 1].set_xlabel('Kategori BMI', fontsize=14)
+    axs[0, 1].set_ylabel('Frekuensi', fontsize=14)
 
     # Stress Level Violin Plot
     sns.violinplot(x='Occupation', y='Stress Level', data=data, ax=axs[1, 0], palette='crest')
-    axs[1, 0].set_title('Violin Plot of Stress Level by Occupation')
-    axs[1, 0].set_xlabel('Pekerjaan')
-    axs[1, 0].set_ylabel('Tingkat Stres')
+    axs[1, 0].set_title('Violin Plot of Stress Level by Occupation', fontsize=16)
+    axs[1, 0].set_xlabel('Pekerjaan', fontsize=14)
+    axs[1, 0].set_ylabel('Tingkat Stres', fontsize=14)
     axs[1, 0].tick_params(axis='x', rotation=45)
 
     # Sleep Disorder Pie Chart
     data['Sleep Disorder'].value_counts().plot.pie(autopct='%1.1f%%', colors=sns.color_palette('pastel'), ax=axs[1, 1], startangle=140)
-    axs[1, 1].set_title('Distribusi Kategori Gangguan Tidur')
+    axs[1, 1].set_title('Distribusi Kategori Gangguan Tidur', fontsize=16)
 
     plt.tight_layout()
     st.pyplot(fig)
@@ -122,9 +141,9 @@ elif menu == "Visualizations":
     # Bar Plot Kualitas Tidur Berdasarkan Kategori BMI
     plt.figure(figsize=(10, 6))
     sns.barplot(x='BMI Category', y='Quality of Sleep', data=data, palette='coolwarm')
-    plt.title('Bar Plot Kualitas Tidur Berdasarkan Kategori BMI')
-    plt.xlabel('Kategori BMI')
-    plt.ylabel('Kualitas Tidur')
+    plt.title('Bar Plot Kualitas Tidur Berdasarkan Kategori BMI', fontsize=16)
+    plt.xlabel('Kategori BMI', fontsize=14)
+    plt.ylabel('Kualitas Tidur', fontsize=14)
     st.pyplot(plt)
 
 elif menu == "Preprocessing, Model Training, and Model Performance":
@@ -186,13 +205,16 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
     # Interactive Model Performance Comparison
     st.write("## Model Performance Comparison")
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=model_names, y=accuracies, name='Accuracy'))
-    fig.add_trace(go.Bar(x=model_names, y=precisions, name='Precision'))
-    fig.add_trace(go.Bar(x=model_names, y=recalls, name='Recall'))
-    fig.add_trace(go.Bar(x=model_names, y=f1_scores, name='F1-Score'))
+    fig.add_trace(go.Bar(x=model_names, y=accuracies, name='Accuracy', marker_color='#5f2c82'))
+    fig.add_trace(go.Bar(x=model_names, y=precisions, name='Precision', marker_color='#49a09d'))
+    fig.add_trace(go.Bar(x=model_names, y=recalls, name='Recall', marker_color='#ff6347'))
+    fig.add_trace(go.Bar(x=model_names, y=f1_scores, name='F1-Score', marker_color='#32cd32'))
 
-    fig.update_layout(barmode='group', title='Model Performance Metrics', xaxis_title='Model', yaxis_title='Score')
+    fig.update_layout(barmode='group', title='Model Performance Metrics', xaxis_title='Model', yaxis_title='Score',
+                      title_font=dict(size=24, color='#5f2c82'), xaxis_title_font=dict(size=16), yaxis_title_font=dict(size=16))
     st.plotly_chart(fig)
+
+
 
     # Hyperparameter tuning for Decision Tree
     st.write("## Hyperparameter Tuning for Decision Tree")
@@ -224,4 +246,8 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
     st.write(f"**Voting Classifier:** Accuracy={voting_acc:.4f}, Precision={voting_prec:.4f}, Recall={voting_rec:.4f}, F1-Score={voting_f1:.4f}")
 
 # Custom Footer
-st.markdown('<div class="footer">Created with ❤️ by Riezki Intan Pertiwi | Universitas Islam Indonesia</div>', unsafe_allow_html=True)
+ st.markdown("""
+        <div class="footer">
+            Created with ❤️ by Riezki Intan Pertiwi | <a href="https://www.uii.ac.id" style="color: #49a09d;">Universitas Islam Indonesia</a>
+        </div>
+    """, unsafe_allow_html=True)

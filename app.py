@@ -29,7 +29,7 @@ st.markdown(
 <style>
 body {
     font-family: 'Times New Roman', serif;
-    background: linear-gradient(to right, #f6c1c1, #9b7eaa); /* Gradient background from pink to purple */
+    background: linear-gradient(to right, #d95dae, #9b7eaa); /* Gradient background from pink to purple */
 }
 .main .block-container {
     max-width: 1200px;

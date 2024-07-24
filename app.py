@@ -215,7 +215,15 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
     recalls = [rec_lr, rec_dt, rec_rf]
     f1_scores = [f1_lr, f1_dt, f1_rf]
 
-    
+    st.write("## Model Performance Comparison")
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=model_names, y=accuracies, name='Accuracy'))
+    fig.add_trace(go.Bar(x=model_names, y=precisions, name='Precision'))
+    fig.add_trace(go.Bar(x=model_names, y=recalls, name='Recall'))
+    fig.add_trace(go.Bar(x=model_names, y=f1_scores, name='F1-Score'))
+
+    fig.update_layout(barmode='group', title='Model Performance Metrics', xaxis_title='Model', yaxis_title='Score')
+    st.plotly_chart(fig)
     # Hyperparameter tuning for Decision Tree
     st.write("## Hyperparameter Tuning for Decision Tree")
     param_grid = {

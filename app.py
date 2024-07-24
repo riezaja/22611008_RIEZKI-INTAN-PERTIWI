@@ -29,7 +29,7 @@ st.markdown(
 <style>
 body {
     font-family: 'Arial', sans-serif;
-    background: radial-gradient(circle, #f9a9b1, #d95dae); /* Radial gradient for a dynamic background */
+    background: radial-gradient(circle, #f9a9b1, #d95dae);
     color: #333;
     margin: 0;
     padding: 0;
@@ -37,86 +37,86 @@ body {
 }
 
 .main .block-container {
-    max-width: 1200px;
-    padding: 3rem;
-    background: rgba(255, 255, 255, 0.95); /* Almost opaque background for a polished look */
-    border-radius: 50px; /* Extreme rounded corners for a soft, modern look */
-    box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.4); /* Intense shadow for strong depth */
-    margin: 3rem auto;
-    border: 1px solid rgba(0, 0, 0, 0.15); /* Very subtle border for enhanced definition */
+    max-width: 1000px; /* Adjusted width for better fit */
+    padding: 2rem; /* Reduced padding for a tighter layout */
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 30px; /* Slightly rounded corners */
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.4);
+    margin: 2rem auto;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
-    overflow: hidden; /* Hide any overflow for clean edges */
+    overflow: hidden;
 }
 
 .centered-title {
     text-align: center;
-    font-size: 5rem; /* Huge font size for major impact */
+    font-size: 3.5rem; /* Reduced font size for better fit */
     color: #fff;
     font-weight: 900;
-    margin: 3rem 0;
+    margin: 2rem 0;
     background: linear-gradient(to right, #e0aaff, #a76cd9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 8px 8px 16px rgba(0, 0, 0, 0.7); /* Strong shadow for dramatic effect */
-    animation: pulse 3s infinite; /* Pulsating effect */
+    text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
+    animation: pulse 3s infinite;
 }
 
 @keyframes pulse {
     0% {
-        text-shadow: 8px 8px 16px rgba(0, 0, 0, 0.7);
+        text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
     }
     50% {
-        text-shadow: 12px 12px 24px rgba(0, 0, 0, 0.5);
+        text-shadow: 8px 8px 15px rgba(0, 0, 0, 0.5);
     }
     100% {
-        text-shadow: 8px 8px 16px rgba(0, 0, 0, 0.7);
+        text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
     }
 }
 
 .stButton>button {
-    border-radius: 40px; /* Extra rounded corners */
-    background: linear-gradient(to right, #a76cd9, #a44c77); /* Gradient button background */
+    border-radius: 30px; /* Rounded corners */
+    background: linear-gradient(to right, #a76cd9, #a44c77);
     color: #fff;
-    padding: 1.75rem 4rem; /* Generous padding for a luxurious feel */
-    font-size: 26px; /* Large font size */
-    margin-top: 1.5rem;
-    transition: background 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    padding: 1.25rem 3rem; /* Adjusted padding */
+    font-size: 22px; /* Slightly smaller font size */
+    margin-top: 1rem;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     font-family: 'Arial', sans-serif;
     border: none;
     cursor: pointer;
-    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.4); /* Strong shadow effect */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .stButton>button:hover {
-    background: linear-gradient(to right, #8a4d8d, #7a3b6d); /* Darker gradient on hover */
-    transform: scale(1.1);
-    box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
+    background: linear-gradient(to right, #8a4d8d, #7a3b6d);
+    transform: scale(1.05);
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.4);
 }
 
 .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
     color: #5f2c82;
     font-family: 'Georgia', serif;
-    text-shadow: 3px 3px 7px rgba(0, 0, 0, 0.5); /* Pronounced shadow for headings */
-    letter-spacing: 1px; /* Slightly increased letter spacing for a refined look */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.5px;
 }
 
 .stMarkdown p {
-    font-size: 22px; /* Larger font size for readability */
-    line-height: 1.8;
-    margin-bottom: 2rem;
+    font-size: 18px; /* Adjusted font size for readability */
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
 }
 
 .dataframe-container {
     display: flex;
     justify-content: center;
-    margin: 2rem 0;
+    margin: 1.5rem 0;
 }
 
 .tab-content {
-    padding: 3rem;
-    background: rgba(255, 255, 255, 0.95); /* Semi-transparent background */
-    border-radius: 50px;
-    box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.3); /* Intense shadow for depth */
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 30px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.3);
     position: relative;
     overflow: hidden;
 }
@@ -124,63 +124,63 @@ body {
 .tab-content h3 {
     color: #5f2c82;
     font-family: 'Georgia', serif;
-    font-size: 2.8rem; /* Larger font size for section headers */
-    border-bottom: 5px solid #a76cd9; /* Thick underline for emphasis */
-    padding-bottom: 0.75rem;
-    margin-bottom: 2rem;
+    font-size: 2.2rem; /* Reduced font size */
+    border-bottom: 4px solid #a76cd9;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
     position: relative;
-    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 .tab-content h3::before {
     content: '';
     position: absolute;
     left: 50%;
-    bottom: -15px; /* Positioned below the text */
+    bottom: -10px;
     transform: translateX(-50%);
-    width: 80px;
-    height: 5px;
+    width: 60px;
+    height: 4px;
     background-color: #a76cd9;
     border-radius: 10px;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Shadow for the underline */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .tab-content p {
-    font-size: 20px;
+    font-size: 16px; /* Smaller font size */
     line-height: 1.6;
 }
 
 .tab-content img {
     display: block;
-    margin: 2rem auto;
-    border-radius: 30px; /* Larger border-radius for a softer look */
-    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.3); /* Strong shadow effect */
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    margin: 1.5rem auto;
+    border-radius: 20px; /* Moderate border-radius */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .tab-content img:hover {
-    transform: scale(1.1); /* Larger zoom effect on hover */
-    box-shadow: 0px 16px 40px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
+    transform: scale(1.05);
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.4);
 }
 
 .tabs {
     display: flex;
     justify-content: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .tab-button {
-    padding: 1.2rem 2.5rem;
+    padding: 1rem 2rem;
     margin: 0 0.5rem;
     border: 1px solid #a76cd9;
-    border-radius: 40px; /* Extra rounded corners */
+    border-radius: 30px; /* Rounded corners */
     background: #ffffff;
     color: #a76cd9;
-    font-size: 20px;
+    font-size: 18px; /* Adjusted font size */
     cursor: pointer;
-    transition: background 0.4s ease, color 0.4s ease, transform 0.4s ease;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
     font-family: 'Arial', sans-serif;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .tab-button:hover {
@@ -196,20 +196,20 @@ body {
 
 .footer {
     text-align: center;
-    padding: 2.5rem;
+    padding: 2rem;
     background: linear-gradient(to right, #f9a9b1, #d95dae);
     color: #ffffff;
-    font-size: 20px; /* Larger font size for emphasis */
-    border-top: 3px solid rgba(255, 255, 255, 0.2); /* More prominent border for definition */
-    margin-top: 3rem;
+    font-size: 18px; /* Adjusted font size */
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    margin-top: 2rem;
     position: relative;
-    box-shadow: 0px -15px 30px rgba(0, 0, 0, 0.3); /* Inverted shadow for footer */
+    box-shadow: 0px -10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .footer::before {
     content: 'Created with ♥ by Riezki Intan Pertiwi';
     display: block;
-    font-size: 18px;
+    font-size: 16px; /* Adjusted font size */
     color: #ffffff;
     margin-top: 0.5rem;
 }
@@ -223,7 +223,7 @@ body {
 
 .footer a:hover {
     color: #f9a9b1;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4); /* Highlight link with shadow effect */
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
     text-decoration: underline;
 }
 

@@ -51,7 +51,7 @@ body {
     text-align: center;
     font-size: 5rem; /* Huge font size for major impact */
     color: #fff;
-    font-weight: 900;
+    font-weight: 800;
     margin: 3rem 0;
     background: linear-gradient(to right, #e0aaff, #a76cd9);
     -webkit-background-clip: text;

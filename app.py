@@ -189,7 +189,6 @@ body {
 }
 
 .footer::before {
-    content: 'Created with ♥ by Riezki Intan Pertiwi';
     display: block;
     font-size: 16px;
     color: #ffffff;

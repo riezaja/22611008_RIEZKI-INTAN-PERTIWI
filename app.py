@@ -224,6 +224,7 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
 
     fig.update_layout(barmode='group', title='Model Performance Metrics', xaxis_title='Model', yaxis_title='Score')
     st.plotly_chart(fig)
+
     # Hyperparameter tuning for Decision Tree
     st.write("## Hyperparameter Tuning for Decision Tree")
     param_grid = {

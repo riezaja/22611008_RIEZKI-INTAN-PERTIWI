@@ -217,7 +217,7 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
     model_dt.fit(X_train, y_train)
     model_rf.fit(X_train, y_train)
 
-    acc_lr, prec_lr, rec_lr, f1_lr = evaluate_model(model_lr, X_test, y_test)
+       acc_lr, prec_lr, rec_lr, f1_lr = evaluate_model(model_lr, X_test, y_test)
     acc_dt, prec_dt, rec_dt, f1_dt = evaluate_model(model_dt, X_test, y_test)
     acc_rf, prec_rf, rec_rf, f1_rf = evaluate_model(model_rf, X_test, y_test)
 
@@ -245,6 +245,6 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
 
     st.markdown("""
         <div class="footer">
-            Created with ❤️ by Riezki Intan Pertiwi</a> | <a href="https://www.uii.ac.id" style="color: #49a09d;"> Universitas Islam Indonesia
+            Created with ❤️ by Riezki Intan Pertiwi | <a href="https://www.uii.ac.id" style="color: #49a09d;"> Universitas Islam Indonesia
         </div>
     """, unsafe_allow_html=True)

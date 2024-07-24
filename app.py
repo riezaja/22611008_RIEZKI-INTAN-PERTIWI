@@ -26,8 +26,8 @@ data.columns = data.columns.str.strip()
 menu = st.sidebar.selectbox('Select a Page', [
     'Data Overview',
     'Visualizations',
-    'Preprocessing and Model Training',
-    'Model Performance'
+    'Preprocessing',
+    'Model Training and Evaluation'
 ])
 
 # Custom CSS for styling
@@ -118,7 +118,7 @@ elif menu == 'Visualizations':
     plt.ylabel('Kualitas Tidur')
     st.pyplot(plt)
 
-elif menu == 'Preprocessing and Model Training':
+elif menu == 'Preprocessing':
     st.write("## Preprocessing Data")
     data[['Systolic_BP', 'Diastolic_BP']] = data['Blood Pressure'].str.split('/', expand=True).astype(float)
     data = data.drop(columns=['Blood Pressure'])
@@ -143,7 +143,6 @@ elif menu == 'Model Training and Evaluation':
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
-
 
     def evaluate_model(model, X_test, y_test):
         y_pred = model.predict(X_test)

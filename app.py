@@ -55,15 +55,6 @@ plt.ylabel('Tingkat Stres')
 plt.xticks(rotation=45)  # Rotate x-axis labels if needed
 st.pyplot(plt)
 
-#Scatter Plot Tingkat Stres vs. Durasi Tidur
-plt.figure(figsize=(10, 6))
-sns.scatterplot(x='Sleep Duration', y='Stress Level', data=data, hue='Gender', alpha=0.7)
-plt.title('Scatter Plot Tingkat Stres vs. Durasi Tidur')
-plt.xlabel('Durasi Tidur (jam)')
-plt.ylabel('Tingkat Stres')
-plt.legend(title='Gender')
-st.pyplot(plt)
-
 #Pie Chart Kategori Gangguan Tidur
 plt.figure(figsize=(8, 8))
 data['Sleep Disorder'].value_counts().plot.pie(autopct='%1.1f%%', colors=sns.color_palette('pastel'))

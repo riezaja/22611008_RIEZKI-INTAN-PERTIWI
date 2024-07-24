@@ -26,8 +26,7 @@ data.columns = data.columns.str.strip()
 menu = st.sidebar.selectbox('Select a Page', [
     'Data Overview',
     'Visualizations',
-    'Preprocessing',
-    'Model Training and Evaluation'
+    'Preprocessing Model Training and Evaluation '
 ])
 
 # Custom CSS for styling
@@ -133,7 +132,6 @@ elif menu == 'Preprocessing':
         data[col] = label_encoder.fit_transform(data[col])
     data = data.drop(columns=['Person ID'])
 
-elif menu == 'Model Training and Evaluation':
     st.write("## Model Training and Evaluation")
     X = data.drop('Sleep Disorder', axis=1)
     y = data['Sleep Disorder']

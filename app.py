@@ -91,6 +91,31 @@ st.markdown(
     .tab-content img {
         border-radius: 15px;
     }
+    .tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    .tab-button {
+        padding: 0.5rem 1rem;
+        margin: 0 0.2rem;
+        border: 1px solid #5f2c82;
+        border-radius: 12px;
+        background-color: #ffffff;
+        color: #5f2c82;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        font-family: 'Times New Roman', serif;
+    }
+    .tab-button:hover {
+        background-color: #5f2c82;
+        color: #ffffff;
+    }
+    .active {
+        background-color: #5f2c82;
+        color: #ffffff;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -99,10 +124,11 @@ st.markdown(
 # Application title
 st.markdown('<h1 class="centered-title">Sleep Health and Lifestyle Analysis</h1>', unsafe_allow_html=True)
 
-# Sidebar menu
-menu = st.sidebar.radio("Menu", ["Introduction", "Data Overview", "Visualizations", "Preprocessing, Model Training, and Model Performance"])
+# Horizontal tab menu
+tabs = ["Introduction", "Data Overview", "Visualizations", "Preprocessing, Model Training, and Model Performance"]
+tab = st.selectbox("Choose a tab", tabs, index=0, key="tabs")
 
-if menu == "Introduction":
+if tab == "Introduction":
     st.markdown("""
         <div class="tab-content">
             <img src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Sleep and Lifestyle">
@@ -111,14 +137,14 @@ if menu == "Introduction":
         </div>
     """, unsafe_allow_html=True)
 
-elif menu == "Data Overview":
+elif tab == "Data Overview":
     st.write("## Data Overview")
     st.dataframe(data)
 
     st.write("## Summary Statistics")
     st.write(data.describe())
 
-elif menu == "Visualizations":
+elif tab == "Visualizations":
     st.write("## Enhanced Visualizations")
     fig, axs = plt.subplots(2, 2, figsize=(14, 10))
 
@@ -157,7 +183,7 @@ elif menu == "Visualizations":
     plt.ylabel('Kualitas Tidur', fontsize=14)
     st.pyplot(plt)
 
-elif menu == "Preprocessing, Model Training, and Model Performance":
+elif tab == "Preprocessing, Model Training, and Model Performance":
     st.write("## Preprocessing Data")
     data[['Systolic_BP', 'Diastolic_BP']] = data['Blood Pressure'].str.split('/', expand=True).astype(float)
     data = data.drop(columns=['Blood Pressure'])

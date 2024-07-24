@@ -26,99 +26,100 @@ data.columns = data.columns.str.strip()
 # Add custom CSS for styling
 st.markdown(
     """
-    <style>
-    body {
-        font-family: 'Times New Roman', serif;
-        background: linear-gradient(to right, #5f2c82, #49a09d); /* Gradient background in purple and teal */
-    }
-    .main .block-container {
-        max-width: 1200px;
-        padding: 2rem;
-        background: linear-gradient(to right, #ffffff, #f0f0f0); /* Light gradient background for the container */
-        border-radius: 15px;
-        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-    }
-    .centered-title {
-        text-align: center;
-        font-size: 2.8rem;
-        color: #333; /* Dark gray for the title text */
-        font-weight: 700;
-        margin: 2rem 0;
-        background: linear-gradient(to right, #5f2c82, #49a09d); /* Gradient text background */
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-    .stButton>button {
-        border-radius: 12px;
-        background-color: #5f2c82; /* Purple button */
-        color: white;
-        padding: 0.8rem 2rem;
-        font-size: 18px;
-        margin-top: 1rem;
-        transition: background-color 0.3s ease;
-        font-family: 'Times New Roman', serif;
-    }
-    .stButton>button:hover {
-        background-color: #4e1f66; /* Slightly darker purple on hover */
-    }
-    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-        color: #333; /* Dark gray text */
-        font-family: 'Times New Roman', serif;
-    }
-    .stMarkdown p {
-        font-size: 18px;
-        line-height: 1.8;
-        margin-bottom: 1.2rem;
-    }
-    .dataframe-container {
-        display: flex;
-        justify-content: center;
-        margin: 2rem 0;
-    }
-    .tab-content {
-        padding: 2rem;
-        background: linear-gradient(to right, #ffffff, #f0f0f0); /* Light gradient background for tabs */
-        border-radius: 15px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    }
-    .tab-content h3 {
-        color: #333; /* Dark gray text for tab headers */
-    }
-    .tab-content p {
-        font-size: 16px;
-        line-height: 1.6;
-    }
-    .tab-content img {
-        display: block;
-        margin: 0 auto;
-        border-radius: 15px;
-    }
-    .tabs {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 1rem;
-    }
-    .tab-button {
-        padding: 0.5rem 1rem;
-        margin: 0 0.2rem;
-        border: 1px solid #5f2c82;
-        border-radius: 12px;
-        background-color: #ffffff;
-        color: #5f2c82;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease;
-        font-family: 'Times New Roman', serif;
-    }
-    .tab-button:hover {
-        background-color: #5f2c82;
-        color: #ffffff;
-    }
-    .active {
-        background-color: #5f2c82;
-        color: #ffffff;
-    }
-    </style>
+<style>
+body {
+    font-family: 'Times New Roman', serif;
+    background: linear-gradient(to right, #f6c1c1, #9b7eaa); /* Gradient background from pink to purple */
+}
+.main .block-container {
+    max-width: 1200px;
+    padding: 2rem;
+    background: linear-gradient(to right, #ffffff, #f0f0f0); /* Light gradient background for the container */
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+.centered-title {
+    text-align: center;
+    font-size: 2.8rem;
+    color: #333; /* Dark gray for the title text */
+    font-weight: 700;
+    margin: 2rem 0;
+    background: linear-gradient(to right, #5f2c82, #49a09d); /* Gradient text background */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.stButton>button {
+    border-radius: 12px;
+    background-color: #5f2c82; /* Purple button */
+    color: white;
+    padding: 0.8rem 2rem;
+    font-size: 18px;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+    font-family: 'Times New Roman', serif;
+}
+.stButton>button:hover {
+    background-color: #4e1f66; /* Slightly darker purple on hover */
+}
+.stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+    color: #333; /* Dark gray text */
+    font-family: 'Times New Roman', serif;
+}
+.stMarkdown p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+}
+.dataframe-container {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+.tab-content {
+    padding: 2rem;
+    background: linear-gradient(to right, #ffffff, #f0f0f0); /* Light gradient background for tabs */
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.tab-content h3 {
+    color: #333; /* Dark gray text for tab headers */
+}
+.tab-content p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+.tab-content img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 15px;
+}
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+.tab-button {
+    padding: 0.5rem 1rem;
+    margin: 0 0.2rem;
+    border: 1px solid #5f2c82;
+    border-radius: 12px;
+    background-color: #ffffff;
+    color: #5f2c82;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Times New Roman', serif;
+}
+.tab-button:hover {
+    background-color: #5f2c82;
+    color: #ffffff;
+}
+.active {
+    background-color: #5f2c82;
+    color: #ffffff;
+}
+</style>
+
     """,
     unsafe_allow_html=True
 )

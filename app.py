@@ -72,35 +72,31 @@ st.pyplot(plt)
 
 # Preprocessing steps
 # Preprocess the data
-def preprocessing(df):
-    # Check if necessary columns are present
-    required_columns = ['Blood Pressure', 'Gender', 'Occupation', 'BMI Category', 'Sleep Disorder', 'Person ID']
-    for col in required_columns:
-        if col not in df.columns:
-            raise ValueError(f"Missing required column: {col}")
-    
-    # Split Blood Pressure into Systolic and Diastolic
-    try:
-        df[['Systolic_BP', 'Diastolic_BP']] = df['Blood Pressure'].str.split('/', expand=True).astype(float)
-    except Exception as e:
-        raise ValueError(f"Error splitting 'Blood Pressure': {e}")
+st.write("## Preprocessing Data")
+# Split Blood Pressure into Systolic and Diastolic
+data[['Systolic_BP', 'Diastolic_BP']] = data['Blood Pressure'].str.split('/', expand=True).astype(float)
+data = data.drop(columns=['Blood Pressure'])
 
-    # Drop original Blood Pressure column
-    df = df.drop(columns=['Blood Pressure'])
+# Check for missing values
+st.write("Missing Values per Column:")
+st.write(data.isnull().sum())
 
-    # Label encoding
-    label_encoder = LabelEncoder()
-    for col in ['Gender', 'Occupation', 'BMI Category', 'Sleep Disorder']:
-        if col in df.columns:
-            df[col] = label_encoder.fit_transform(df[col])
-        else:
-            raise ValueError(f"Column {col} not found for encoding")
+# Drop rows with missing target values
+data.dropna(subset=['Sleep Disorder'], inplace=True)
 
-    # Drop Person ID column
-    if 'Person ID' in df.columns:
-        df = df.drop(columns=['Person ID'])
+# Fill missing numeric values with the mean
+numeric_cols = data.select_dtypes(include=['float64', 'int64']).columns
+data[numeric_cols] = data[numeric_cols].fillna(data[numeric_cols].mean())
 
-    return df
+# Encode categorical variables
+label_encoder = LabelEncoder()
+categorical_cols = ['Gender', 'Occupation', 'BMI Category', 'Sleep Disorder']
+for col in categorical_cols:
+    data[col] = label_encoder.fit_transform(data[col])
+
+# Drop unnecessary columns
+data = data.drop(columns=['Person ID'])
+
 
 
 # Define features and target

@@ -5,9 +5,9 @@ import seaborn as sns
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+from sklearn.model_selection import train_test_split
 import plotly.graph_objects as go
 
 # Set up the layout and page configuration
@@ -78,6 +78,42 @@ st.markdown("""
             padding: 10px;
             box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
         }
+        .menu-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            text-align: center;
+            background-color: #5f2c82;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .menu-btn:hover {
+            background-color: #3e1b56;
+        }
+        .intro {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .intro img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .intro h2 {
+            font-family: 'Roboto', sans-serif;
+            color: #5f2c82;
+            margin-top: 10px;
+        }
+        .intro p {
+            font-family: 'Roboto', sans-serif;
+            color: #49a09d;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -85,9 +121,15 @@ st.markdown("""
 st.markdown('<h1 class="title">Sleep Health and Lifestyle Analysis</h1>', unsafe_allow_html=True)
 
 # Sidebar menu
-menu = st.sidebar.radio("Menu", ["Data Overview", "Visualizations", "Preprocessing, Model Training, and Model Performance"])
+menu = st.sidebar.selectbox(
+    "Menu",
+    ["Introduction", "Data Overview", "Visualizations", "Preprocessing, Model Training, and Model Performance"]
+)
 
-if menu == "Data Overview":
+if menu == "Introduction":
+    st.write('<div class="intro"><img src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Introduction Image"><h2>Welcome to the Sleep Health and Lifestyle Analysis</h2><p>Explore the data, visualizations, and model performance insights to understand factors influencing sleep health and lifestyle.</p></div>', unsafe_allow_html=True)
+
+elif menu == "Data Overview":
     st.write("## Data Overview")
     st.dataframe(data)
 

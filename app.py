@@ -5,9 +5,9 @@ import seaborn as sns
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
 import plotly.graph_objects as go
 
 # Set up the layout and page configuration
@@ -26,62 +26,7 @@ data.columns = data.columns.str.strip()
 # Set custom CSS for styling
 st.markdown("""
     <style>
-        body {
-            background-image: url('https://www.example.com/your-background-image.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
-        
-        .title {
-            font-family: 'Roboto', sans-serif;
-            color: #5f2c82;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .subtitle {
-            font-family: 'Roboto', sans-serif;
-            color: #49a09d;
-        }
-        .container {
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            gap: 20px;
-            padding: 20px;
-        }
-        .sidebar {
-            background-color: #f2f2f2;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .section {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .header {
-            font-family: 'Roboto', sans-serif;
-            font-size: 24px;
-            color: #5f2c82;
-            margin-bottom: 10px;
-        }
-        .footer {
-            font-family: 'Roboto', sans-serif;
-            color: #49a09d;
-            text-align: center;
-            padding: 10px;
-            border-top: 1px solid #e0e0e0;
-        }
-        .chart-container {
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            padding: 10px;
-            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-        }
-        .introduction img {
-            max-width: 100%;
-            border-radius: 10px;
-        }
+        /* Your CSS styles here */
     </style>
 """, unsafe_allow_html=True)
 
@@ -214,8 +159,6 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
                       title_font=dict(size=24, color='#5f2c82'), xaxis_title_font=dict(size=16), yaxis_title_font=dict(size=16))
     st.plotly_chart(fig)
 
-
-
     # Hyperparameter tuning for Decision Tree
     st.write("## Hyperparameter Tuning for Decision Tree")
     param_grid = {
@@ -245,8 +188,8 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
     voting_acc, voting_prec, voting_rec, voting_f1 = evaluate_model(voting_clf, X_test, y_test)
     st.write(f"**Voting Classifier:** Accuracy={voting_acc:.4f}, Precision={voting_prec:.4f}, Recall={voting_rec:.4f}, F1-Score={voting_f1:.4f}")
 
-# Custom Footer
- st.markdown("""
+    # Custom Footer
+    st.markdown("""
         <div class="footer">
             Created with ❤️ by Riezki Intan Pertiwi | <a href="https://www.uii.ac.id" style="color: #49a09d;">Universitas Islam Indonesia</a>
         </div>

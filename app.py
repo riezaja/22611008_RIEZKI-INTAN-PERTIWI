@@ -133,6 +133,7 @@ elif menu == 'Preprocessing and Model Training':
         data[col] = label_encoder.fit_transform(data[col])
     data = data.drop(columns=['Person ID'])
 
+elif menu == 'Model Training and Evaluation':
     st.write("## Model Training and Evaluation")
     X = data.drop('Sleep Disorder', axis=1)
     y = data['Sleep Disorder']

@@ -71,30 +71,18 @@ st.pyplot(plt)
 
 
 # Preprocessing steps
-st.write("## Preprocessing Data")
-# Split Blood Pressure into Systolic and Diastolic
-data[['Systolic_BP', 'Diastolic_BP']] = data['Blood Pressure'].str.split('/', expand=True).astype(float)
-data = data.drop(columns=['Blood Pressure'])
+# Preprocess the data
+def preprocessing(df):
+    df[['Systolic_BP', 'Diastolic_BP']] = df['Blood Pressure'].str.split('/', expand=True).astype(float)
+    df = df.drop(columns=['Blood Pressure'])
 
-# Check for missing values
-st.write("Missing Values per Column:")
-st.write(data.isnull().sum())
+    label_encoder = LabelEncoder()
+    for col in ['Gender', 'Occupation', 'BMI Category', 'Sleep Disorder']:
+        df[col] = label_encoder.fit_transform(df[col])
 
-# Drop rows with missing target values
-data.dropna(subset=['Sleep Disorder'], inplace=True)
+    df = df.drop(columns=['Person ID'])
+    return df
 
-# Fill missing numeric values with the mean
-numeric_cols = data.select_dtypes(include=['float64', 'int64']).columns
-data[numeric_cols] = data[numeric_cols].fillna(data[numeric_cols].mean())
-
-# Encode categorical variables
-label_encoder = LabelEncoder()
-categorical_cols = ['Gender', 'Occupation', 'BMI Category', 'Sleep Disorder']
-for col in categorical_cols:
-    data[col] = label_encoder.fit_transform(data[col])
-
-# Drop unnecessary columns
-data = data.drop(columns=['Person ID'])
 
 # Define features and target
 X = data.drop('Sleep Disorder', axis=1)

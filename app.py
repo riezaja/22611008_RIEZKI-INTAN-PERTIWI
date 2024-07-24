@@ -203,6 +203,6 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
 
     st.markdown("""
         <div class="footer">
-            Created with ❤️ by <a href="https://www.uii.ac.id" style="color: #49a09d;">Universitas Islam Indonesia</a> | Riezki Intan Pertiwi
+            Created with ❤️ by Riezki Intan Pertiwi</a> | <a href="https://www.uii.ac.id" style="color: #49a09d;"> Universitas Islam Indonesia
         </div>
     """, unsafe_allow_html=True)

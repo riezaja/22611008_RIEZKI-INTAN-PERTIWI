@@ -46,6 +46,15 @@ plt.xlabel('Kategori BMI')
 plt.ylabel('Frekuensi')
 st.pyplot(plt)
 
+# Violin plot for Stress Level by Occupation
+plt.figure(figsize=(10, 6))
+sns.violinplot(x='Occupation', y='Stress Level', data=df)
+plt.title('Violin Plot of Stress Level by Occupation')
+plt.xlabel('Pekerjaan')
+plt.ylabel('Tingkat Stres')
+plt.xticks(rotation=45)  # Rotate x-axis labels if needed
+st.pyplot(plt)
+
 
 # Preprocessing steps
 st.write("## Preprocessing Data")

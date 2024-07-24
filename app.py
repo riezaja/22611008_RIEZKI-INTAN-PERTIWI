@@ -29,7 +29,7 @@ st.markdown(
 <style>
 body {
     font-family: 'Arial', sans-serif;
-    background: radial-gradient(circle, #f9a9b1, #d95dae);
+    background: linear-gradient(to right, #f9a9b1, #d95dae);
     color: #333;
     margin: 0;
     padding: 0;
@@ -37,160 +37,143 @@ body {
 }
 
 .main .block-container {
-    max-width: 1000px; /* Adjusted width for better fit */
-    padding: 2rem; /* Reduced padding for a tighter layout */
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 30px; /* Slightly rounded corners */
-    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.4);
+    max-width: 1200px;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background for a light feel */
+    border-radius: 40px; /* More rounded corners */
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.4); /* Deep shadow for depth */
     margin: 2rem auto;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border for definition */
     position: relative;
-    overflow: hidden;
 }
 
 .centered-title {
     text-align: center;
-    font-size: 3.5rem; /* Reduced font size for better fit */
+    font-size: 4.5rem; /* Larger font size for a bold statement */
     color: #fff;
     font-weight: 900;
-    margin: 2rem 0;
+    margin: 2.5rem 0;
     background: linear-gradient(to right, #e0aaff, #a76cd9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
-    animation: pulse 3s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
-    }
-    50% {
-        text-shadow: 8px 8px 15px rgba(0, 0, 0, 0.5);
-    }
-    100% {
-        text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
-    }
+    text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6); /* Dramatic shadow for impact */
 }
 
 .stButton>button {
-    border-radius: 30px; /* Rounded corners */
-    background: linear-gradient(to right, #a76cd9, #a44c77);
-    color: #fff;
-    padding: 1.25rem 3rem; /* Adjusted padding */
-    font-size: 22px; /* Slightly smaller font size */
-    margin-top: 1rem;
-    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 30px; /* Soft rounded corners */
+    background-color: #a76cd9;
+    color: white;
+    padding: 1.5rem 3.5rem;
+    font-size: 24px;
+    margin-top: 1.5rem;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     font-family: 'Arial', sans-serif;
     border: none;
     cursor: pointer;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
 }
 
 .stButton>button:hover {
-    background: linear-gradient(to right, #8a4d8d, #7a3b6d);
-    transform: scale(1.05);
-    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.4);
+    background-color: #8a4d8d;
+    transform: scale(1.1);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
 }
 
 .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
     color: #5f2c82;
     font-family: 'Georgia', serif;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    letter-spacing: 0.5px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Enhanced shadow for headings */
 }
 
 .stMarkdown p {
-    font-size: 18px; /* Adjusted font size for readability */
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
+    font-size: 20px;
+    line-height: 1.8;
+    margin-bottom: 2rem;
 }
 
 .dataframe-container {
     display: flex;
     justify-content: center;
-    margin: 1.5rem 0;
+    margin: 2rem 0;
 }
 
 .tab-content {
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 30px;
-    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.3);
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    border-radius: 40px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.3); /* Deep shadow for depth */
     position: relative;
-    overflow: hidden;
 }
 
 .tab-content h3 {
     color: #5f2c82;
     font-family: 'Georgia', serif;
-    font-size: 2.2rem; /* Reduced font size */
-    border-bottom: 4px solid #a76cd9;
+    font-size: 2.5rem; /* Larger font size */
+    border-bottom: 4px solid #a76cd9; /* Thick underline for emphasis */
     padding-bottom: 0.5rem;
     margin-bottom: 1.5rem;
     position: relative;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 .tab-content h3::before {
     content: '';
     position: absolute;
     left: 50%;
-    bottom: -10px;
+    bottom: -10px; /* Position below the text */
     transform: translateX(-50%);
     width: 60px;
-    height: 4px;
+    height: 5px;
     background-color: #a76cd9;
     border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for the underline */
 }
 
 .tab-content p {
-    font-size: 16px; /* Smaller font size */
+    font-size: 18px;
     line-height: 1.6;
 }
 
 .tab-content img {
     display: block;
     margin: 1.5rem auto;
-    border-radius: 20px; /* Moderate border-radius */
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 25px; /* Larger border-radius */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Deep shadow effect */
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .tab-content img:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1); /* Larger zoom effect on hover */
+    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
 }
 
 .tabs {
     display: flex;
     justify-content: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .tab-button {
     padding: 1rem 2rem;
     margin: 0 0.5rem;
     border: 1px solid #a76cd9;
-    border-radius: 30px; /* Rounded corners */
-    background: #ffffff;
+    border-radius: 35px; /* Softer corners */
+    background-color: #ffffff;
     color: #a76cd9;
-    font-size: 18px; /* Adjusted font size */
+    font-size: 18px;
     cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     font-family: 'Arial', sans-serif;
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .tab-button:hover {
-    background: #a76cd9;
+    background-color: #a76cd9;
     color: #ffffff;
     transform: scale(1.05);
 }
 
 .active {
-    background: #a76cd9;
+    background-color: #a76cd9;
     color: #ffffff;
 }
 
@@ -199,17 +182,16 @@ body {
     padding: 2rem;
     background: linear-gradient(to right, #f9a9b1, #d95dae);
     color: #ffffff;
-    font-size: 18px; /* Adjusted font size */
-    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    font-size: 18px; /* Slightly larger font size */
+    border-top: 2px solid rgba(255, 255, 255, 0.2); /* Slightly thicker border for definition */
     margin-top: 2rem;
     position: relative;
-    box-shadow: 0px -10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .footer::before {
     content: 'Created with ♥ by Riezki Intan Pertiwi';
     display: block;
-    font-size: 16px; /* Adjusted font size */
+    font-size: 16px;
     color: #ffffff;
     margin-top: 0.5rem;
 }
@@ -218,18 +200,24 @@ body {
     color: #ffffff;
     text-decoration: none;
     font-weight: bold;
-    transition: color 0.3s ease, text-shadow 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 .footer a:hover {
-    color: #f9a9b1;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    color: #f9a9b1; /* Highlight link on hover */
     text-decoration: underline;
 }
 
+/* Icons */
+.icon {
+    font-size: 1.5rem;
+    color: #a76cd9;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+/* Use font-awesome or other icon libraries */
 </style>
-
-
     """,
     unsafe_allow_html=True
 )

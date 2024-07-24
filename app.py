@@ -26,7 +26,8 @@ data.columns = data.columns.str.strip()
 menu = st.sidebar.selectbox('Select a Page', [
     'Data Overview',
     'Visualizations',
-    'Preprocessing Model Training and Evaluation '
+    'Preprocessing and Model Training',
+    'Model Performance'
 ])
 
 # Custom CSS for styling
@@ -117,7 +118,7 @@ elif menu == 'Visualizations':
     plt.ylabel('Kualitas Tidur')
     st.pyplot(plt)
 
-elif menu == 'Preprocessing':
+elif menu == 'Preprocessing and Model Training':
     st.write("## Preprocessing Data")
     data[['Systolic_BP', 'Diastolic_BP']] = data['Blood Pressure'].str.split('/', expand=True).astype(float)
     data = data.drop(columns=['Blood Pressure'])
@@ -132,7 +133,6 @@ elif menu == 'Preprocessing':
         data[col] = label_encoder.fit_transform(data[col])
     data = data.drop(columns=['Person ID'])
 
-    st.write("## Model Training and Evaluation")
     X = data.drop('Sleep Disorder', axis=1)
     y = data['Sleep Disorder']
     X = X.apply(pd.to_numeric, errors='coerce')
@@ -142,6 +142,7 @@ elif menu == 'Preprocessing':
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
 
+    st.write("## Model Training and Evaluation")
     def evaluate_model(model, X_test, y_test):
         y_pred = model.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)
@@ -166,6 +167,7 @@ elif menu == 'Preprocessing':
     st.write(f"**Decision Tree:** Accuracy={acc_dt:.4f}, Precision={prec_dt:.4f}, Recall={rec_dt:.4f}, F1-Score={f1_dt:.4f}")
     st.write(f"**Random Forest:** Accuracy={acc_rf:.4f}, Precision={prec_rf:.4f}, Recall={rec_rf:.4f}, F1-Score={f1_rf:.4f}")
 
+elif menu == 'Model Performance':
     st.write("## Model Performance Visualizations")
     model_names = ['Logistic Regression', 'Decision Tree', 'Random Forest']
     accuracies = [acc_lr, acc_dt, acc_rf]

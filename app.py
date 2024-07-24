@@ -28,42 +28,43 @@ st.markdown(
     """
 <style>
 body {
-    font-family: 'Times New Roman', serif;
-    background: linear-gradient(to right, #d95dae, #9b7eaa); /* Gradient background from pink to purple */
+    font-family: 'Arial', sans-serif; /* Use a more modern, clean font */
+    background: linear-gradient(to right, #f9a9b1, #d95dae); /* Gradient from soft pink to vibrant purple */
 }
 .main .block-container {
     max-width: 1200px;
     padding: 2rem;
-    background: linear-gradient(to right, #ffffff, #f0f0f0); /* Light gradient background for the container */
-    border-radius: 15px;
-    box-shadow: 0px 4px 15px rgba(215, 112, 165, 0.8);
+    background: linear-gradient(to right, #ffffff, #f8f9fc); /* Light gradient background for the container */
+    border-radius: 20px; /* Slightly more rounded corners */
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15); /* Softer shadow for a more elegant look */
 }
 .centered-title {
     text-align: center;
-    font-size: 2.8rem;
-    color: #333; /* Dark gray for the title text */
+    font-size: 3rem; /* Larger font size for the title */
+    color: #fff; /* White color for the gradient text */
     font-weight: 700;
     margin: 2rem 0;
-    background: linear-gradient(to right, #5f2c82, #49a09d); /* Gradient text background */
+    background: linear-gradient(to right, #e0aaff, #a76cd9); /* Gradient text background */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 .stButton>button {
-    border-radius: 12px;
-    background-color: #5f2c82; /* Purple button */
+    border-radius: 15px; /* Softer corners for the button */
+    background-color: #a76cd9; /* Soft purple button */
     color: white;
     padding: 0.8rem 2rem;
     font-size: 18px;
     margin-top: 1rem;
-    transition: background-color 0.3s ease;
-    font-family: 'Times New Roman', serif;
+    transition: background-color 0.3s ease, transform 0.2s; /* Add scale effect on hover */
+    font-family: 'Arial', sans-serif;
 }
 .stButton>button:hover {
-    background-color: #4e1f66; /* Slightly darker purple on hover */
+    background-color: #8a4d8d; /* Slightly darker purple on hover */
+    transform: scale(1.05); /* Slightly increase button size on hover */
 }
 .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-    color: #333; /* Dark gray text */
-    font-family: 'Times New Roman', serif;
+    color: #5f2c82; /* Matching dark purple for headings */
+    font-family: 'Georgia', serif; /* Elegant serif font for headings */
 }
 .stMarkdown p {
     font-size: 18px;
@@ -77,12 +78,13 @@ body {
 }
 .tab-content {
     padding: 2rem;
-    background: linear-gradient(to right, #ffffff, #f0f0f0); /* Light gradient background for tabs */
-    border-radius: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to right, #ffffff, #f8f9fc); /* Light gradient background for tabs */
+    border-radius: 20px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
 }
 .tab-content h3 {
-    color: #333; /* Dark gray text for tab headers */
+    color: #5f2c82; /* Dark purple text for tab headers */
+    font-family: 'Georgia', serif;
 }
 .tab-content p {
     font-size: 16px;
@@ -101,24 +103,25 @@ body {
 .tab-button {
     padding: 0.5rem 1rem;
     margin: 0 0.2rem;
-    border: 1px solid #5f2c82;
-    border-radius: 12px;
-    background-color: #ffffff;
-    color: #5f2c82;
+    border: 1px solid #a76cd9;
+    border-radius: 15px; /* Softer corners for tab buttons */
+    background-color: #f9f9f9; /* Light background for tab buttons */
+    color: #a76cd9;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
-    font-family: 'Times New Roman', serif;
+    font-family: 'Arial', sans-serif;
 }
 .tab-button:hover {
-    background-color: #5f2c82;
+    background-color: #a76cd9;
     color: #ffffff;
 }
 .active {
-    background-color: #5f2c82;
+    background-color: #a76cd9;
     color: #ffffff;
 }
 </style>
+
 
     """,
     unsafe_allow_html=True

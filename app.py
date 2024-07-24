@@ -49,16 +49,16 @@ body {
 
 .centered-title {
     text-align: center;
-    font-size: 2.5rem; /* Smaller font size for a more compact title */
+    font-size: 5rem; /* Huge font size for major impact */
     color: #fff;
-    font-weight: 700;
-    margin: 1.5rem 0;
+    font-weight: 900;
+    margin: 3rem 0;
     background: linear-gradient(to right, #e0aaff, #a76cd9);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4); /* Subtle shadow for impact */
+    text-shadow: 8px 8px 16px rgba(0, 0, 0, 0.7); /* Strong shadow for dramatic effect */
+    animation: pulse 3s infinite; /* Pulsating effect */
 }
-
 .stButton>button {
     border-radius: 20px; /* Smaller rounded corners */
     background-color: #a76cd9;

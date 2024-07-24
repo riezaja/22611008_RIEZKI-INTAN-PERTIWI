@@ -67,20 +67,25 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Application title
-st.markdown('<h1 class="title">Sleep Health and Lifestyle Analysis</h1>', unsafe_allow_html=True)
+# Sidebar menu
+st.sidebar.title("Navigation")
+menu = st.sidebar.radio("Select a section:", ["Data Overview", "Visualizations", "Preprocessing Data", "Model Training and Evaluation", "Hyperparameter Tuning", "Cross-validation", "Voting Classifier"])
 
-# Layout for the main content
-with st.container():
+# Main content
+if menu == "Data Overview":
+    st.title('Sleep Health and Lifestyle Analysis')
     st.write("## Data Overview")
     st.dataframe(data)
 
     st.write("## Summary Statistics")
     st.write(data.describe())
 
-    # Visualization section
+elif menu == "Visualizations":
+    st.title('Sleep Health and Lifestyle Analysis')
     st.write("## Visualizations")
+    
     fig, axs = plt.subplots(2, 2, figsize=(14, 10))
+    
     sns.histplot(data['Sleep Duration'], bins=30, ax=axs[0, 0])
     axs[0, 0].set_title('Distribusi Durasi Tidur')
     axs[0, 0].set_xlabel('Durasi Tidur (jam)')
@@ -103,7 +108,6 @@ with st.container():
     plt.tight_layout()
     st.pyplot(fig)
 
-    # Bar Plot Kualitas Tidur Berdasarkan Kategori BMI
     plt.figure(figsize=(10, 6))
     sns.barplot(x='BMI Category', y='Quality of Sleep', data=data)
     plt.title('Bar Plot Kualitas Tidur Berdasarkan Kategori BMI')
@@ -111,8 +115,9 @@ with st.container():
     plt.ylabel('Kualitas Tidur')
     st.pyplot(plt)
 
-    # Preprocessing steps
-    st.write("## Preprocessing Data")
+elif menu == "Preprocessing Data":
+    st.title('Preprocessing Data')
+    st.write("## Preprocessing Steps")
     data[['Systolic_BP', 'Diastolic_BP']] = data['Blood Pressure'].str.split('/', expand=True).astype(float)
     data = data.drop(columns=['Blood Pressure'])
     st.write("Missing Values per Column:")
@@ -125,7 +130,13 @@ with st.container():
     for col in categorical_cols:
         data[col] = label_encoder.fit_transform(data[col])
     data = data.drop(columns=['Person ID'])
+    st.write("Data after preprocessing:")
+    st.dataframe(data)
 
+elif menu == "Model Training and Evaluation":
+    st.title('Model Training and Evaluation')
+    st.write("## Model Training and Evaluation")
+    
     X = data.drop('Sleep Disorder', axis=1)
     y = data['Sleep Disorder']
     X = X.apply(pd.to_numeric, errors='coerce')
@@ -134,9 +145,7 @@ with st.container():
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
-
-    # Model training and evaluation
-    st.write("## Model Performance")
+    
     def evaluate_model(model, X_test, y_test):
         y_pred = model.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)
@@ -183,8 +192,10 @@ with st.container():
     plt.tight_layout()
     st.pyplot(fig)
 
-    # Hyperparameter tuning for Decision Tree
+elif menu == "Hyperparameter Tuning":
+    st.title('Hyperparameter Tuning')
     st.write("## Hyperparameter Tuning for Decision Tree")
+    
     param_grid = {
         'criterion': ['gini', 'entropy'],
         'max_depth': [10, 20, None],
@@ -198,14 +209,18 @@ with st.container():
     acc_dt, prec_dt, rec_dt, f1_dt = evaluate_model(best_model_dt, X_test, y_test)
     st.write(f"**Best Decision Tree:** Accuracy={acc_dt:.4f}, Precision={prec_dt:.4f}, Recall={rec_dt:.4f}, F1-Score={f1_dt:.4f}")
 
-    # Cross-validation
+elif menu == "Cross-validation":
+    st.title('Cross-validation')
     st.write("## Cross-validation")
+    
     cv_scores = cross_val_score(model_dt, X, y, cv=5, scoring='accuracy')
     st.write(f"Cross-Validation Scores: {cv_scores}")
     st.write(f"Mean Cross-Validation Score: {cv_scores.mean():.4f}")
 
-    # Voting Classifier
+elif menu == "Voting Classifier":
+    st.title('Voting Classifier')
     st.write("## Voting Classifier")
+    
     voting_clf = VotingClassifier(estimators=[
         ('lr', model_lr),
         ('dt', model_dt),

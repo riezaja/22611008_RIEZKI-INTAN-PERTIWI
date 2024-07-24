@@ -6,8 +6,11 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+
+# Set up the layout and page configuration
+st.set_page_config(page_title='Sleep Health and Lifestyle Analysis', layout='wide')
 
 # Load the dataset
 @st.cache_data
@@ -18,9 +21,6 @@ data = load_data()
 
 # Strip whitespace from column names
 data.columns = data.columns.str.strip()
-
-# Set up the layout
-st.set_page_config(page_title='Sleep Health and Lifestyle Analysis', layout='wide')
 
 # Set custom CSS for styling
 st.markdown("""

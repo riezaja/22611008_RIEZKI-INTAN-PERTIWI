@@ -23,39 +23,81 @@ data = load_data()
 # Strip whitespace from column names
 data.columns = data.columns.str.strip()
 
-# Set custom CSS for styling
-st.markdown("""
+# Add custom CSS for styling
+st.markdown(
+    """
     <style>
-        .title {
-            color: #5f2c82;
-            font-size: 3em;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .subtitle {
-            font-size: 1.5em;
-            color: #49a09d;
-        }
-        .introduction img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        .footer {
-            text-align: center;
-            padding: 10px;
-            margin-top: 20px;
-            border-top: 1px solid #ccc;
-            color: #666;
-        }
-        .footer a {
-            color: #49a09d;
-            text-decoration: none;
-        }
+    body {
+        font-family: 'Times New Roman', serif;
+        background: linear-gradient(to right, #5f2c82, #49a09d);
+    }
+    .main .block-container {
+        max-width: 1200px;
+        padding: 2rem;
+        background: linear-gradient(to right, #ffffff, #f0f0f0);
+        border-radius: 15px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    .centered-title {
+        text-align: center;
+        font-size: 2.8rem;
+        color: #333;
+        font-weight: 700;
+        margin: 2rem 0;
+        background: linear-gradient(to right, #5f2c82, #49a09d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .stButton>button {
+        border-radius: 12px;
+        background-color: #5f2c82;
+        color: white;
+        padding: 0.8rem 2rem;
+        font-size: 18px;
+        margin-top: 1rem;
+        transition: background-color 0.3s ease;
+        font-family: 'Times New Roman', serif;
+    }
+    .stButton>button:hover {
+        background-color: #4e1f66;
+    }
+    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+        color: #333;
+        font-family: 'Times New Roman', serif;
+    }
+    .stMarkdown p {
+        font-size: 18px;
+        line-height: 1.8;
+        margin-bottom: 1.2rem;
+    }
+    .dataframe-container {
+        display: flex;
+        justify-content: center;
+        margin: 2rem 0;
+    }
+    .tab-content {
+        padding: 2rem;
+        background: linear-gradient(to right, #ffffff, #f0f0f0);
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .tab-content h3 {
+        color: #333;
+    }
+    .tab-content p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    .tab-content img {
+        border-radius: 15px;
+    }
     </style>
-""", unsafe_allow_html=True)
+    """,
+    unsafe_allow_html=True
+)
 
 # Application title
-st.markdown('<h1 class="title">Sleep Health and Lifestyle Analysis</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="centered-title">Sleep Health and Lifestyle Analysis</h1>', unsafe_allow_html=True)
 
 # Sidebar menu
 st.sidebar.title("Navigation")
@@ -63,7 +105,7 @@ menu = st.sidebar.radio("Menu", ["Introduction", "Data Overview", "Visualization
 
 if menu == "Introduction":
     st.markdown("""
-        <div class="introduction">
+        <div class="tab-content">
             <img src="https://i.pinimg.com/564x/6c/e2/66/6ce2668a8eec2760653f88902c81f489.jpg" alt="Sleep and Lifestyle">
             <h2 class="subtitle">Welcome to the Sleep Health and Lifestyle Analysis Dashboard</h2>
             <p>This application provides insights into sleep health and lifestyle factors using a comprehensive dataset. Explore the data overview, visualizations, and machine learning models to understand how different factors affect sleep quality and overall health.</p>
@@ -163,14 +205,14 @@ elif menu == "Model Training and Performance":
     st.write(f"**Decision Tree:** Accuracy={acc_dt:.4f}, Precision={prec_dt:.4f}, Recall={rec_dt:.4f}, F1-Score={f1_dt:.4f}")
     st.write(f"**Random Forest:** Accuracy={acc_rf:.4f}, Precision={prec_rf:.4f}, Recall={rec_rf:.4f}, F1-Score={f1_rf:.4f}")
 
+    # Plot model comparison
+    st.write("## Model Comparison")
     model_names = ['Logistic Regression', 'Decision Tree', 'Random Forest']
     accuracies = [acc_lr, acc_dt, acc_rf]
     precisions = [prec_lr, prec_dt, prec_rf]
     recalls = [rec_lr, rec_dt, rec_rf]
     f1_scores = [f1_lr, f1_dt, f1_rf]
 
-    # Interactive Model Performance Comparison
-    st.write("## Model Performance Comparison")
     fig = go.Figure()
     fig.add_trace(go.Bar(x=model_names, y=accuracies, name='Accuracy', marker_color='#5f2c82'))
     fig.add_trace(go.Bar(x=model_names, y=precisions, name='Precision', marker_color='#49a09d'))

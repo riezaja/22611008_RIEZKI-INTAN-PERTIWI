@@ -40,7 +40,7 @@ st.pyplot(plt)
 
 # Count plot for BMI Category
 plt.figure(figsize=(8, 6))
-sns.countplot(x='BMI Category', data=data)  # Pastikan menggunakan nama DataFrame yang benar
+sns.countplot(x='BMI Category', data=data)
 plt.title('Count Plot of BMI Category')
 plt.xlabel('Kategori BMI')
 plt.ylabel('Frekuensi')
@@ -48,10 +48,11 @@ st.pyplot(plt)
 
 # Violin plot for Stress Level by Occupation
 plt.figure(figsize=(10, 6))
-sns.violinplot(x='Occupation', y='Stress Level', data=df)
+sns.violinplot(x='Occupation', y='Stress Level', data=data)
 plt.title('Violin Plot of Stress Level by Occupation')
 plt.xlabel('Pekerjaan')
 plt.ylabel('Tingkat Stres')
+plt.xticks(rotation=45)  # Rotate x-axis labels if needed
 st.pyplot(plt)
 
 

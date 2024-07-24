@@ -184,7 +184,7 @@ elif menu == "Preprocessing, Model Training, and Model Performance":
     X_test = scaler.transform(X_test)
 
     # Model training and evaluation
-   st.write("## Model Performance")
+   
     def evaluate_model(model, X_test, y_test):
         y_pred = model.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)

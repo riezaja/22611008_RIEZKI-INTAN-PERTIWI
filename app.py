@@ -1,175 +1,176 @@
+# app.py
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
-from sklearn.model_selection import GridSearchCV
-import numpy as np
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
 
-# Load data
+# Load the dataset
 @st.cache_data
 def load_data():
-    data = pd.read_csv('Sleep_health_and_lifestyle_dataset.csv')
-    data.columns = data.columns.str.strip()
-    return data
+    return pd.read_csv('Sleep_health_and_lifestyle_dataset.csv')
 
 data = load_data()
 
-# Sidebar options
-st.sidebar.title("Navigation")
-options = st.sidebar.radio("Select a page:", ['Data Overview', 'Data Preprocessing', 'Model Training and Evaluation', 'Model Performance'])
+# Strip whitespace from column names
+data.columns = data.columns.str.strip()
 
-# Data Overview
-if options == 'Data Overview':
-    st.title("Data Overview")
-    st.write(data.head())
-    st.write(data.describe())
-    st.write(data.info())
+# Display data overview
+st.title('Sleep Health and Lifestyle Analysis')
+st.write("## Data Overview")
+st.dataframe(data)
 
-    # Visualizations
-    st.subheader("Distribusi Durasi Tidur")
-    fig, ax = plt.subplots()
-    sns.histplot(data['Sleep Duration'], bins=30, ax=ax)
-    ax.set_title('Distribusi Durasi Tidur')
-    ax.set_xlabel('Durasi Tidur (jam)')
-    ax.set_ylabel('Frekuensi')
-    st.pyplot(fig)
+# Show summary statistics
+st.write("## Summary Statistics")
+st.write(data.describe())
 
-    st.subheader("Box Plot of Sleep Duration by Gender")
-    fig, ax = plt.subplots()
-    sns.boxplot(x='Gender', y='Sleep Duration', data=data, ax=ax)
-    ax.set_title('Box Plot of Sleep Duration by Gender')
-    ax.set_xlabel('Gender')
-    ax.set_ylabel('Durasi Tidur (jam)')
-    st.pyplot(fig)
+# Visualize Sleep Duration distribution
+st.write("## Visualize Data")
+plt.figure(figsize=(10, 6))
+sns.histplot(data['Sleep Duration'], bins=30)
+plt.title('Distribusi Durasi Tidur')
+plt.xlabel('Durasi Tidur (jam)')
+plt.ylabel('Frekuensi')
+st.pyplot(plt)
 
-    st.subheader("Count Plot of BMI Category")
-    fig, ax = plt.subplots()
-    sns.countplot(x='BMI Category', data=data, ax=ax)
-    ax.set_title('Count Plot of BMI Category')
-    ax.set_xlabel('Kategori BMI')
-    ax.set_ylabel('Frekuensi')
-    st.pyplot(fig)
+# Preprocessing steps
+st.write("## Preprocessing Data")
+# Split Blood Pressure into Systolic and Diastolic
+data[['Systolic_BP', 'Diastolic_BP']] = data['Blood Pressure'].str.split('/', expand=True).astype(float)
+data = data.drop(columns=['Blood Pressure'])
 
-    st.subheader("Violin Plot of Stress Level by Occupation")
-    fig, ax = plt.subplots()
-    sns.violinplot(x='Occupation', y='Stress Level', data=data, ax=ax)
-    ax.set_title('Violin Plot of Stress Level by Occupation')
-    ax.set_xlabel('Pekerjaan')
-    ax.set_ylabel('Tingkat Stres')
-    plt.xticks(rotation=45)
-    st.pyplot(fig)
+# Check for missing values
+st.write("Missing Values per Column:")
+st.write(data.isnull().sum())
 
-# Data Preprocessing
-elif options == 'Data Preprocessing':
-    st.title("Data Preprocessing")
+# Drop rows with missing target values
+data.dropna(subset=['Sleep Disorder'], inplace=True)
 
-    # Handle missing values (if any)
-    st.write("Missing values per column:")
-    st.write(data.isnull().sum())
+# Fill missing numeric values with the mean
+numeric_cols = data.select_dtypes(include=['float64', 'int64']).columns
+data[numeric_cols] = data[numeric_cols].fillna(data[numeric_cols].mean())
 
-    # Encode categorical features
-    label_encoder = LabelEncoder()
-    for col in ['Gender', 'Occupation', 'BMI Category', 'Sleep Disorder']:
-        data[col] = label_encoder.fit_transform(data[col])
+# Encode categorical variables
+label_encoder = LabelEncoder()
+categorical_cols = ['Gender', 'Occupation', 'BMI Category', 'Sleep Disorder']
+for col in categorical_cols:
+    data[col] = label_encoder.fit_transform(data[col])
 
-    # Split Blood Pressure into Systolic and Diastolic
-    data[['Systolic_BP', 'Diastolic_BP']] = data['Blood Pressure'].str.split('/', expand=True).astype(float)
-    data = data.drop(columns=['Blood Pressure', 'Person ID'])
+# Drop unnecessary columns
+data = data.drop(columns=['Person ID'])
 
-    st.write("Data after preprocessing:")
-    st.write(data.head())
-    st.write(data.dtypes)
+# Define features and target
+X = data.drop('Sleep Disorder', axis=1)
+y = data['Sleep Disorder']
 
-# Model Training and Evaluation
-elif options == 'Model Training and Evaluation':
-    st.title("Model Training and Evaluation")
+# Ensure all features are numeric
+X = X.apply(pd.to_numeric, errors='coerce')
+X = X.fillna(0)  # Replace any remaining NaNs with 0 or another value if necessary
 
-    # Define features and target
-    X = data.drop('Sleep Disorder', axis=1)
-    y = data['Sleep Disorder']
+# Split data into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # Split data
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Standardize features
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
 
-    # Standardize features
-    scaler = StandardScaler()
-    X_train = scaler.fit_transform(X_train)
-    X_test = scaler.transform(X_test)
+# Model training and evaluation function
+def evaluate_model(model, X_test, y_test):
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred, average='weighted')
+    recall = recall_score(y_test, y_pred, average='weighted')
+    f1 = f1_score(y_test, y_pred, average='weighted')
+    return accuracy, precision, recall, f1
 
-    # Define evaluate_model function
-    def evaluate_model(model, X_test, y_test):
-        y_pred = model.predict(X_test)
-        accuracy = accuracy_score(y_test, y_pred)
-        precision = precision_score(y_test, y_pred, average='weighted')
-        recall = recall_score(y_test, y_pred, average='weighted')
-        f1 = f1_score(y_test, y_pred, average='weighted')
-        report = classification_report(y_test, y_pred)
-        return accuracy, precision, recall, f1, report
+# Initialize models
+model_lr = LogisticRegression(random_state=42)
+model_dt = DecisionTreeClassifier(random_state=42)
+model_rf = RandomForestClassifier(random_state=42)
 
-    # Train models
-    model_lr = LogisticRegression(random_state=42)
-    model_dt = DecisionTreeClassifier(random_state=42)
-    model_rf = RandomForestClassifier(random_state=42)
+# Train and evaluate models
+model_lr.fit(X_train, y_train)
+model_dt.fit(X_train, y_train)
+model_rf.fit(X_train, y_train)
 
-    models = {'Logistic Regression': model_lr, 'Decision Tree': model_dt, 'Random Forest': model_rf}
+acc_lr, prec_lr, rec_lr, f1_lr = evaluate_model(model_lr, X_test, y_test)
+acc_dt, prec_dt, rec_dt, f1_dt = evaluate_model(model_dt, X_test, y_test)
+acc_rf, prec_rf, rec_rf, f1_rf = evaluate_model(model_rf, X_test, y_test)
 
-    for name, model in models.items():
-        model.fit(X_train, y_train)
+# Display evaluation results
+st.write("## Model Performance")
+st.write(f"**Logistic Regression:** Accuracy={acc_lr:.4f}, Precision={prec_lr:.4f}, Recall={rec_lr:.4f}, F1-Score={f1_lr:.4f}")
+st.write(f"**Decision Tree:** Accuracy={acc_dt:.4f}, Precision={prec_dt:.4f}, Recall={rec_dt:.4f}, F1-Score={f1_dt:.4f}")
+st.write(f"**Random Forest:** Accuracy={acc_rf:.4f}, Precision={prec_rf:.4f}, Recall={rec_rf:.4f}, F1-Score={f1_rf:.4f}")
 
-    # Model evaluation
-    st.subheader("Model Performance")
-    results = {}
-    for name, model in models.items():
-        accuracy, precision, recall, f1, report = evaluate_model(model, X_test, y_test)
-        results[name] = [accuracy, precision, recall, f1]
-        st.write(f"{name}:\n")
-        st.text(report)
+# Visualization of model comparisons
+model_names = ['Logistic Regression', 'Decision Tree', 'Random Forest']
+accuracies = [acc_lr, acc_dt, acc_rf]
+precisions = [prec_lr, prec_dt, prec_rf]
+recalls = [rec_lr, rec_dt, rec_rf]
+f1_scores = [f1_lr, f1_dt, f1_rf]
 
-    # Model comparison visualization
-    st.subheader("Model Comparison")
-    results_df = pd.DataFrame(results, index=['Accuracy', 'Precision', 'Recall', 'F1 Score']).T
-    st.dataframe(results_df)
+plt.figure(figsize=(10, 6))
+plt.subplot(2, 2, 1)
+sns.barplot(x=model_names, y=accuracies)
+plt.title('Accuracy')
 
-    # Bar plot
-    fig, ax = plt.subplots(figsize=(10, 6))
-    results_df.plot(kind='bar', ax=ax)
-    ax.set_title('Model Comparison')
-    st.pyplot(fig)
+plt.subplot(2, 2, 2)
+sns.barplot(x=model_names, y=precisions)
+plt.title('Precision')
 
-# Model Performance
-elif options == 'Model Performance':
-    st.title("Model Performance and Hyperparameter Tuning")
+plt.subplot(2, 2, 3)
+sns.barplot(x=model_names, y=recalls)
+plt.title('Recall')
 
-    # Cross-validation
-    model_dt = DecisionTreeClassifier(random_state=42)
-    cv_scores = cross_val_score(model_dt, X, y, cv=5, scoring='accuracy')
-    st.write("Cross-Validation Scores:", cv_scores)
-    st.write("Mean Cross-Validation Score:", cv_scores.mean())
+plt.subplot(2, 2, 4)
+sns.barplot(x=model_names, y=f1_scores)
+plt.title('F1-score')
 
-    # Hyperparameter tuning
-    param_grid = {
-        'criterion': ['gini', 'entropy'],
-        'max_depth': [10, 20, None],
-        'min_samples_split': [2, 5],
-    }
-    grid_search = GridSearchCV(estimator=model_dt, param_grid=param_grid, cv=5, scoring='accuracy')
-    grid_search.fit(X_train, y_train)
-    st.write("Best Parameters:", grid_search.best_params_)
-    st.write("Best Score:", grid_search.best_score_)
+plt.tight_layout()
+st.pyplot(plt)
 
-    # Voting Classifier
-    model_lr = LogisticRegression(random_state=42)
-    model_dt_best = grid_search.best_estimator_
-    model_rf = RandomForestClassifier(random_state=42)
-    voting_clf = VotingClassifier(estimators=[('lr', model_lr), ('dt', model_dt_best), ('rf', model_rf)], voting='soft')
-    voting_clf.fit(X_train, y_train)
+# Hyperparameter tuning for Decision Tree
+st.write("## Hyperparameter Tuning for Decision Tree")
+param_grid = {
+    'criterion': ['gini', 'entropy'],
+    'max_depth': [10, 20, None],
+    'min_samples_split': [2, 5],
+}
+grid_search = GridSearchCV(estimator=model_dt, param_grid=param_grid, cv=5, scoring='accuracy')
+grid_search.fit(X_train, y_train)
+best_params = grid_search.best_params_
+st.write(f"Best Parameters: {best_params}")
+best_model_dt = grid_search.best_estimator_
+acc_dt, prec_dt, rec_dt, f1_dt = evaluate_model(best_model_dt, X_test, y_test)
+st.write(f"**Best Decision Tree:** Accuracy={acc_dt:.4f}, Precision={prec_dt:.4f}, Recall={rec_dt:.4f}, F1-Score={f1_dt:.4f}")
 
-    acc_vc, prec_vc, rec_vc, f1_vc, report_vc = evaluate_model(voting_clf, X_test, y_test)
-    st.write("Voting Classifier Performance:\n")
-    st.text(report_vc)
+# Cross-validation
+st.write("## Cross-validation")
+cv_scores = cross_val_score(model_dt, X, y, cv=5, scoring='accuracy')
+st.write(f"Cross-Validation Scores: {cv_scores}")
+st.write(f"Mean Cross-Validation Score: {cv_scores.mean():.4f}")
+
+# Voting Classifier
+st.write("## Voting Classifier")
+voting_clf = VotingClassifier(estimators=[
+    ('lr', model_lr),
+    ('dt', model_dt),
+    ('rf', model_rf)
+], voting='soft')
+voting_clf.fit(X_train, y_train)
+acc_vc, prec_vc, rec_vc, f1_vc = evaluate_model(voting_clf, X_test, y_test)
+st.write(f"**Voting Classifier:** Accuracy={acc_vc:.4f}, Precision={prec_vc:.4f}, Recall={rec_vc:.4f}, F1-Score={f1_vc:.4f}")
+
+# Requirement.txt
+# streamlit
+# pandas
+# matplotlib
+# seaborn
+# scikit-learn
